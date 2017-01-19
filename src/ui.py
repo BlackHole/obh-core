@@ -40,7 +40,7 @@ class VIXMenu(Screen, ProtectedScreen):
 	def __init__(self, session, args=0):
 		Screen.__init__(self, session)
 		ProtectedScreen.__init__(self)
-		screentitle = _("ViX")
+		screentitle = _("OBH")
 		self.menu_path = _("Main menu")+' / '+_("Setup")+' / '
 		if config.usage.show_menupath.value == 'large':
 			self.menu_path += screentitle

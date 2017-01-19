@@ -61,7 +61,7 @@ def UpgradeMain(session, **kwargs):
 def startSetup(menuid):
 	if menuid != "setup":
 		return []
-	return [(_("ViX"), UpgradeMain, "vix_menu", 1010)]
+	return [(_("OBH"), UpgradeMain, "vix_menu", 1010)]
 
 def RestoreWizard(*args, **kwargs):
 	from RestoreWizard import RestoreWizard
