@@ -1,0 +1,984 @@
+# Copyright (C) 2011 THE plugins'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the plugins package.
+# Automatically generated, 2011.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: enigma2-vix-core\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-01-05 14:06+0100\n"
+"PO-Revision-Date: 2017-01-05 20:38+0100\n"
+"Last-Translator: Rob van der Does <RobvanderDoes@Gmail.com>\n"
+"Language-Team: Andy Blackburn, Rob van der Does\n"
+"Language: nl\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Poedit-SourceCharset: iso-8859-15\n"
+"X-Generator: Poedit 1.8.11\n"
+
+msgid "%a %e %b  %-H:%M"
+msgstr "%a %e %b  %-H:%M"
+
+msgid "128 Mb"
+msgstr "128 Mb"
+
+msgid "16 Mb"
+msgstr "16 Mb"
+
+msgid "256 Mb"
+msgstr "256 Mb"
+
+msgid "30 Days"
+msgstr "30 dagen"
+
+msgid "32 Mb"
+msgstr "32 Mb"
+
+msgid "64 Mb"
+msgstr "64 Mb"
+
+msgid "8 Mb"
+msgstr "8 Mb"
+
+msgid "96 Mb"
+msgstr "96 Mb"
+
+msgid "A background update check is in progress, please try again."
+msgstr "Er wordt momenteel op updates gecontroleerd; probeer het later nogmaals. "
+
+msgid "A background update check is is progress, please try again."
+msgstr "Er wordt momenteel op updates gecontroleerd; probeer het later nogmaals. "
+
+msgid "A backup has been detected."
+msgstr "Een back-up is verwijderd."
+
+msgid "Activate"
+msgstr "Activeer"
+
+msgid "Active"
+msgstr "Actief"
+
+msgid "Active:"
+msgstr "Actief:"
+
+msgid "Allows the script runner to be launched from extensions."
+msgstr "Maakt het mogelijk dit script te laten lopen vanuit het extensieoverzicht."
+
+msgid "Allows the softcam manager to be launched from extensions."
+msgstr "Geeft de mogelijkheid de softcammanager vanuit de extensies te starten."
+
+msgid "Allows the softcam to be checked if it stopped working, and restarted automatically if needed."
+msgstr "Controleert of de softcam nog werkt en herstart die als dat niet het geval is."
+
+msgid "Allows you have the window close automatically."
+msgstr "Maakt het mogelijk het venster automatisch te sluiten."
+
+msgid "Allows you schedule your backups."
+msgstr "Plan settings back-ups."
+
+msgid "Allows you schedule your image backups."
+msgstr "Plan image back-ups."
+
+msgid "Allows you to tag your backups to a box."
+msgstr "Hier kunt u een label geven aan de back-ups van uw STB."
+
+msgid "Allows you to tag your image backup to a box. (default is box name/type)"
+msgstr "U kunt labels aan image back-ups van een ontvanger hangen (default is box naam/type)."
+
+msgid "Are you ready to create a backup image ?"
+msgstr "Bent u gereed om een imageback-up te maken?"
+
+msgid "Are you ready to install ?"
+msgstr "Bent u gereed te installeren?"
+
+msgid ""
+"Are you sure you want to delete this backup:\n"
+" "
+msgstr ""
+"Weet u zeker dat u deze back-up wilt verwijderen:\n"
+" "
+
+msgid ""
+"Are you sure you want to download this image:\n"
+" "
+msgstr ""
+"Weet u zeker dat u dit image wilt downloaden:\n"
+" "
+
+msgid ""
+"Are you sure you want to restore this backup:\n"
+" "
+msgstr ""
+"Weet u zeker dat u deze back-up wilt herstellen:\n"
+" "
+
+msgid ""
+"Are you sure you want to restore this image:\n"
+" "
+msgstr ""
+"Weet u zeker dat u dit image wilt terugplaatsen:\n"
+" "
+
+msgid "Automatic settings backup"
+msgstr "Automatische settingsbackup"
+
+msgid "Autostart"
+msgstr "Autostart"
+
+msgid "Backing up Kernel..."
+msgstr "Kernel wordt geback-upped..."
+
+msgid "Backing up Root file system..."
+msgstr "Er wordt een back-up gemaakt van het root-bestandssysteem..."
+
+msgid "Backing up files..."
+msgstr "Bestanden worden geback-upped"
+
+msgid "Backup Complete..."
+msgstr "Back-up compleet..."
+
+msgid "Backup Confirmation"
+msgstr "Back-up bevestiging"
+
+msgid "Backup Created"
+msgstr "Back-up gemaakt"
+
+msgid "Backup Location"
+msgstr "Back-up locatie"
+
+msgid "Backup Manager"
+msgstr "Backupmanager"
+
+msgid "Backup failed - e. g. wrong backup destination or no space left on backup device"
+msgstr "Back-up mislukt of verkeerde backup bestemming of onvoldoende ruimte"
+
+msgid ""
+"Backup in progress,\n"
+"Please wait for it to finish, before trying again"
+msgstr ""
+"Er loopt een back-up,\n"
+"wacht tot deze klaar is voordat u het weer probeert."
+
+msgid "Backup prefix"
+msgstr "Back-up prefix"
+
+msgid "Backups to keep"
+msgstr "Te bewaren backups"
+
+msgid "CCcam can't run whilst MGcamd is running"
+msgstr "CCcam en MGcamd kunnen niet beide actief zijn"
+
+msgid "Can't un-mount the partition, make sure it is not being used for swap or record/timeshift paths"
+msgstr "Kan de partietie niet 'unmounten', stel zeker dat deze niet gebruikt wordt voor SWAP, logs, picons, opname of timeshift."
+
+msgid "Cancel"
+msgstr "Annuleer"
+
+msgid "Change Location"
+msgstr "Verander locatie"
+
+msgid "Checking Free RAM.."
+msgstr "Controleert vrije RAM..."
+
+msgid "Checking softcams..."
+msgstr "Controleert softcams..."
+
+msgid "Choose Files"
+msgstr "Kies bestanden"
+
+msgid "Choose local ipk's folder"
+msgstr "Kies lokale IPK-folder"
+
+msgid "Choose where to mount your devices to:"
+msgstr "U wilt het apparaat mounten als:"
+
+msgid "Close"
+msgstr "Sluit"
+
+msgid "Close window on success"
+msgstr "Sluit venster indien geslaagd"
+
+msgid "Comparing against backup..."
+msgstr "Vergelijkt met back-up..."
+
+msgid "Create"
+msgstr "Creëer"
+
+msgid "Create and Manage your swap files."
+msgstr "Beheer SWAP-bestanden."
+
+msgid "Create and Restore complete images of your system."
+msgstr "Maak en herstel complete images van uw systeem."
+
+msgid "Creating Swap.."
+msgstr "Creëert swap"
+
+msgid "Creating list of installed plugins..."
+msgstr "Maakt een lijst met beschikbare plugins..."
+
+msgid "Creating zip..."
+msgstr "Creërt zip..."
+
+msgid "Current Status:"
+msgstr "Actuele status"
+
+msgid "Daily"
+msgstr "Dagelijks"
+
+msgid "Deactivate"
+msgstr "De-activeer"
+
+msgid "Delete"
+msgstr "Verwijder"
+
+msgid "Deselect"
+msgstr "Deselecteer"
+
+msgid "Device: "
+msgstr "Apparaat: "
+
+msgid "Device: None available"
+msgstr "Apparaat: niet beschikbaar"
+
+msgid "Disable Startup"
+msgstr "Startup uitschakelen"
+
+msgid "Do you want to restart GUI now ?"
+msgstr "Wilt u de gebruikersinterface nu opnieuw starten?"
+
+msgid "Do you want to restore your Enigma2 plugins ?"
+msgstr "Wilt u uw plugins weer installeren?"
+
+msgid "Do you want to restore your Enigma2 settings ?"
+msgstr "Wilt u de Enigma2 instellingen terugplaatsen?"
+
+msgid "Download"
+msgstr "Download"
+
+msgid "Download Confirmation"
+msgstr "Download confirmatie"
+
+msgid "Downloading"
+msgstr "Bezig met downloaden"
+
+msgid "Downloads"
+msgstr "Downloads"
+
+msgid "Enable Startup"
+msgstr "Startup inschakelen"
+
+msgid "Enable Swap at startup"
+msgstr "Swap tijdens opstarten inschakelen"
+
+msgid "Enable frozen check"
+msgstr "Softcamcontrole inschakelen"
+
+msgid "Enough Retries, delaying till next schedule."
+msgstr "Vaak genoeg geprobeerd, wacht op de volgende geplande tijd."
+
+msgid "Exit the restore wizard"
+msgstr "Beeindig de herstel wizard"
+
+msgid "Extra IPK's"
+msgstr "Extra IPK's"
+
+msgid "Found non-standard softcam, trying to start, this may fail"
+msgstr "Niet-standaard CAM gevonden. Er wordt geprobeerd deze te starten, maar dit kan mislukken."
+
+msgid "Free space:"
+msgstr "Vrije ruimte"
+
+msgid "Frozen check interval"
+msgstr "Controle interval"
+
+msgid "GB"
+msgstr "GB"
+
+msgid "HARD DISK: "
+msgstr "HARDE SCHIJF: "
+
+msgid "IPK Installer"
+msgstr "IPK Installeren"
+
+msgid "Image Manager"
+msgstr "Imagemanager"
+
+msgid "Inactive"
+msgstr "Inactief"
+
+msgid "Include machine name in backup name"
+msgstr "Neem de STB-naam op in de naam van de back-up"
+
+msgid "Info"
+msgstr "Info"
+
+msgid "Install"
+msgstr "Installeer"
+
+msgid "Install Confirmation"
+msgstr "Installatie bevestiging"
+
+msgid "Install IPK's from your tmp folder."
+msgstr "Installeer IPK's in uw tmp map."
+
+msgid "Install extensions."
+msgstr "Installeer extensies"
+
+msgid "Install local extension"
+msgstr "Installeer lokale extensie"
+
+msgid "Installing..."
+msgstr "Installeert...."
+
+msgid "Invert"
+msgstr "Keer om"
+
+msgid "Ipkg"
+msgstr "IPKG"
+
+msgid "It seems you have not setup an extra location, please set it up in the Backup Manager setup menu "
+msgstr "U moet eerst een extra lokatie aanmaken in het menu van de back-up manager "
+
+msgid "Location of where backup should be saved."
+msgstr "Locatie voor uw back-ups."
+
+msgid "Location of where image backup should be saved."
+msgstr "Locatie waar images moeten worden opgeslagen."
+
+msgid "Logs"
+msgstr "Logs"
+
+msgid "MB"
+msgstr "MB"
+
+msgid "MGcamd can't run whilst CCcam is running"
+msgstr "MGcamd en CCcam kunnen niet beide actief zijn"
+
+msgid "Main menu"
+msgstr "Hoofdmenu"
+
+msgid "Manage the backups of your settings."
+msgstr "Beheer de back-ups van uw instellingen."
+
+msgid "Manage your devices mount points."
+msgstr "Beheer hoe uw apparaten gemount zijn."
+
+msgid "Max backups to keep (0==all)"
+msgstr "Max aantal backups (0 = allemaal)"
+
+msgid "Max image backups to keep (0==all)"
+msgstr "Max aantal backups behouden (0==alle)"
+
+msgid "Mount"
+msgstr "Mount"
+
+msgid "Mount Manager"
+msgstr "Mountmanager"
+
+msgid "Mount failed"
+msgstr "Mounten mislukt"
+
+msgid "Mount: "
+msgstr "Mount: "
+
+msgid "Moving to Backup Location..."
+msgstr "Verplaatsen naar back-up locatie"
+
+msgid "NO, do not restore plugins"
+msgstr "NEE, installeer de plugins niet"
+
+msgid "NO, do not restore settings"
+msgstr "Nee, plaats de instellingen niet terug"
+
+msgid "New Backup"
+msgstr "Nieuwe back-up"
+
+msgid "Next Backup: "
+msgstr "Volgende back-up: "
+
+msgid ""
+"No config files found, please setup CCcam first\n"
+"in /etc/CCcam.cfg"
+msgstr ""
+"Geen configuratie bestanden gevonden, maak aub eerst uw CCcam instellingen \n"
+"in /etc/CCcam.cfg"
+
+msgid ""
+"No config files found, please setup Hypercam first\n"
+"in /etc/hypercam.cfg"
+msgstr ""
+"Geen configuratiebestand gevonden; maak eerst de Hypercam instellingen\n"
+"in /etc/hypercam.cfg"
+
+msgid ""
+"No config files found, please setup MGcamd first\n"
+"in /usr/keys"
+msgstr "Geen configuratiebestand gevonden. Maak eerst de instellingen voor MGcamd in /usr/keys"
+
+msgid ""
+"No config files found, please setup Oscam first\n"
+"in /etc/tuxbox/config"
+msgstr ""
+"Geen configuratiebestand gevonden; maak eerst de Oscam instellingen\n"
+"in /etc/tuxbox/config"
+
+msgid "No plugins needed to be installed"
+msgstr "Er hoefden geen plugins geïnstalleerd te worden"
+
+msgid "None"
+msgstr "Geen"
+
+msgid "Now skipping restore process"
+msgstr "Slaat het herstel proces over"
+
+msgid "OK"
+msgstr "OK"
+
+msgid "OK, to perform a restore"
+msgstr "JA, voer een herstelactie uit"
+
+msgid "Please enter a folder that contains some packages."
+msgstr "Kies een folder die plugins bevat."
+
+msgid "Please select device to use as swapfile location"
+msgstr "Selecteer het medium dat u voor de swapfile wilt gebruiken"
+
+msgid "Please select the file to restore ?"
+msgstr "Kies bestanden die teruggeplaatst moeten worden."
+
+msgid "Please wait while plugins restore completes..."
+msgstr "Even wachten tot het installeren van plugins gereed is..."
+
+msgid "Please wait while scanning for devices..."
+msgstr "Wacht, de apparaten worden gescand..."
+
+#, python-format
+msgid "Please wait while scanning your %s %s devices..."
+msgstr "Uw %s %s apparaten worden gescand..."
+
+msgid "Please wait while settings restore completes..."
+msgstr "Even wachten tot het herstellen van de instellingen gereed is..."
+
+msgid "Please wait while starting\n"
+msgstr "Wacht terwijl er gestart wordt\n"
+
+msgid "Please wait while stopping\n"
+msgstr "Wacht terwijl er gestopt wordt\n"
+
+msgid "Please wait while the restore prepares"
+msgstr "Wacht terwijl het herstellen wordt voorbereid."
+
+msgid "Please wait while the system gathers information..."
+msgstr "Wacht terwijl het systeem informatie verzamelt..."
+
+msgid "Please wait."
+msgstr "Even wachten."
+
+msgid "Plugin listing failed - e. g. wrong backup destination or no space left on backup device"
+msgstr "Het maken van een lijst van plugins is mislukt, b.v. omdat er een verkeerde bestemming is gekozen of omdat er niet voldoende ruimte is."
+
+msgid "Preparing extra plugins..."
+msgstr "Bereidt extra plugins voor.."
+
+msgid "Press OK to toggle the selection."
+msgstr "Druk op OK om de selectie om te wisselen.."
+
+msgid "Query before backup starts"
+msgstr "Melding als backup start"
+
+msgid "Query before image backup starts"
+msgstr "Vragen alvorens image back-up start."
+
+msgid "Query before starting backup."
+msgstr "Melding als backup start"
+
+msgid "Query before starting image backup."
+msgstr "Vragen alvorens image back-up te starten."
+
+msgid "Rebooting..."
+msgstr "Bezig met rebooten..."
+
+msgid "Remove Confirmation"
+msgstr "Bevestig verwijderen"
+
+msgid "Removing temp mounts..."
+msgstr "Verwijdert tijdelijke mounts..."
+
+msgid "Repeat how often"
+msgstr "Hoe vaak herhalen"
+
+msgid "Restart"
+msgstr "Herstart"
+
+#, python-format
+msgid "Restart %s %s."
+msgstr "Herstart %s %s."
+
+msgid "Restart Enigma2."
+msgstr "Start Enigma2 opnieuw."
+
+msgid "Restore"
+msgstr "Herstel"
+
+msgid "Restore Confirmation"
+msgstr "Bevestig herstellen"
+
+msgid "Restore Wizard"
+msgstr "Herstelwizard"
+
+msgid "Restoring backup..."
+msgstr "Plaatst back-up terug..."
+
+msgid "Restoring plugins, this can take a long time..."
+msgstr "Bezig plugins te installeren; dit kan lang duren..."
+
+msgid "Restoring plugins..."
+msgstr "Plaatst plugins terug..."
+
+msgid "Run"
+msgstr "Voer uit"
+
+msgid "Run your shell scripts."
+msgstr "Voer uw shell scripts uit."
+
+msgid "Save"
+msgstr "Bewaar"
+
+msgid "Schedule Backups"
+msgstr "Plan back-ups"
+
+msgid "Script Runner"
+msgstr "Script uitvoeren"
+
+msgid "Select"
+msgstr "Selecteer"
+
+msgid "Select a backup to Restore:"
+msgstr "Kies een backup om terug te zetten!"
+
+msgid "Select a package to install:"
+msgstr "Selecteer een pakket om te installeren:"
+
+msgid "Select an image to Download:"
+msgstr "Selecteer een image om te downloaden:"
+
+msgid "Select an image to restore:"
+msgstr "Kies een image om terug te zetten"
+
+msgid "Select extra packages folder"
+msgstr "Kies de folder met extra plugins"
+
+msgid "Select files/folders to backup"
+msgstr "Selecteer bestanden/mappen om te back-uppen"
+
+msgid "Select folder that contains plugins"
+msgstr "Kies de folder met plugins"
+
+msgid "Select the Swap File Size:"
+msgstr "Selecteer de grootte van de swapfile:"
+
+msgid "Select:"
+msgstr "Selecteer:"
+
+msgid "Set the interval to be checked in mins."
+msgstr "Bepaal het controle-interval (in minuten)."
+
+msgid "Set the repeat interval of backup schedule."
+msgstr "Stel het back-upinterval in."
+
+msgid "Set the time of backup to start."
+msgstr "Stel de tijd in waarop een back-up wordt gemaakt."
+
+msgid "Setting Up..."
+msgstr "Bezig met instellen...."
+
+msgid "Setup"
+msgstr "Instellingen"
+
+msgid "Setup Mounts"
+msgstr "Mounts instellingen"
+
+msgid "Show in extensions"
+msgstr "Toon in extensies"
+
+msgid "Size: "
+msgstr "Afmetingen: "
+
+msgid "SoftCam and CI"
+msgstr "SoftCam en CI"
+
+msgid "Softcam Manager"
+msgstr "Softcammanager"
+
+msgid "Softcam Starting..."
+msgstr "Bezig Softcam te starten..."
+
+msgid "Softcam Stopping..."
+msgstr "Bezig Softcam te stoppen..."
+
+msgid "SoftcamCheck"
+msgstr "Softcam controle"
+
+msgid "Sorry but that location does not exist or is not setup, please set it up in the Backup Manager setup menu "
+msgstr "die lokatie bestaat niet of is niet ingesteld; doe dat in het menu van de back-up manager."
+
+msgid "Sorry feeds are down for maintenance, Please try again later."
+msgstr "Vanwege onderhoud zijn de feeds niet actief. Probeer het later opnieuw."
+
+msgid "Sorry the feeds are down for maintenance, Please try using Backup Manager to restore plugins later."
+msgstr "De feeds zijn dood vanwege onderhoud. Probeer later nog eens de plugins te herstellen via de back-up manager."
+
+msgid "Sorry the feeds are down for maintenance, Please try using the Backup Manager to restore plugins later."
+msgstr "De feeds zijn momenteel niet actief. Probeer later de plugins te installeren via de backupmanager."
+
+msgid "Sorry, but the file is not compatible with this image version."
+msgstr "Het bestand is niet verenigbaar met deze versie van de firmware."
+
+msgid "Sorry, but the restore failed."
+msgstr "Het terugplaatsen is mislukt."
+
+msgid "Sorry, no physical devices that supports SWAP attached. Can't create Swapfile on network or fat32 filesystems"
+msgstr "Sorry, geen opslagmedia gevonden die een Swapfile ondersteunen. Kan geen Swapfile op een netwerk of een fat32 filesysteem maken."
+
+msgid "Sorry, not enough free ram found, and no physical devices that supports SWAP attached. Can't create Swapfile on network or fat32 filesystems, unable to make backup"
+msgstr "Sorry, niet genoeg vrij RAM gevonden en geen opslagmedia die een Swapfile ondersteunen. Kan geen Swapfile op een netwerk of een fat32 filesysteem maken: kan geen back-up maken."
+
+msgid "Start"
+msgstr "Start"
+
+msgid "Starting..."
+msgstr "Bezig met starten...."
+
+msgid "Status:"
+msgstr "Status:"
+
+msgid "Stop"
+msgstr "Stop"
+
+msgid "Swap File not found. You have to create the file before to activate."
+msgstr "Er is geen swapfile gevonden. U moet een swapfile maken alvorens u die actief kunt maken."
+
+msgid "Swap Manager"
+msgstr "Swapmanager"
+
+msgid "Swap Place:"
+msgstr "Swaplocatie:"
+
+msgid "Swap Size:"
+msgstr "Swap grootte:"
+
+msgid "TB"
+msgstr "TB"
+
+msgid "Temp Folder"
+msgstr "Tijdelijke folder"
+
+msgid "The backup location does not have enough free space."
+msgstr "De back-up lokatie heeft onvoldoende ruimte."
+
+msgid "The backup location does not have enough free space.\n"
+msgstr "De back-up lokatie heeft onvoldoende ruimte.\n"
+
+#, python-format
+msgid ""
+"The changes need a system restart to take effect.\n"
+"Restart your %s %s now?"
+msgstr ""
+"Het systeem moet herstart worden om deze aanpassing te effectueren.\n"
+"Uw %s %s nu herstarten?"
+
+msgid "The chosen location does not exist, using /media/hdd"
+msgstr "De gekozen locatie bestaat niet, gebruik nu /media/hdd"
+
+msgid "The name of the receiver can be included in the backup filename, but makes the filename lengthy."
+msgstr "De naam van de STB kan worden opgenomen in de naam van het back-up bestand, maar dat kan de naam wel lang maken."
+
+msgid "The wizard is finished now, and will reboot"
+msgstr "De wizard is gereed; uw systeem wordt opnieuw gestart."
+
+msgid "The wizard is finished now."
+msgstr "De wizard is nu gereed."
+
+msgid "This Device is already mounted as HDD."
+msgstr "Dit medium is al gemount als HDD."
+
+msgid "Time of Backup to start"
+msgstr "Tijd waarop de back-up wordt uitgevoerd"
+
+msgid "Type: "
+msgstr "Type: "
+
+msgid "USB: "
+msgstr "USB: "
+
+msgid "Unmount"
+msgstr "Unmount"
+
+msgid "Updating mount locations."
+msgstr "Mounts worden geupdate."
+
+msgid "Use as HDD"
+msgstr "Gebruik als HDD"
+
+msgid "ViX"
+msgstr "ViX"
+
+msgid "ViX Backup Manager"
+msgstr "ViX backupmanager"
+
+msgid "ViX Image Manager"
+msgstr "ViX imagemanager"
+
+msgid "ViX Mount Manager"
+msgstr "ViX mountmanager"
+
+msgid "ViX Script Runner"
+msgstr "ViX xcriptrunner"
+
+msgid "ViX Swap Manager"
+msgstr "ViX swapmanager"
+
+msgid "View Progress"
+msgstr "Bekijk voortgang"
+
+msgid "Wait please while creating swapfile..."
+msgstr "Een ogenblik geduld terwijl de swapfile gemaakt wordt...."
+
+msgid ""
+"Wait please while scanning\n"
+"for softcam's..."
+msgstr ""
+"Een ogenblikje geduld, zoeken \n"
+"naar softcams"
+
+msgid "Wait please while scanning..."
+msgstr "Een ogenblikje geduld, zoeken is bezig..."
+
+msgid "Weekly"
+msgstr "Wekelijks"
+
+msgid ""
+"Welcome to the restore wizard.\n"
+"\n"
+"A backup has been detected.\n"
+"You can use this wizard to restore your settings and any extra plugins that were installed when the backup was created.\n"
+msgstr ""
+"Welkom bij de herstel-wizard.\n"
+"\n"
+"Er is een back-up gevonden.\n"
+"U kunt deze wizard gebruiken om de instellingen en/of de plugins van die back-up terug te plaatsen.\n"
+
+msgid "YES, to restore plugins"
+msgstr "JA, installeer plugins weer"
+
+msgid "YES, to restore settings"
+msgstr "JA, plaats de instellingen weer terug"
+
+msgid "You have no backup to delete."
+msgstr "Er is geen back-up die verwijderd kan worden."
+
+msgid "You have no backups to restore."
+msgstr "Er is geen back-up die hersteld kan worden."
+
+msgid "You have no image to delete."
+msgstr "Er is geen image dat verwijderd kan worden."
+
+msgid "You have no image to download."
+msgstr "U hebt geen image om te downloaden."
+
+msgid "You have no image to restore."
+msgstr "U heeft geen image om terug te plaatsen"
+
+msgid "You have to create a Swap File before to activate the autostart."
+msgstr "U moet een swapfile maken voordat deze actief kan worden."
+
+#, python-format
+msgid ""
+"Your %s %s is about to run a backup of your settings and detect your plugins,\n"
+"Do you want to allow this?"
+msgstr ""
+"Uw %s %s is gereed een settings backup te maken.\n"
+"Wilt u doorgaan?"
+
+#, python-format
+msgid ""
+"Your %s %s is about to run a full image backup, this can take about 6 minutes to complete,\n"
+"do you want to allow this?"
+msgstr ""
+"Uw %s %s is gereed een image backup te maken; dat kan wel 6 minuten duren.\n"
+"Wilt u doorgaan?"
+
+#, python-format
+msgid "Your %s %s is not connected to the internet, Please try using Backup Manager to restore plugins later."
+msgstr "Uw %s %s is niet met internet verbonden. Gebruik de backupmanager later om uw plugins weer te installeren."
+
+#, python-format
+msgid "Your %s %s is not connected to the internet, Please try using the Backup Manager to restore plugins later."
+msgstr "Uw %s %s is niet met het internet verbonden. Probeer later de plugins te installeren via de backupmanager."
+
+#, python-format
+msgid "Your %s %s is not connected to the internet, please check your network settings and try again."
+msgstr "Uw %s %s is niet met internet verbonden. Controleer uw netwerkinstellingen en probeer het opnieuw."
+
+msgid "there is a problem with this device, please reformat and try again."
+msgstr "er is een probleem met dit apparaat; formatteer het en probeer het nogmaals."
+
+msgid "unavailable"
+msgstr "niet beschikbaar"
+
+#~ msgid "A background update check is is progress, please wait for retry."
+#~ msgstr "De feeds worden gecontroleerd; even wachten."
+
+#~ msgid "Allows you to tag your backups to a box. (default is box name/type)"
+#~ msgstr "U kunt labels aan back-ups van een ontvanger hangen (default is box naam/type)."
+
+#~ msgid "Backup Manager Log"
+#~ msgstr "Backupmanager log"
+
+#~ msgid "Backup Manager Setup"
+#~ msgstr "Backupmanager instellingen"
+
+#~ msgid ""
+#~ "Backup in progress,\n"
+#~ "Please for it to finish, before trying again"
+#~ msgstr ""
+#~ "Back-up in uitvoering,\n"
+#~ "Laat dit doorlopen voordat u opnieuw probeert"
+
+#~ msgid "Can't unmount partition, make sure it is not being used for swap or record/timeshift paths"
+#~ msgstr "Kan de partitie niet 'unmounten'; kijk of deze niet wordt gebruikt voor SWAP/Opname/Timeshift/Logs/EPG."
+
+#~ msgid "Can't unmount the partition, make sure it is not being used for swap or record/timeshift paths"
+#~ msgstr "Kan de partitie niet unmounten; kijk of deze niet in gebruik is als opname/timeshift pad."
+
+#~ msgid ""
+#~ "Changes need a system restart to take effect.\n"
+#~ "Restart your %s %s now?"
+#~ msgstr ""
+#~ "U moet het systeem herstarten om de veranderingen door te voeren.\n"
+#~ "Uw %s %s nu herstarten?"
+
+#~ msgid "Create and Manage your swapfiles."
+#~ msgstr "Creëer en beheer uw swapfiles."
+
+#~ msgid "Create and Restore complete images of the system."
+#~ msgstr "Creëer en herstel complete images van het systeem."
+
+#~ msgid "Creating Backup Files..."
+#~ msgstr "Creëert back-upbestanden..."
+
+#~ msgid "Downloading Image..."
+#~ msgstr "Download image..."
+
+#~ msgid "Found none standard softcam, trying to start, this may fail"
+#~ msgstr "Een niet-standaard softcam gevonden; er wordt geprobeerd te herstarten, maar dat kan mislukken"
+
+#~ msgid "Image Manager Setup"
+#~ msgstr "Imagemanager instellingen"
+
+#~ msgid "It seems you have not setup a extra location, please setup in Backup Manager setup menu "
+#~ msgstr "U heeft geen extra locatie ingesteld; U kunt dat doen via het menu van de Backup Manager."
+
+#~ msgid "It seems you have not setup an extra location, please setup in Backup Manager setup menu "
+#~ msgstr "Het lijkt erop dat u geen extra locatie heeft ingesteld; doe dat in het context menu van de back-up manager."
+
+#~ msgid "Manage you devices mountpoints."
+#~ msgstr "Beheer de mountpoints van uw apparaten."
+
+#~ msgid "Manage your backups of your settings."
+#~ msgstr "Beheer de back-ups van uw instellingen."
+
+#~ msgid ""
+#~ "No config files found, please setup MGcamd first\n"
+#~ "in /var/keys"
+#~ msgstr ""
+#~ "Geen configuratiebestand gevonden; maak eerst de MGcamd instellingen\n"
+#~ "in /var/keys"
+
+#~ msgid "No plugins where needed to be installed"
+#~ msgstr "Er hoefden geen plugins te worden geïnstalleerd"
+
+#~ msgid "Please copy the folder"
+#~ msgstr "Kopieer de map"
+
+#~ msgid "Please wait while gathers information..."
+#~ msgstr "De informatie wordt verzameld..."
+
+#~ msgid "Please wait while gathers information... A"
+#~ msgstr "Even wachten terwijl de informatie verzameld wordt..."
+
+#~ msgid "Please wait while gathers information... B"
+#~ msgstr "Even wachten terwijl de informatie verzameld wordt..."
+
+#~ msgid "Please wait while restore prepares"
+#~ msgstr "Wacht terwijl de restore wordt voorbereid"
+
+#~ msgid "Plugin Listing failed - e. g. wrong backup destination or no space left on backup device"
+#~ msgstr "Maken van een lijst met plugins is mislukt - of een verkeerde back-up locatie of onvoldoende vrije ruimte"
+
+#~ msgid "Script Runner Setup"
+#~ msgstr "Scriptrunner instellingen"
+
+#~ msgid "Softcam Manager Log"
+#~ msgstr "Softcammanager log"
+
+#~ msgid "Softcam Manager Setup"
+#~ msgstr "Softcammanager instellingen"
+
+#~ msgid "Softcam Setup"
+#~ msgstr "Softcam instellingen"
+
+#~ msgid "Sorry Image Restore is not supported on the"
+#~ msgstr "Sorry: het terugzetten van een image wordt niet ondersteund door een"
+
+#~ msgid "Sorry Image Restore is not supported on the "
+#~ msgstr "Helaas is het herstellen nit ondersteund op de "
+
+#~ msgid "Sorry but location does exist or not setup, please setup in Backup Manager setup menu "
+#~ msgstr "De locatie bestaat niet; U kunt die instellen via het menu van de backupmanager"
+
+#~ msgid "Sorry but that location does not exist or is not setup, please setup in Backup Manager setup menu "
+#~ msgstr "Die locatie bestaat niet of is niet ingesteld; maak de juiste instelling in het context menu van de back-up manager."
+
+#~ msgid "Sorry feeds are down for maintenance, Please try using Backup Manager to restore plugins later."
+#~ msgstr "Vanwege onderhoud zijn de feeds niet actief. Probeer later opnieuw de plugins te installeren via de backupmanager."
+
+#~ msgid "Sorry you %s %s is not yet compatible."
+#~ msgstr "Sorry uw %s %s is nog niet compatible."
+
+#~ msgid "Sorry, But this machine is not supported yet."
+#~ msgstr "Sorry, maar deze STB wordt nog niet ondersteund."
+
+#~ msgid "The backup location does not have enough freespace."
+#~ msgstr "De back-uplocatie heeft niet voldoende ruimte."
+
+#~ msgid "The backup location does not have enough freespace.\n"
+#~ msgstr "De back-up locatie heeft niet genoeg vrije ruimte.\n"
+
+#~ msgid "Wait please while scanning for devices..."
+#~ msgstr "Even wachten op het scannen van de media...."
+
+#~ msgid "Wait please while scanning your %s %s devices..."
+#~ msgstr "Wacht terwijl uw %s %s medium gescand wordt ..."
+
+#~ msgid ""
+#~ "Welcome to the restore wizard.\n"
+#~ "\n"
+#~ "A backup has been detected.\n"
+#~ "You can use this wizard to restore your setting and any extra plugins that where installed when the backup was created.\n"
+#~ msgstr ""
+#~ "Welkom bij de herstel wizard.\n"
+#~ "\n"
+#~ "Er is een back-up gevonden.\n"
+#~ "U kunt deze wizard gebruiken om uw instellingen terug te plaatsen, evenals de plugins die ten tijde van het maken van de back-up waren geïnstalleerd.\n"
+
+#~ msgid "echo 'Downloading Image.'"
+#~ msgstr "echo 'Download image.'"
+
+#~ msgid "there was a problem with this device, please reformat and try again."
+#~ msgstr "er was een probleem met dit medium; formatteer opnieuw en probeer het weer."
+
+#~ msgid "to a USB stick, place in front USB port of reciver and power on"
+#~ msgstr "naar een USB-stick, plaats die in de aansluiting op de voorkant en schakel uw ontvanger in"
