@@ -61,7 +61,7 @@ def UpgradeMain(session, **kwargs):
 def startSetup(menuid):
 	if menuid != "setup":
 		return []
-	return [(_("OBH"), UpgradeMain, "vix_menu", 1010)]
+	return []
 
 def RestoreWizard(*args, **kwargs):
 	from RestoreWizard import RestoreWizard
@@ -76,7 +76,7 @@ def SoftcamMenu(session, **kwargs):
 
 def SoftcamSetup(menuid):
 	if menuid == "cam":
-		return [(_("Softcam Manager"), SoftcamMenu, "softcamsetup", 1005)]
+		return []
 	return []
 
 def BackupManager(session):
@@ -133,10 +133,7 @@ def filescan(**kwargs):
 
 def Plugins(**kwargs):
 	plist = [PluginDescriptor(where=PluginDescriptor.WHERE_MENU, needsRestart=False, fnc=startSetup),
-			 PluginDescriptor(name=_("ViX"), where=PluginDescriptor.WHERE_EXTENSIONSMENU, fnc=UpgradeMain),
 			 PluginDescriptor(where=PluginDescriptor.WHERE_MENU, fnc=SoftcamSetup)]
-	if config.softcammanager.showinextensions.value:
-		plist.append(PluginDescriptor(name=_("Softcam Manager"), where=PluginDescriptor.WHERE_EXTENSIONSMENU, fnc=SoftcamMenu))
 	if config.scriptrunner.showinextensions.value:
 		plist.append(PluginDescriptor(name=_("Script Runner"), where=PluginDescriptor.WHERE_EXTENSIONSMENU, fnc=ScriptRunnerMenu))
 	plist.append(PluginDescriptor(where=PluginDescriptor.WHERE_AUTOSTART, fnc=SoftcamAutostart))
