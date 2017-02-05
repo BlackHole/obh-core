@@ -5,8 +5,8 @@ from Components.Language import language
 from Tools.Directories import resolveFilename, SCOPE_PLUGINS
 
 
-PluginLanguageDomain = "vix"
-PluginLanguagePath = "SystemPlugins/ViX/locale"
+PluginLanguageDomain = "obh"
+PluginLanguagePath = "SystemPlugins/OBH/locale"
 
 def pluginlanguagedomain():
 	return PluginLanguageDomain
