@@ -8,7 +8,7 @@ from Components.Harddisk import harddiskmanager
 from BackupManager import BackupManagerautostart
 from ImageManager import ImageManagerautostart
 from SwapManager import SwapAutostart
-from SoftcamManager import SoftcamAutostart
+#from SoftcamManager import SoftcamAutostart
 from ScriptRunner import ScriptRunnerAutostart
 from IPKInstaller import IpkgInstaller
 
@@ -67,17 +67,17 @@ def RestoreWizard(*args, **kwargs):
 	from RestoreWizard import RestoreWizard
 	return RestoreWizard(*args, **kwargs)
 
-def SoftcamManager(session):
-	from SoftcamManager import VIXSoftcamManager
-	return VIXSoftcamManager(session)
+#def SoftcamManager(session):
+#	from SoftcamManager import VIXSoftcamManager
+#	return VIXSoftcamManager(session)
 
-def SoftcamMenu(session, **kwargs):
-	session.open(SoftcamManager)
+#def SoftcamMenu(session, **kwargs):
+#	session.open(SoftcamManager)
 
-def SoftcamSetup(menuid):
-	if menuid == "cam":
-		return []
-	return []
+#def SoftcamSetup(menuid):
+#	if menuid == "cam":
+#		return []
+#	return []
 
 def BackupManager(session):
 	from BackupManager import VIXBackupManager
@@ -132,11 +132,11 @@ def filescan(**kwargs):
 
 
 def Plugins(**kwargs):
-	plist = [PluginDescriptor(where=PluginDescriptor.WHERE_MENU, needsRestart=False, fnc=startSetup),
-			 PluginDescriptor(where=PluginDescriptor.WHERE_MENU, fnc=SoftcamSetup)]
+	plist = [PluginDescriptor(where=PluginDescriptor.WHERE_MENU, needsRestart=False, fnc=startSetup)]
+#			 PluginDescriptor(where=PluginDescriptor.WHERE_MENU, fnc=SoftcamSetup)]
 	if config.scriptrunner.showinextensions.value:
 		plist.append(PluginDescriptor(name=_("Script Runner"), where=PluginDescriptor.WHERE_EXTENSIONSMENU, fnc=ScriptRunnerMenu))
-	plist.append(PluginDescriptor(where=PluginDescriptor.WHERE_AUTOSTART, fnc=SoftcamAutostart))
+#	plist.append(PluginDescriptor(where=PluginDescriptor.WHERE_AUTOSTART, fnc=SoftcamAutostart))
 	plist.append(PluginDescriptor(where=PluginDescriptor.WHERE_AUTOSTART, fnc=SwapAutostart))
 	plist.append(PluginDescriptor(where=PluginDescriptor.WHERE_SESSIONSTART, fnc=ImageManagerautostart))
 	plist.append(PluginDescriptor(where=PluginDescriptor.WHERE_SESSIONSTART, fnc=BackupManagerautostart))
