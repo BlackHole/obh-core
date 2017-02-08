@@ -18,7 +18,7 @@ from BackupManager import isRestorableSettings, isRestorablePlugins, isRestorabl
 
 class RestoreWizard(WizardLanguage, Rc):
 	def __init__(self, session):
-		self.xmlfile = resolveFilename(SCOPE_PLUGINS, "SystemPlugins/ViX/restorewizard.xml")
+		self.xmlfile = resolveFilename(SCOPE_PLUGINS, "SystemPlugins/OBH/restorewizard.xml")
 		WizardLanguage.__init__(self, session, showSteps=False, showStepSlider=False)
 		Rc.__init__(self)
 		self.session = session

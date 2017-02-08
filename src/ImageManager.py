@@ -289,7 +289,7 @@ class VIXImageManager(Screen):
 			self['lab1'].setText(_("Device: ") + config.imagemanager.backuplocation.value + "\n" + _("there is a problem with this device, please reformat and try again."))
 
 	def createSetup(self):
-		self.session.openWithCallback(self.setupDone, Setup, 'viximagemanager', 'SystemPlugins/ViX', self.menu_path, PluginLanguageDomain)
+		self.session.openWithCallback(self.setupDone, Setup, 'viximagemanager', 'SystemPlugins/OBH', self.menu_path, PluginLanguageDomain)
 
 	def doDownload(self):
 		self.session.openWithCallback(self.populate_List, ImageManagerDownload, self.menu_path, self.BackupDirectory)
@@ -369,7 +369,7 @@ class VIXImageManager(Screen):
 			self.showJobView(job)
 
 	def doSettingsBackup(self):
-		from Plugins.SystemPlugins.ViX.BackupManager import BackupFiles
+		from Plugins.SystemPlugins.OBH.BackupManager import BackupFiles
 		self.BackupFiles = BackupFiles(self.session, False, True)
 		Components.Task.job_manager.AddJob(self.BackupFiles.createBackupJob())
 		Components.Task.job_manager.in_background = False
