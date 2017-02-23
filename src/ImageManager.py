@@ -925,8 +925,8 @@ class ImageBackup(Screen):
 				line = "rename this file to 'force' to force an update without confirmation"
 				fileout.write(line)
 				fileout.close()
-			if path.exists('/usr/lib/enigma2/python/Plugins/SystemPlugins/ViX/burn.bat'):
-				copy('/usr/lib/enigma2/python/Plugins/SystemPlugins/ViX/burn.bat', self.MAINDESTROOT + '/burn.bat')
+			if path.exists('/usr/lib/enigma2/python/Plugins/SystemPlugins/OBH/burn.bat'):
+				copy('/usr/lib/enigma2/python/Plugins/SystemPlugins/OBH/burn.bat', self.MAINDESTROOT + '/burn.bat')
 		print '[ImageManager] Stage4: Removing Swap.'
 		if path.exists(self.swapdevice + config.imagemanager.folderprefix.value + '-' + getImageType() + "-swapfile_backup"):
 			system('swapoff ' + self.swapdevice + config.imagemanager.folderprefix.value + '-' + getImageType() + "-swapfile_backup")
@@ -1139,10 +1139,10 @@ class ImageManagerDownload(Screen):
 			try:
 				self.boxtype = supportedMachines[getMachineMake()]
 			except:
-				print "[ImageManager][populate_List] the %s is not currently supported by OpenViX." % getMachineMake()
+				print "[ImageManager][populate_List] the %s is not currently supported by OpenBH." % getMachineMake()
 				self.boxtype = 'UNKNOWN'
 
-			url = 'http://www.openvix.co.uk/openvix-builds/'+self.boxtype+'/'
+			url = 'http://www.vuplus-community.net/openbh-builds/'+self.boxtype+'/'
 			conn = urllib2.urlopen(url)
 			html = conn.read()
 
@@ -1179,7 +1179,7 @@ class ImageManagerDownload(Screen):
 	def doDownload(self, answer):
 		if answer is True:
 			selectedimage = self['list'].getCurrent()
-			fileurl = 'http://www.openvix.co.uk/openvix-builds/%s/%s' % (self.boxtype, selectedimage)
+			fileurl = 'http://www.vuplus-community.net/openbh-builds/%s/%s' % (self.boxtype, selectedimage)
 			fileloc = self.BackupDirectory + selectedimage
 			Tools.CopyFiles.downloadFile(fileurl, fileloc, selectedimage.replace('_usb',''))
 			for job in Components.Task.job_manager.getPendingJobs():

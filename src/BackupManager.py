@@ -85,7 +85,7 @@ def isRestorablePlugins(imageversion):
 	
 def isRestorableKernel(kernelversion):
 	# This check should no longer be necessary since auto-installed packages are no longer listed in the plugins backup.
-	# For more information please consult commit https://github.com/OpenViX/vix-core/commit/53a95067677651a3f2579a1b0d1f70172ccc493b
+	# For more information please consult commit https://github.com/BlackHole/obh-core/commit/53a95067677651a3f2579a1b0d1f70172ccc493b
 	return True
 	#return kernelversion == about.getKernelVersionString()
 
@@ -1251,7 +1251,7 @@ class BackupFiles(Screen):
 				for line in opkg_status_split:
 					if line.startswith('Package'):
 						parts = line.strip().split()
-						if len(parts) > 1 and parts[1] not in ('opkg', 'openvix-base'):
+						if len(parts) > 1 and parts[1] not in ('opkg', 'openbh-base'):
 							plugin = parts[1]
 							continue
 					if plugin and line.startswith('Status') and 'user installed' in line:

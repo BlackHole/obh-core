@@ -41,7 +41,7 @@ def checkConfigBackup():
 		else:
 			return None
 	except IOError, e:
-		print "[ViX] unable to use device (%s)..." % str(e)
+		print "[OBH] unable to use device (%s)..." % str(e)
 		return None
 
 
@@ -56,7 +56,7 @@ def VIXMenu(session):
 	return ui.VIXMenu(session)
 
 def UpgradeMain(session, **kwargs):
-	session.open(VIXMenu)
+	session.open(OBHMenu)
 
 def startSetup(menuid):
 	if menuid != "setup":
