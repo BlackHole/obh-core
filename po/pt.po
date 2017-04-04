@@ -1,770 +1,850 @@
-# Portuguese translations for plugins package.
-# Copyright (C) 2011 THE plugins'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the plugins package.
-# Automatically generated, 2011.
+# Open BlackHole 1.0 Core Portuguese translation
+# Copyright (C) 2017 THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR BlackHole team, 2017.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: enigma2-vix-core\n"
+"Project-Id-Version: enigma2-obh-core\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-10-19 21:00+0200\n"
-"PO-Revision-Date: 2013-10-20 17:17+0100\n"
-"Last-Translator: Andy Blackburn <andyblac@o2.co.uk>\n"
-"Language-Team: none\n"
-"Language: pt\n"
+"POT-Creation-Date: 2017-04-03 11:16+0100\n"
+"PO-Revision-Date: 2017-04-04 10:45+0100\n"
+"Language-Team: BlackHole team\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 2.0\n"
+"Last-Translator: Ev0\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Language: pt_PT\n"
+"X-Poedit-SourceCharset: UTF-8\n"
 
 msgid "%a %e %b  %-H:%M"
-msgstr ""
-
-msgid "128 Mb"
-msgstr ""
+msgstr "%a %e %b  %-H:%M"
 
 msgid "16 Mb"
-msgstr ""
-
-msgid "256 Mb"
-msgstr ""
+msgstr "16 Mb"
 
 msgid "30 Days"
-msgstr ""
+msgstr "30 Dias"
 
 msgid "32 Mb"
-msgstr ""
+msgstr "32 Mb"
 
 msgid "64 Mb"
-msgstr ""
+msgstr "64 Mb"
 
 msgid "8 Mb"
-msgstr ""
+msgstr "8 Mb"
 
 msgid "96 Mb"
-msgstr ""
+msgstr "96 Mb"
 
-msgid "A background update check is is progress, please wait for retry."
+msgid "A background update check is in progress, please wait for retry."
 msgstr ""
-
-msgid "A backup has been detected."
-msgstr ""
+"Verificação de atualização em segundo plano em execução, por favor aguarde."
 
 msgid "Activate"
-msgstr ""
+msgstr "Ativar"
 
 msgid "Active"
-msgstr ""
+msgstr "Ativo"
 
 msgid "Active:"
-msgstr ""
+msgstr "Ativo:"
 
-msgid "Allows the softcam manager to be launched from extensions."
-msgstr ""
-
-msgid "Allows the softcam to be checked if it stopped working, and restarted automatically if needed."
-msgstr ""
-
-msgid "Allows you have the window close automatically."
-msgstr ""
-
-msgid "Allows you schedule your backups."
-msgstr ""
-
-msgid "Allows you schedule your image backups."
-msgstr ""
-
-msgid "Allows you to tag your backups to a box. (default is box name/type)"
-msgstr ""
-
-msgid "Allows you to tag your image backup to a box. (default is box name/type)"
-msgstr ""
+msgid "Are you ready to create a backup ?"
+msgstr "Está preparado para criar um Backup?"
 
 msgid "Are you ready to create a backup image ?"
-msgstr ""
+msgstr "Está preparado para criar um Backup da imagem?"
 
 msgid "Are you ready to install ?"
-msgstr ""
+msgstr "Está preparado para instalar?"
 
 msgid ""
 "Are you sure you want to delete this backup:\n"
 " "
 msgstr ""
+"Tem certeza que deseja excluir este Backup:\n"
+" "
 
 msgid ""
 "Are you sure you want to download this image:\n"
 " "
 msgstr ""
+"Deseja fazer a descarga desta imagem:\n"
+" "
 
 msgid ""
 "Are you sure you want to restore this backup:\n"
 " "
 msgstr ""
+"Tem a certeza que prentende restaurar este Backup:\n"
+" "
 
 msgid ""
 "Are you sure you want to restore this image:\n"
 " "
 msgstr ""
+"Tem certeza de que deseja restaurar esta imagem:\n"
+" "
 
 msgid "Autostart"
-msgstr ""
+msgstr "Início automático"
 
 msgid "Backing up files..."
-msgstr ""
+msgstr "A executar Backup dos ficheiros..."
 
 msgid "Backup Complete..."
-msgstr ""
+msgstr "Backup completo..."
 
 msgid "Backup Confirmation"
-msgstr ""
+msgstr "Confirmação de Backup"
 
 msgid "Backup Created"
-msgstr ""
-
-msgid "Backup Location"
-msgstr ""
+msgstr "Backup Criado"
 
 msgid "Backup Manager"
-msgstr ""
+msgstr "Gestor de Backup"
 
 msgid "Backup Manager Log"
-msgstr ""
+msgstr "Gestor de Logs de Backups"
 
-msgid "Backup Manager Setup"
+msgid ""
+"Backup failed - e. g. wrong backup destination or no space left on backup "
+"device"
 msgstr ""
-
-msgid "Backup failed - e. g. wrong backup destination or no space left on backup device"
-msgstr ""
+"Falha na cópia de segurança - por exemplo, destino de cópia de segurança "
+"incorrecto ou sem espaço disponível no dispositivo de cópia de segurança"
 
 msgid ""
 "Backup in progress,\n"
-"Please for it to finish, before trying again"
+"Please wait for it to finish, before trying again"
 msgstr ""
-
-msgid "Backup prefix"
-msgstr ""
+"Backup em andamento, Por favor, espere que termine, antes de tentar novamente"
 
 msgid "CCcam can't run whilst MGcamd is running"
-msgstr ""
+msgstr "CCcam não pode ser executado enquanto MGcamd está em execução"
 
-msgid "Can't unmount partition, make sure it is not being used for swap or record/timeshift paths"
+msgid ""
+"Can't unmount partition, make sure it is not being used for swap or record/"
+"timeshift paths"
 msgstr ""
+"Não pode desmontar a partição, certifique-se que não está a ser usada para "
+"swap ou caminhos de registro/timeshift"
 
 msgid "Cancel"
-msgstr ""
+msgstr "Cancelar"
 
 msgid "Change Location"
-msgstr ""
+msgstr "Mudar Localização"
 
 #, python-format
 msgid ""
 "Changes need a system restart to take effect.\n"
 "Restart your %s %s now?"
 msgstr ""
+"As modificações necessitam de um reinício para serem aplicadas.\n"
+"Reiniciar a sua %s %s agora?"
 
 msgid "Checking Free RAM.."
-msgstr ""
+msgstr "Verificação de RAM livre..."
 
 msgid "Checking softcams..."
-msgstr ""
+msgstr "A verificar softcams..."
 
 msgid "Choose Files"
-msgstr ""
+msgstr "Escolher Ficheiros"
 
 msgid "Choose local ipk's folder"
-msgstr ""
+msgstr "Escolher a pasta local de Ipk's"
 
 msgid "Choose where to mount your devices to:"
-msgstr ""
+msgstr "Escolha onde montar os seus dispositivos:"
 
 msgid "Close"
-msgstr ""
-
-msgid "Close window on success"
-msgstr ""
+msgstr "Fechar"
 
 msgid "Comparing against backup..."
-msgstr ""
+msgstr "A comparar com o Backup..."
 
 msgid "Create"
-msgstr ""
+msgstr "Criar"
 
 msgid "Create and Manage your swapfiles."
-msgstr ""
+msgstr "Criar e Gerir os ficheiros de Swap."
 
 msgid "Create and Restore complete images of the system."
-msgstr ""
+msgstr "Criar e restaurar imagens completas do sistema."
 
 msgid "Creating Backup Files..."
-msgstr ""
+msgstr "A criar Ficheiros de Backup..."
 
 msgid "Creating Swap.."
-msgstr ""
+msgstr "A criar Swap..."
 
 msgid "Creating list of installed plugins..."
-msgstr ""
-
-msgid "Creating zip..."
-msgstr ""
+msgstr "A criar lista dos plugins instalados..."
 
 msgid "Current Status:"
-msgstr ""
+msgstr "Estado atual:"
 
 msgid "Daily"
-msgstr ""
+msgstr "Diariamente"
 
 msgid "Deactivate"
-msgstr ""
+msgstr "Desativar"
 
 msgid "Delete"
-msgstr ""
+msgstr "Apagar"
 
 msgid "Deselect"
-msgstr ""
+msgstr "Desmarcar"
 
 msgid "Device: "
-msgstr ""
+msgstr "Dispositivo: "
 
 msgid "Device: None available"
-msgstr ""
+msgstr "Dispositivo: Não disponível"
 
 msgid "Disable Startup"
-msgstr ""
+msgstr "Desativar Arranque"
 
 msgid "Do you want to restore your Enigma2 plugins ?"
-msgstr ""
+msgstr "Deseja fazer um restauro dos Plugins Enigma2 ?"
 
 msgid "Do you want to restore your Enigma2 settings ?"
-msgstr ""
+msgstr "Deseja fazer um restauro das suas definições?"
 
 msgid "Download"
-msgstr ""
+msgstr "Descarregar"
 
 msgid "Download Confirmation"
-msgstr ""
+msgstr "Confirmação de Descarga"
 
 msgid "Downloading Image..."
-msgstr ""
+msgstr "A descarregar a Imagem..."
 
 msgid "Downloads"
-msgstr ""
+msgstr "Descargas"
 
 msgid "Enable Startup"
-msgstr ""
+msgstr "Ativar arranque"
 
 msgid "Enable Swap at startup"
-msgstr ""
-
-msgid "Enable frozen check"
-msgstr ""
+msgstr "Ativar Swap no arranque"
 
 msgid "Enough Retries, delaying till next schedule."
-msgstr ""
+msgstr "Tentativas suficientes, adiar até ao próximo agendamento."
 
 msgid "Exit the restore wizard"
-msgstr ""
+msgstr "Sair do assistente de restauro"
 
 msgid "Extra IPK's"
-msgstr ""
+msgstr "IPK's Extra"
 
 msgid "Found none standard softcam, trying to start, this may fail"
-msgstr ""
+msgstr "Não encontrada softcam padrão, a tentar iniciar, isto pode falhar"
 
 msgid "Free space:"
-msgstr ""
-
-msgid "Frozen check interval"
-msgstr ""
+msgstr "Espaço livre:"
 
 msgid "GB"
-msgstr ""
+msgstr "GB"
 
 msgid "HARD DISK: "
-msgstr ""
+msgstr "DISCO RÍGIDO: "
 
 msgid "IPK Installer"
-msgstr ""
+msgstr "Instalador IPK"
 
 msgid "Image Manager"
-msgstr ""
-
-msgid "Image Manager Setup"
-msgstr ""
+msgstr "Gestor de Imagens"
 
 msgid "Inactive"
-msgstr ""
+msgstr "Inativo"
 
 msgid "Info"
-msgstr ""
+msgstr "Informação"
 
 msgid "Install"
-msgstr ""
+msgstr "Instalar"
 
 msgid "Install Confirmation"
-msgstr ""
+msgstr "Confirmação de Instalação"
 
 msgid "Install IPK's from your tmp folder."
-msgstr ""
+msgstr "Instalar IPK´s da pasta tmp."
 
 msgid "Install extensions."
-msgstr ""
+msgstr "Instalar extensões."
 
 msgid "Install local extension"
-msgstr ""
+msgstr "Instalar extensão local"
 
 msgid "Installing..."
-msgstr ""
+msgstr "A instalar..."
 
 msgid "Invert"
-msgstr ""
+msgstr "Inverter"
 
 msgid "Ipkg"
-msgstr ""
+msgstr "Ipkg"
 
-msgid "It seems you have not setup a extra location, please setup in Backup Manager setup menu "
+msgid ""
+"It seems you have not setup a extra location, please setup in Backup Manager "
+"setup menu "
 msgstr ""
-
-msgid "Location of where backup should be saved."
-msgstr ""
-
-msgid "Location of where image backup should be saved."
-msgstr ""
+"Parece que não tem configurado um local extra, por favor, configure-o no "
+"menu do Gestor de Backups "
 
 msgid "MB"
-msgstr ""
+msgstr "MB"
 
 msgid "MGcamd can't run whilst CCcam is running"
-msgstr ""
+msgstr "MGcamd não pode ser executado enquanto está a executar a CCcam"
 
 msgid "Manage you devices mountpoints."
-msgstr ""
+msgstr "Gerir a montagem dos seus dispositivos."
 
 msgid "Manage your backups of your settings."
-msgstr ""
+msgstr "Gerir os backups das suas definições."
 
 msgid "Mount"
-msgstr ""
+msgstr "Montar"
 
 msgid "Mount Manager"
-msgstr ""
+msgstr "Gestor de Montagens"
 
 msgid "Mount failed"
-msgstr ""
+msgstr "Montagem fallhou"
 
 msgid "Mount: "
-msgstr ""
+msgstr "Montagem: "
 
 msgid "Moving to Backup Location..."
-msgstr ""
+msgstr "A mover para o Local de Backups..."
 
 msgid "NO, do not restore plugins"
-msgstr ""
+msgstr "NÃO, não restaurar plugins"
 
 msgid "NO, do not restore settings"
-msgstr ""
+msgstr "NÃO, não restaurar definições"
 
 msgid "New Backup"
-msgstr ""
+msgstr "Novo Backup"
 
 msgid "Next Backup: "
-msgstr ""
+msgstr "Backup Seguinte: "
 
 msgid ""
 "No config files found, please setup CCcam first\n"
 "in /etc/CCcam.cfg"
 msgstr ""
+"Nenhum arquivo de config encontrado, por favor configurar CCcam primeiro em /"
+"etc/CCcam.cfg"
 
 msgid ""
 "No config files found, please setup Hypercam first\n"
 "in /etc/hypercam.cfg"
 msgstr ""
+"No config files found, please setup Hypercam first\n"
+"in /etc/hypercam.cfg"
 
 msgid ""
 "No config files found, please setup MGcamd first\n"
 "in /var/keys"
 msgstr ""
+"No config files found, please setup MGcamd first\n"
+"in /var/keys"
 
 msgid ""
 "No config files found, please setup Oscam first\n"
 "in /etc/tuxbox/config"
 msgstr ""
-
-msgid "No plugins where needed to be installed"
-msgstr ""
+"No config files found, please setup Oscam first\n"
+"in /etc/tuxbox/config"
 
 msgid "None"
-msgstr ""
+msgstr "Nenhum"
 
 msgid "Now skipping restore process"
-msgstr ""
+msgstr "Saltar o processo de restauro"
 
 msgid "OK"
-msgstr ""
+msgstr "OK"
 
 msgid "OK, to perform a restore"
-msgstr ""
+msgstr "OK, para executar o restauro"
 
 msgid "Please copy the folder"
-msgstr ""
+msgstr "Por favor copie a pasta"
 
 msgid "Please enter a folder that contains some packages."
-msgstr ""
+msgstr "Por favor introduza uma pasta que contém alguns pacotes."
 
 msgid "Please select device to use as swapfile location"
-msgstr ""
-
-msgid "Please select the file to restore ?"
-msgstr ""
+msgstr "Por favor, selecione o dispositivo para usar como swapfile"
 
 msgid "Please wait while gathers information..."
-msgstr ""
+msgstr "Por favor aguarde enquanto a informação é recolhida..."
 
 msgid "Please wait while plugins restore completes..."
-msgstr ""
-
-msgid "Please wait while restore prepares"
-msgstr ""
+msgstr "Por favor aguarde até ao restauro completo dos plugins..."
 
 msgid "Please wait while settings restore completes..."
-msgstr ""
+msgstr "Por favor aguarde até ao restauro completo das definições..."
 
 msgid "Please wait while starting\n"
-msgstr ""
+msgstr "Por favor aguarde, enquanto inicia\n"
 
 msgid "Please wait while stopping\n"
-msgstr ""
+msgstr "Por favor aguarde, enquanto termina\n"
 
 msgid "Please wait."
-msgstr ""
+msgstr "Por favor, aguarde."
 
-msgid "Plugin Listing failed - e. g. wrong backup destination or no space left on backup device"
+msgid ""
+"Plugin Listing failed - e. g. wrong backup destination or no space left on "
+"backup device"
 msgstr ""
+"Listagem de plugins falhou - i.e. destino do backup errado ou sem espaço no "
+"dispositivo"
 
 msgid "Preparing extra plugins..."
-msgstr ""
+msgstr "A preparar plugins extra..."
 
 msgid "Press OK to toggle the selection."
-msgstr ""
+msgstr "Prima OK para mudar de selecção."
 
 msgid "Rebooting..."
-msgstr ""
+msgstr "A reiniciar..."
+
+msgid "Refresh List"
+msgstr "Refrescar Lista"
 
 msgid "Remove Confirmation"
-msgstr ""
+msgstr "Remover Confirmação"
 
 msgid "Removing temp mounts..."
-msgstr ""
-
-msgid "Repeat how often"
-msgstr ""
+msgstr "A remover montagens temporárias..."
 
 msgid "Restart"
-msgstr ""
+msgstr "Reiniciar"
 
 #, python-format
 msgid "Restart %s %s."
-msgstr ""
+msgstr "Reiniciar %s  %s."
 
 msgid "Restart Enigma2."
-msgstr ""
+msgstr "Reiniciar Enigma2."
 
 msgid "Restore"
-msgstr ""
+msgstr "Restaurar"
 
 msgid "Restore Confirmation"
-msgstr ""
+msgstr "Confirmação de restauro"
 
 msgid "Restore Wizard"
-msgstr ""
+msgstr "Assistente de Restauro"
 
 msgid "Restoring backup..."
-msgstr ""
+msgstr "A restaurar o backup..."
 
 msgid "Restoring plugins, this can take a long time..."
-msgstr ""
+msgstr "A restaurar plugins, isto pode demorar algum tempo..."
 
 msgid "Restoring plugins..."
-msgstr ""
+msgstr "Restauração de plugins..."
 
 msgid "Run"
-msgstr ""
+msgstr "Execução"
 
 msgid "Run your shell scripts."
-msgstr ""
+msgstr "Executar scripts Shell."
 
 msgid "Save"
-msgstr ""
-
-msgid "Schedule Backups"
-msgstr ""
+msgstr "Salvar"
 
 msgid "Script Runner"
-msgstr ""
-
-msgid "Script Runner Setup"
-msgstr ""
+msgstr "Executor de scripts"
 
 msgid "Select"
-msgstr ""
+msgstr "Selecionar"
 
 msgid "Select a backup to Restore:"
-msgstr ""
+msgstr "Selecionar backup para Restauro:"
 
 msgid "Select a package to install:"
-msgstr ""
+msgstr "Selecionar o pacote a instalar:"
 
 msgid "Select an image to Download:"
-msgstr ""
+msgstr "Selecionar a imagem para Descarga:"
 
 msgid "Select an image to restore:"
-msgstr ""
+msgstr "Selecionar a imagem para Restauro:"
 
 msgid "Select extra packages folder"
-msgstr ""
+msgstr "Selecionar pasta de pacotes extra"
 
 msgid "Select files/folders to backup"
-msgstr ""
+msgstr "Selecione Arquivos/pastas para backup"
 
 msgid "Select folder that contains plugins"
-msgstr ""
+msgstr "Selecionar pasta que contém plugins"
 
 msgid "Select the Swap File Size:"
-msgstr ""
+msgstr "Selecionar o tamanho Ficheiro Swap:"
 
 msgid "Select:"
-msgstr ""
-
-msgid "Set the interval to be checked in mins."
-msgstr ""
-
-msgid "Set the repeat interval of backup schedule."
-msgstr ""
-
-msgid "Set the time of backup to start."
-msgstr ""
+msgstr "Selecionar:"
 
 msgid "Setting Up..."
-msgstr ""
+msgstr "A Definir..."
 
 msgid "Setup Mounts"
-msgstr ""
-
-msgid "Show in extensions"
-msgstr ""
+msgstr "Configurar Montagens"
 
 msgid "Size: "
-msgstr ""
+msgstr "Tamanho: "
 
 msgid "Softcam Manager"
-msgstr ""
+msgstr "Gestor de Softcam"
 
 msgid "Softcam Manager Log"
-msgstr ""
-
-msgid "Softcam Manager Setup"
-msgstr ""
+msgstr "Log do Gestor de Softcam"
 
 msgid "Softcam Setup"
-msgstr ""
+msgstr "Configuração de Softcam"
 
 msgid "Softcam Starting..."
-msgstr ""
+msgstr "A Iniciar Softcam..."
 
 msgid "Softcam Stopping..."
-msgstr ""
+msgstr "A Parar Softcam..."
 
 msgid "SoftcamCheck"
-msgstr ""
+msgstr "Verificação de Softcam"
 
 msgid "Sorry Image Restore is not supported on the"
-msgstr ""
+msgstr "Desculpe, O Restauro da imagem não é suportado em"
 
-msgid "Sorry but location does exist or not setup, please setup in Backup Manager setup menu "
+msgid ""
+"Sorry but location does exist or not setup, please setup in Backup Manager "
+"setup menu "
 msgstr ""
+"Desculpe, localização existente ou não configurada, por favor, configurar no "
+"menu de configuração do Gestor de Backups "
 
 msgid "Sorry feeds are down for maintenance, Please try again later."
-msgstr ""
+msgstr "Desculpe, os Feeds estão em manutenção, por favor tente mais tarde."
 
-msgid "Sorry feeds are down for maintenance, Please try using Backup Manager to restore plugins later."
+msgid ""
+"Sorry feeds are down for maintenance, Please try using Backup Manager to "
+"restore plugins later."
 msgstr ""
+"Desculpe, os Feeds estão em manutenção, por favor tente  usar o Gestor de "
+"Backups para restaurar mais tarde os plugins."
+
+msgid "Sorry the image "
+msgstr "Desculpe a Imagem "
 
 #, python-format
 msgid "Sorry you %s %s is not yet compatible."
-msgstr ""
+msgstr "Desculpe a sua %s %s ainda não é compatível."
 
 msgid "Sorry, but the restore failed."
-msgstr ""
+msgstr "Desculpe, mas o Restauro falhou."
 
-msgid "Sorry, no physical devices that supports SWAP attached. Can't create Swapfile on network or fat32 filesystems"
+msgid ""
+"Sorry, no physical devices that supports SWAP attached. Can't create "
+"Swapfile on network or fat32 filesystems"
 msgstr ""
+"Desculpe, não há dispositivos que suportam Swap. Não é possível criar o "
+"ficheiro SWAP em sistemas de arquivos de rede ou fat32"
 
-msgid "Sorry, not enough free ram found, and no physical devices that supports SWAP attached. Can't create Swapfile on network or fat32 filesystems, unable to make backup"
+msgid ""
+"Sorry, not enough free ram found, and no physical devices that supports SWAP "
+"attached. Can't create Swapfile on network or fat32 filesystems, unable to "
+"make backup"
 msgstr ""
+"Desculpe, não há memória RAM suficiente, e sem dispositivos físicos que "
+"suportam ficheiros SWAP. Não é possível criar o ficheiro SWAP em rede ou "
+"fat32 e, não é possível efetuar o backup"
 
 msgid "Start"
-msgstr ""
+msgstr "Iniciar"
 
 msgid "Starting..."
-msgstr ""
+msgstr "A iniciar..."
 
 msgid "Status:"
-msgstr ""
+msgstr "Estado:"
 
 msgid "Stop"
-msgstr ""
+msgstr "Parar"
 
 msgid "Swap File not found. You have to create the file before to activate."
 msgstr ""
+"Ficheiro de Swap não encontrado. Tem de criar o ficheiro, antes de ativar."
 
 msgid "Swap Manager"
-msgstr ""
+msgstr "Gestor de  Swap"
 
 msgid "Swap Place:"
-msgstr ""
+msgstr "Local Swap:"
 
 msgid "Swap Size:"
-msgstr ""
+msgstr "Tamanho Swap:"
 
 msgid "TB"
-msgstr ""
+msgstr "TB"
 
 msgid "Temp Folder"
-msgstr ""
+msgstr "Pasta temporária"
 
 msgid "The backup location does not have enough freespace."
-msgstr ""
+msgstr "O local de backup não tem espaço livre suficiente."
 
 msgid "The chosen location does not exist, using /media/hdd"
-msgstr ""
-
-msgid "The wizard is finished now, and will reboot"
-msgstr ""
-
-msgid "The wizard is finished now."
-msgstr ""
+msgstr "O local escolhido não existe, a usar /media/hdd"
 
 msgid "This Device is already mounted as HDD."
-msgstr ""
-
-msgid "Time of Backup to start"
-msgstr ""
+msgstr "Este dispositivo já está montado como HDD."
 
 msgid "Type: "
-msgstr ""
+msgstr "Tipo: "
 
 msgid "USB: "
-msgstr ""
+msgstr "USB: "
 
 msgid "Unmount"
-msgstr ""
+msgstr "Desmontar"
 
 msgid "Updating mount locations."
-msgstr ""
+msgstr "A Atualizar os locais de montagem."
 
 msgid "Use as HDD"
-msgstr ""
+msgstr "Usar como HDD"
 
 msgid "ViX"
-msgstr ""
+msgstr "ViX"
 
 msgid "ViX Backup Manager"
-msgstr ""
+msgstr "Gestor de Backup ViX"
 
 msgid "ViX Image Manager"
-msgstr ""
+msgstr "Gestor de imagem de ViX"
 
 msgid "ViX Mount Manager"
-msgstr ""
+msgstr "Gestor de montagem ViX"
 
 msgid "ViX Script Runner"
-msgstr ""
+msgstr "Executor de scripts ViX"
 
 msgid "ViX Swap Manager"
-msgstr ""
+msgstr "Gestor de Swap ViX"
 
 msgid "View Progress"
-msgstr ""
+msgstr "Ver Progresso"
 
 msgid "Wait please while creating swapfile..."
-msgstr ""
+msgstr "Por favor, aguarde enquanto o ficheiro Swap é criado..."
 
 msgid ""
 "Wait please while scanning\n"
 "for softcam's..."
 msgstr ""
+"Por favor aguarde enquanto se procura\n"
+"por softcam´s..."
 
 msgid "Wait please while scanning for devices..."
-msgstr ""
+msgstr "Por favor aguarde enquanto a procura está em progresso..."
 
 #, python-format
 msgid "Wait please while scanning your %s %s devices..."
 msgstr ""
+"Espere por favor durante a verificação de seus dispositivos de %s %s..."
 
 msgid "Wait please while scanning..."
-msgstr ""
+msgstr "Por favor, aguarde enquanto procura..."
 
 msgid "Weekly"
+msgstr "Semanalmente"
+
+msgid "YES, to restore plugins"
+msgstr "Sim, para restaurar plugins"
+
+msgid "YES, to restore settings"
+msgstr "Sim, para restaurar as definições"
+
+msgid "You have no backup to delete."
+msgstr "Não tem backups para apagar."
+
+msgid "You have no backups to restore."
+msgstr "Não tem algum backup para restaurar."
+
+msgid "You have no image to delete."
+msgstr "Não tem imagens para apagar."
+
+msgid "You have no image to download."
+msgstr "Não tem imagens para descarregar."
+
+msgid "You have no image to restore."
+msgstr "Não tem imagens para restaurar."
+
+msgid "You have to create a Swap File before to activate the autostart."
+msgstr "Tem de criar um ficheiro Swap, antes de ativar o Início Automático."
+
+#, python-format
+msgid ""
+"Your %s %s is about to run a backup of your settings and detect your "
+"plugins,\n"
+"Do you want to allow this?"
 msgstr ""
+"A sua %s %s está em vias de executar um backup das suas definições e de "
+"detetar os seus plugins,\n"
+"Quer permitir isto?"
+
+#, python-format
+msgid ""
+"Your %s %s is about to run a full image backup, this can take about 6 "
+"minutes to complete,\n"
+"do you want to allow this?"
+msgstr ""
+"A sua %s %s está prestes a executar um backup de imagem completo, isto pode "
+"levar cerca de 6 minutos para completar,\n"
+"Quer permitir isto?"
+
+#, python-format
+msgid ""
+"Your %s %s is not connected to the internet, Please try using Backup Manager "
+"to restore plugins later."
+msgstr ""
+"A sua %s %s não está conetada à internet, por favor, tente usar o Gestor de "
+"Backup para restaurar os plugins mais tarde."
+
+#, python-format
+msgid ""
+"Your %s %s is not connected to the internet, please check your network "
+"settings and try again."
+msgstr ""
+"A sua %s %s não está conetada à internet, por favor verifique as definições "
+"de rede e tente novamente."
+
+msgid "echo 'Downloading Image.'"
+msgstr "echo 'A Descarregar imagem.'"
+
+msgid "echo 'Expanding Image.'"
+msgstr "echo 'A Expandir imagem.'"
+
+msgid "there was a problem with this device, please reformat and try again."
+msgstr ""
+"há um problema com este dispositivo, por favor reformate-o e tente novamente."
+
+msgid "to a USB stick, place in front USB port of reciver and power on"
+msgstr "para unidade USB, introduza na porta frontal do recetor e ligue-o"
+
+msgid "unavailable"
+msgstr "indisponível"
+
+msgid "A backup has been detected."
+msgstr "Foi detectado um backup."
+
+msgid "No plugins were needed to be installed"
+msgstr "Não existem plugins necessários a serem instalados"
+
+msgid "Please select the file to restore ?"
+msgstr "Por favor, selecione o arquivo para restaurar ?"
+
+msgid "The wizard is finished now, and will reboot"
+msgstr "O assitente terminou, e a STB será reiniciada"
+
+msgid "The wizard is finished now."
+msgstr "O assitente terminou."
 
 msgid ""
 "Welcome to the restore wizard.\n"
 "\n"
 "A backup has been detected.\n"
-"You can use this wizard to restore your setting and any extra plugins that where installed when the backup was created.\n"
+"You can use this wizard to restore your setting and any extra plugins that "
+"were installed when the backup was created.\n"
 msgstr ""
+"Bem-vindo ao assistente de restauro.\n"
+"\n"
+"Foi detectado um backup.\n"
+"Pode usar este assistente para restaurar as suas configurações e quaisquer "
+"plugins extra que foram instalados, quando o backup foi criado.\n"
 
-msgid "YES, to restore plugins"
-msgstr ""
+msgid "Allows the softcam manager to be launched from extensions."
+msgstr "Permite que o Gestor de Softcam seja lançado a partir das extensões."
 
-msgid "YES, to restore settings"
-msgstr ""
-
-msgid "You have no backup to delete."
-msgstr ""
-
-msgid "You have no backups to restore."
-msgstr ""
-
-msgid "You have no image to delete."
-msgstr ""
-
-msgid "You have no image to download."
-msgstr ""
-
-msgid "You have no image to restore."
-msgstr ""
-
-msgid "You have to create a Swap File before to activate the autostart."
-msgstr ""
-
-#, python-format
 msgid ""
-"Your %s %s is about to run a backup of your settings and detect your plugins,\n"
-"Do you want to allow this?"
+"Allows the softcam to be checked if it stopped working, and restarted "
+"automatically if needed."
 msgstr ""
+"Permite que a softcam seja verificada se parar de funcionar e reiniciá-la "
+"automaticamente, se necessário."
 
-#, python-format
+msgid "Allows you schedule your backups."
+msgstr "Permite agendar os seus backups."
+
+msgid "Allows you schedule your image backups."
+msgstr "Permite agendar os seus backups de imagens."
+
+msgid "Allows you to tag your backups to a box. (default is box name/type)"
+msgstr ""
+"Permite marcar os seus backups para uma caixa. (o padrão é o nome/tipo de "
+"caixa)"
+
 msgid ""
-"Your %s %s is about to run a full image backup, this can take about 6 minutes to complete,\n"
-"do you want to allow this?"
+"Allows you to tag your image backup to a box. (default is box name/type)"
 msgstr ""
+"Permite marcar os seus backups para uma caixa. (o padrão é o nome/tipo de "
+"caixa)"
 
-#, python-format
-msgid "Your %s %s is not connected to the internet, Please try using Backup Manager to restore plugins later."
-msgstr ""
+msgid "Backup Location"
+msgstr "Localização do Backup"
 
-#, python-format
-msgid "Your %s %s is not connected to the internet, please check your network settings and try again."
-msgstr ""
+msgid "Backup Manager Setup"
+msgstr "Configuração do Gestor de backup"
 
-msgid "echo 'Downloading Image.'"
-msgstr ""
+msgid "Backup prefix"
+msgstr "Prefixo do Backup"
 
-msgid "there was a problem with this device, please reformat and try again."
-msgstr ""
+msgid "Enable frozen check"
+msgstr "Habilitar verificação congelada"
 
-msgid "to a USB stick, place in front USB port of reciver and power on"
-msgstr ""
+msgid "Frozen check interval"
+msgstr "Intervalo de verificação de congelamento"
 
-msgid "unavailable"
-msgstr ""
+msgid "Image Manager Setup"
+msgstr "Configuração do Gestor de Imagens"
+
+msgid "Location of where backup should be saved."
+msgstr "Localização de onde o backup deve ser salvo."
+
+msgid "Location of where image backup should be saved."
+msgstr "Localização de onde o backup de imagem deve ser salvo."
+
+msgid "Repeat how often"
+msgstr "Repita quantas vezes"
+
+msgid "Schedule Backups"
+msgstr "Agendamento de Backups"
+
+msgid "Set the interval to be checked in mins."
+msgstr "Defina o intervalo a ser verificado em minutos."
+
+msgid "Set the repeat interval of backup schedule."
+msgstr "Defina o intervalo de repetição de agendamento de backup."
+
+msgid "Set the time of backup to start."
+msgstr "Defina o tempo de backup para iniciar."
+
+msgid "Show in extensions"
+msgstr "Mostrar em extensões"
+
+msgid "Time of Backup to start"
+msgstr "Tempo de Backup para iniciar"

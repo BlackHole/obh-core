@@ -516,7 +516,7 @@ class VIXBackupManager(Screen):
 			self.Stage2Completed = True
 		elif result.find('Collected errors') != -1:
 			AddPopupWithCallback(self.Stage2,
-								 _("A background update check is is progress, please try again."),
+								 _("A background update check is in progress, please try again."),
 								 MessageBox.TYPE_INFO,
 								 10,
 								 NOPLUGINS
