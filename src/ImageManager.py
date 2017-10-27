@@ -1,6 +1,6 @@
 # for localized messages
 from boxbranding import getBoxType, getImageType, getImageDistro, getImageVersion, getImageBuild, getImageDevBuild, getImageFolder, getImageFileSystem, getBrandOEM, getMachineBrand, getMachineName, getMachineBuild, getMachineMake, getMachineMtdRoot, getMachineRootFile, getMachineMtdKernel, getMachineKernelFile, getMachineMKUBIFS, getMachineUBINIZE
-from os import path, system, mkdir, makedirs, listdir, remove, rename, statvfs, chmod, walk, symlink, unlink
+from os import path, stat, system, mkdir, makedirs, listdir, remove, rename, statvfs, chmod, walk, symlink, unlink
 from shutil import rmtree, move, copy
 from time import localtime, time, strftime, mktime
 
@@ -190,11 +190,12 @@ class VIXImageManager(Screen):
 		images = listdir(self.BackupDirectory)
 		self.oldlist = images
 		del self.emlist[:]
+		mtimes = []
 		for fil in images:
 			if fil.endswith('.zip') or path.isdir(path.join(self.BackupDirectory, fil)):
-				self.emlist.append(fil)
-		self.emlist.sort()
-		self.emlist.reverse()
+				mtimes.append((fil, stat(self.BackupDirectory + fil).st_mtime)) # (filname, mtime)
+		for fil in [x[0] for x in sorted(mtimes, key=lambda x: x[1], reverse=True)]: # sort by mtime
+			self.emlist.append(fil)
 		self["list"].setList(self.emlist)
 		self["list"].show()
 
@@ -323,7 +324,7 @@ class VIXImageManager(Screen):
 	def keyDelete(self):
 		self.sel = self['list'].getCurrent()
 		if self.sel:
-			message = _("Are you sure you want to delete this backup:\n ") + self.sel
+			message = _("Are you sure you want to delete this image backup:\n ") + self.sel
 			ybox = self.session.openWithCallback(self.doDelete, MessageBox, message, MessageBox.TYPE_YESNO, default=False)
 			ybox.setTitle(_("Remove confirmation"))
 		else:
@@ -352,7 +353,7 @@ class VIXImageManager(Screen):
 			self.keyBackup()
 
 	def keyBackup(self):
-		message = _("Are you ready to create a backup image ?")
+		message = _("Do you want to create a full image backup?\nThis can take about 6 minutes to complete.")
 		ybox = self.session.openWithCallback(self.doBackup, MessageBox, message, MessageBox.TYPE_YESNO)
 		ybox.setTitle(_("Backup confirmation"))
 
@@ -381,7 +382,7 @@ class VIXImageManager(Screen):
 	def keyResstore(self):
 		self.sel = self['list'].getCurrent()
 		if self.sel:
-			message = _("Are you sure you want to restore this image:\n ") + self.sel
+			message = _("Are you sure you want to flash this image:\n ") + self.sel
 			ybox = self.session.openWithCallback(self.keyResstore2, MessageBox, message, MessageBox.TYPE_YESNO)
 			ybox.setTitle(_("Restore confirmation"))
 		else:
@@ -500,14 +501,14 @@ class AutoImageManagerTimer:
 			from Screens.Standby import inStandby
 
 			if not inStandby and config.imagemanager.query.value:
-				message = _("Your %s %s is about to run a full image backup, this can take about 6 minutes to complete,\ndo you want to allow this?") % (getMachineBrand(), getMachineName())
+				message = _("Your %s %s is about to create a full image backup, this can take about 6 minutes to complete.\nDo you want to allow this?") % (getMachineBrand(), getMachineName())
 				ybox = self.session.openWithCallback(self.doBackup, MessageBox, message, MessageBox.TYPE_YESNO, timeout=30)
 				ybox.setTitle('Scheduled backup.')
 			else:
 				print "[ImageManager] in Standby or no querying, so just running backup", strftime("%c", localtime(now))
 				self.doBackup(True)
 		else:
-			print '[ImageManager] Where are not close enough', strftime("%c", localtime(now))
+			print '[ImageManager] We are not close enough', strftime("%c", localtime(now))
 			self.backupupdate(60)
 
 	def doBackup(self, answer):
@@ -585,6 +586,9 @@ class ImageBackup(Screen):
 		self.MTDROOTFS = getMachineMtdRoot()
 		self.ROOTFSFILE = getMachineRootFile()
 		self.MAINDEST = self.MAINDESTROOT + '/' + getImageFolder() + '/'
+		self.MODEL = getBoxType()
+		self.GB4Kbin = 'boot.bin'
+		self.GB4Krescue = 'rescue.bin'
 		print '[ImageManager] MTD Kernel:',self.MTDKERNEL
 		print '[ImageManager] MTD Root:',self.MTDROOTFS
 		print '[ImageManager] Type:',getImageFileSystem()
@@ -796,64 +800,64 @@ class ImageBackup(Screen):
 			self.commands.append('mount --bind / %s/root' % self.TMPDIR)
 			self.commands.append('mkfs.jffs2 --root=%s/root --faketime --output=%s/rootfs.jffs2 %s' % (self.TMPDIR, self.WORKDIR, JFFS2OPTIONS))
 		elif self.ROOTDEVTYPE == 'tar.bz2':
-			print '[ImageManager] Stage1: TAR.BZIP Detected.'
+			print '[ImageManager] Stage2: TAR.BZIP Detected.'
 			self.commands.append('mount --bind / %s/root' % self.TMPDIR)
 			self.commands.append("/bin/tar -cf %s/rootfs.tar -C %s/root --exclude=/var/nmbd/* ." % (self.WORKDIR, self.TMPDIR))
 			self.commands.append("/usr/bin/bzip2 %s/rootfs.tar" % self.WORKDIR)
+			if self.MODEL in ("gbquad4k","gbue4k"):
+				self.commands.append("dd if=/dev/mmcblk0p1 of=%s/boot.bin" % self.WORKDIR)
+				self.commands.append("dd if=/dev/mmcblk0p3 of=%s/rescue.bin" % self.WORKDIR)
+				print '[ImageManager] Stage2: Create: boot dump boot.bin:',self.MODEL
+				print '[ImageManager] Stage2: Create: rescue dump rescue.bin:',self.MODEL
 		elif self.ROOTDEVTYPE == 'hd-emmc':
 			print '[ImageManager] Stage2: EMMC Detected.'
-			GPT_OFFSET=0
-			GPT_SIZE=1024
-			BOOT_PARTITION_OFFSET = int(GPT_OFFSET) + int(GPT_SIZE)
+			self.MTDBOOT_HD51 = "mmcblk0p1"
+			self.EMMCIMG = "disk.img"
+			BLOCK_SIZE=512
+			BLOCK_SECTOR=2
+			IMAGE_ROOTFS_ALIGNMENT=1024
 			BOOT_PARTITION_SIZE=3072
-			KERNEL_PARTITION_OFFSET = int(BOOT_PARTITION_OFFSET) + int(BOOT_PARTITION_SIZE)
+			KERNEL_PARTITION_OFFSET = int(IMAGE_ROOTFS_ALIGNMENT) + int(BOOT_PARTITION_SIZE)
 			KERNEL_PARTITION_SIZE=8192
 			ROOTFS_PARTITION_OFFSET = int(KERNEL_PARTITION_OFFSET) + int(KERNEL_PARTITION_SIZE)
-			ROOTFS_PARTITION_SIZE=1048576
+			ROOTFS_PARTITION_SIZE=819200
 			SECOND_KERNEL_PARTITION_OFFSET = int(ROOTFS_PARTITION_OFFSET) + int(ROOTFS_PARTITION_SIZE)
 			SECOND_ROOTFS_PARTITION_OFFSET = int(SECOND_KERNEL_PARTITION_OFFSET) + int(KERNEL_PARTITION_SIZE)
-			THRID_KERNEL_PARTITION_OFFSET = int(SECOND_ROOTFS_PARTITION_OFFSET) + int(ROOTFS_PARTITION_SIZE)
-			THRID_ROOTFS_PARTITION_OFFSET = int(THRID_KERNEL_PARTITION_OFFSET) + int(KERNEL_PARTITION_SIZE)
-			FOURTH_KERNEL_PARTITION_OFFSET = int(THRID_ROOTFS_PARTITION_OFFSET) + int(ROOTFS_PARTITION_SIZE)
+			THIRD_KERNEL_PARTITION_OFFSET = int(SECOND_ROOTFS_PARTITION_OFFSET) + int(ROOTFS_PARTITION_SIZE)
+			THIRD_ROOTFS_PARTITION_OFFSET = int(THIRD_KERNEL_PARTITION_OFFSET) + int(KERNEL_PARTITION_SIZE)
+			FOURTH_KERNEL_PARTITION_OFFSET = int(THIRD_ROOTFS_PARTITION_OFFSET) + int(ROOTFS_PARTITION_SIZE)
 			FOURTH_ROOTFS_PARTITION_OFFSET = int(FOURTH_KERNEL_PARTITION_OFFSET) + int(KERNEL_PARTITION_SIZE)
-			EMMC_IMAGE = "%s/disk.img" % self.WORKDIR
+			SWAP_PARTITION_OFFSET = int(FOURTH_ROOTFS_PARTITION_OFFSET) + int(ROOTFS_PARTITION_SIZE)
+			EMMC_IMAGE = "%s/%s"% (self.WORKDIR,self.EMMCIMG)
 			EMMC_IMAGE_SIZE=3817472
-			IMAGE_ROOTFS_SIZE=196608
-			self.commands.append('dd if=/dev/zero of=%s bs=1024 count=0 seek=%s' % (EMMC_IMAGE, EMMC_IMAGE_SIZE))
-			self.commands.append('parted -s %s mklabel gpt' % EMMC_IMAGE)
-			PARTED_END_BOOT = int(BOOT_PARTITION_OFFSET) + int(BOOT_PARTITION_SIZE)
-			self.commands.append('parted -s %s unit KiB mkpart boot fat16 %s %s' % (EMMC_IMAGE, BOOT_PARTITION_OFFSET, PARTED_END_BOOT))
+			EMMC_IMAGE_SEEK = int(EMMC_IMAGE_SIZE) * int(BLOCK_SECTOR)
+			self.commands.append('dd if=/dev/zero of=%s bs=%s count=0 seek=%s' % (EMMC_IMAGE, BLOCK_SIZE , EMMC_IMAGE_SEEK))
+			self.commands.append('parted -s %s mklabel gpt' %EMMC_IMAGE)
+			PARTED_END_BOOT = int(IMAGE_ROOTFS_ALIGNMENT) + int(BOOT_PARTITION_SIZE)
+			self.commands.append('parted -s %s unit KiB mkpart boot fat16 %s %s' % (EMMC_IMAGE, IMAGE_ROOTFS_ALIGNMENT, PARTED_END_BOOT ))
 			PARTED_END_KERNEL1 = int(KERNEL_PARTITION_OFFSET) + int(KERNEL_PARTITION_SIZE)
-			self.commands.append('parted -s %s unit KiB mkpart kernel1 %s %s' % (EMMC_IMAGE, KERNEL_PARTITION_OFFSET, PARTED_END_KERNEL1))
+			self.commands.append('parted -s %s unit KiB mkpart kernel1 %s %s' % (EMMC_IMAGE, KERNEL_PARTITION_OFFSET, PARTED_END_KERNEL1 ))
 			PARTED_END_ROOTFS1 = int(ROOTFS_PARTITION_OFFSET) + int(ROOTFS_PARTITION_SIZE)
-			self.commands.append('parted -s %s unit KiB mkpart rootfs1 ext2 %s %s' % (EMMC_IMAGE, ROOTFS_PARTITION_OFFSET, PARTED_END_ROOTFS1))
+			self.commands.append('parted -s %s unit KiB mkpart rootfs1 ext4 %s %s' % (EMMC_IMAGE, ROOTFS_PARTITION_OFFSET, PARTED_END_ROOTFS1 ))
 			PARTED_END_KERNEL2 = int(SECOND_KERNEL_PARTITION_OFFSET) + int(KERNEL_PARTITION_SIZE)
-			self.commands.append('parted -s %s unit KiB mkpart kernel2 %s %s' % (EMMC_IMAGE, SECOND_KERNEL_PARTITION_OFFSET, PARTED_END_KERNEL2))
+			self.commands.append('parted -s %s unit KiB mkpart kernel2 %s %s' % (EMMC_IMAGE, SECOND_KERNEL_PARTITION_OFFSET, PARTED_END_KERNEL2 ))
 			PARTED_END_ROOTFS2 = int(SECOND_ROOTFS_PARTITION_OFFSET) + int(ROOTFS_PARTITION_SIZE)
-			self.commands.append('parted -s %s unit KiB mkpart rootfs2 ext2 %s %s' % (EMMC_IMAGE, SECOND_ROOTFS_PARTITION_OFFSET, PARTED_END_ROOTFS2))
-			PARTED_END_KERNEL3 = int(THRID_KERNEL_PARTITION_OFFSET) + int(KERNEL_PARTITION_SIZE)
-			self.commands.append('parted -s %s unit KiB mkpart kernel3 %s %s' % (EMMC_IMAGE, THRID_KERNEL_PARTITION_OFFSET, PARTED_END_KERNEL3))
-			PARTED_END_ROOTFS3 = int(THRID_ROOTFS_PARTITION_OFFSET) + int(ROOTFS_PARTITION_SIZE)
-			self.commands.append('parted -s %s unit KiB mkpart rootfs3 ext2 %s %s' % (EMMC_IMAGE, THRID_ROOTFS_PARTITION_OFFSET, PARTED_END_ROOTFS3))
+			self.commands.append('parted -s %s unit KiB mkpart rootfs2 ext4 %s %s' % (EMMC_IMAGE, SECOND_ROOTFS_PARTITION_OFFSET, PARTED_END_ROOTFS2 ))
+			PARTED_END_KERNEL3 = int(THIRD_KERNEL_PARTITION_OFFSET) + int(KERNEL_PARTITION_SIZE)
+			self.commands.append('parted -s %s unit KiB mkpart kernel3 %s %s' % (EMMC_IMAGE, THIRD_KERNEL_PARTITION_OFFSET, PARTED_END_KERNEL3 ))
+			PARTED_END_ROOTFS3 = int(THIRD_ROOTFS_PARTITION_OFFSET) + int(ROOTFS_PARTITION_SIZE)
+			self.commands.append('parted -s %s unit KiB mkpart rootfs3 ext4 %s %s' % (EMMC_IMAGE, THIRD_ROOTFS_PARTITION_OFFSET, PARTED_END_ROOTFS3 ))
 			PARTED_END_KERNEL4 = int(FOURTH_KERNEL_PARTITION_OFFSET) + int(KERNEL_PARTITION_SIZE)
-			self.commands.append('parted -s %s unit KiB mkpart kernel4 %s %s' % (EMMC_IMAGE, FOURTH_KERNEL_PARTITION_OFFSET, PARTED_END_KERNEL4))
-			PARTED_END_ROOTFS4 = int(EMMC_IMAGE_SIZE) - 1024
-			self.commands.append('parted -s %s unit KiB mkpart rootfs4 ext2 %s %s' % (EMMC_IMAGE, FOURTH_ROOTFS_PARTITION_OFFSET, PARTED_END_ROOTFS4))
-			self.commands.append('dd if=/dev/zero of=%s/boot.img bs=1024 count=%s' % (self.WORKDIR, BOOT_PARTITION_SIZE))
-			self.commands.append('mkfs.msdos -S 512 %s/boot.img' % self.WORKDIR)
-			self.commands.append("echo \"boot emmcflash0.kernel1 \'root=/dev/mmcblk0p3 rw rootwait hd51_4.boxmode=1\'\" > %s/STARTUP" %self.WORKDIR)
-			self.commands.append("echo \"boot emmcflash0.kernel1 \'root=/dev/mmcblk0p3 rw rootwait hd51_4.boxmode=1\'\" > %s/STARTUP_1" %self.WORKDIR)
-			self.commands.append("echo \"boot emmcflash0.kernel2 \'root=/dev/mmcblk0p5 rw rootwait hd51_4.boxmode=1\'\" > %s/STARTUP_2" %self.WORKDIR)
-			self.commands.append("echo \"boot emmcflash0.kernel3 \'root=/dev/mmcblk0p7 rw rootwait hd51_4.boxmode=1\'\" > %s/STARTUP_3" %self.WORKDIR)
-			self.commands.append("echo \"boot emmcflash0.kernel4 \'root=/dev/mmcblk0p9 rw rootwait hd51_4.boxmode=1\'\" > %s/STARTUP_4" %self.WORKDIR)
-			self.commands.append('mcopy -i %s/boot.img -v %s/STARTUP ::' % (self.WORKDIR, self.WORKDIR))
-			self.commands.append('mcopy -i %s/boot.img -v %s/STARTUP_1 ::' % (self.WORKDIR, self.WORKDIR))
-			self.commands.append('mcopy -i %s/boot.img -v %s/STARTUP_2 ::' % (self.WORKDIR, self.WORKDIR))
-			self.commands.append('mcopy -i %s/boot.img -v %s/STARTUP_3 ::' % (self.WORKDIR, self.WORKDIR))
-			self.commands.append('mcopy -i %s/boot.img -v %s/STARTUP_4 ::' % (self.WORKDIR, self.WORKDIR))
-			self.commands.append('dd conv=notrunc if=%s/boot.img of=%s bs=1024 seek=%s' % (self.WORKDIR, EMMC_IMAGE, BOOT_PARTITION_OFFSET))
-			self.commands.append('dd conv=notrunc if=/dev/%s of=%s bs=1024 seek=%s' % (self.MTDKERNEL, EMMC_IMAGE, KERNEL_PARTITION_OFFSET))
-			self.commands.append('dd if=/dev/%s of=%s bs=1024 seek=%s count=%s' % (self.MTDROOTFS, EMMC_IMAGE, ROOTFS_PARTITION_OFFSET, IMAGE_ROOTFS_SIZE))
+			self.commands.append('parted -s %s unit KiB mkpart kernel4 %s %s' % (EMMC_IMAGE, FOURTH_KERNEL_PARTITION_OFFSET, PARTED_END_KERNEL4 ))
+			PARTED_END_ROOTFS4 = int(FOURTH_ROOTFS_PARTITION_OFFSET) + int(ROOTFS_PARTITION_SIZE)
+			self.commands.append('parted -s %s unit KiB mkpart rootfs4 ext4 %s %s' % (EMMC_IMAGE, FOURTH_ROOTFS_PARTITION_OFFSET, PARTED_END_ROOTFS4 ))
+			self.commands.append('parted -s %s unit KiB mkpart swap linux-swap %s 100%%' % (EMMC_IMAGE, SWAP_PARTITION_OFFSET))
+			BOOT_IMAGE_SEEK = int(IMAGE_ROOTFS_ALIGNMENT) * int(BLOCK_SECTOR)
+			self.commands.append('dd if=/dev/%s of=%s seek=%s' % (self.MTDBOOT_HD51, EMMC_IMAGE, BOOT_IMAGE_SEEK ))
+			KERNEL_IMAGE_SEEK = int(KERNEL_PARTITION_OFFSET) * int(BLOCK_SECTOR)
+			self.commands.append('dd if=/dev/%s of=%s seek=%s' % (self.MTDKERNEL, EMMC_IMAGE, KERNEL_IMAGE_SEEK ))
+			ROOTFS_IMAGE_SEEK = int(ROOTFS_PARTITION_OFFSET) * int(BLOCK_SECTOR)
+			self.commands.append('dd if=/dev/%s of=%s seek=%s' % (self.MTDROOTFS, EMMC_IMAGE, ROOTFS_IMAGE_SEEK ))
 		else:
 			print '[ImageManager] Stage2: UBIFS Detected.'
 			UBINIZE_ARGS = getMachineUBINIZE()
@@ -903,6 +907,10 @@ class ImageBackup(Screen):
 				move('%s/vmlinux.bin' % self.WORKDIR, '%s/%s' % (self.MAINDEST, self.KERNELFILE))
 			else:
 				move('%s/vmlinux.gz' % self.WORKDIR, '%s/%s' % (self.MAINDEST, self.KERNELFILE))
+		if self.MODEL in ("gbquad4k","gbue4k"):
+			move('%s/%s' % (self.WORKDIR, self.GB4Kbin), '%s/%s' % (self.MAINDEST, self.GB4Kbin))
+			move('%s/%s' % (self.WORKDIR, self.GB4Krescue), '%s/%s' % (self.MAINDEST, self.GB4Krescue))
+			system('cp -f /usr/share/gpt.bin %s/gpt.bin' %(self.MAINDEST))
 		fileout = open(self.MAINDEST + '/imageversion', 'w')
 		line = defaultprefix + '-' + getImageType() + '-backup-' + getImageVersion() + '.' + getImageBuild() + '-' + self.BackupDate
 		fileout.write(line)
@@ -1068,13 +1076,15 @@ class ImageManagerDownload(Screen):
 				'et8500'          : 'ET-8500',
 				'et9x00'          : 'ET-9x00',
 				'formuler4turbo'  : 'Formuler4turbo',
+				'formuler1'       : 'Formuler1',					
+				'formuler1tc'     : 'Formuler1tc',				
 				'gb800se'         : 'GiGaBlue-HD800SE',
 				'gb800seplus'     : 'GiGaBlue-HD800SE-PLUS',
 				'gb800ue'         : 'GiGaBlue-HD800UE',
 				'gb800ueplus'     : 'GiGaBlue-HD800UE-PLUS',
 				'gbquad'          : 'GiGaBlue-HD-QUAD',
 				'gbquadplus'      : 'GiGaBlue-HD-QUAD-PLUS',
-				'gbquad4k'        : 'GiGaBlue-HD-QUAD-4K',				
+				'gbquad4k'        : 'GiGaBlue-UHD-QUAD-4K',
 				'gbultraue'       : 'GiGaBlue-HD-ULTRA-UE',
 				'gbx1'            : 'GiGaBlue-HD-X1',
 				'gbx3'            : 'GiGaBlue-HD-X3',
@@ -1085,7 +1095,7 @@ class ImageManagerDownload(Screen):
 				'maram9'          : 'Mara-M9',
 				'mbhybrid'        : 'Miraclebox-Mini-Hybrid',
 				'mbmicro'         : 'Miraclebox-Micro',
-				'mbmicrov2'       : 'Miraclebox-Microv2',				
+				'mbmicrov2'       : 'Miraclebox-Microv2',
 				'mbmini'          : 'Miraclebox-Mini',
 				'mbminiplus'      : 'Miraclebox-MiniPlus',
 				'mbtwin'          : 'Miraclebox-Twin',
