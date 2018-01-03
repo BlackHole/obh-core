@@ -120,10 +120,7 @@ class VIXImageManager(Screen):
 
 		self['lab1'] = Label()
 		self["backupstatus"] = Label()
-		if getImageFileSystem().replace(' ','') not in ('tar.bz2', 'hd-emmc'):
-			self["key_blue"] = Button(_("Flash"))
-		else:
-			self["key_blue"] = Button("")
+		self["key_blue"] = Button(_("Flash"))
 		self["key_green"] = Button()
 		self["key_yellow"] = Button(_("Downloads"))
 		self["key_red"] = Button(_("Delete"))
@@ -231,17 +228,13 @@ class VIXImageManager(Screen):
 											  'red': self.keyDelete,
 											  'green': self.GreenPressed,
 											  'yellow': self.doDownload,
+											  'blue': self.keyResstore,
 											  "menu": self.createSetup,
 											  "up": self.refreshUp,
 											  "down": self.refreshDown,
 											  "displayHelp": self.doDownload,
+											  'ok': self.keyResstore,
 											  }, -1)
-				if getImageFileSystem().replace(' ','') not in ('tar.bz2', 'hd-emmc'):
-					self['restoreaction'] = ActionMap(['ColorActions', 'OkCancelActions'],
-												  {
-												  "ok": self.keyResstore,
-												  'blue': self.keyResstore,
-												  }, -1)
 
 				self.BackupDirectory = '/media/hdd/imagebackups/'
 				config.imagemanager.backuplocation.value = '/media/hdd/'
@@ -262,17 +255,13 @@ class VIXImageManager(Screen):
 										  'red': self.keyDelete,
 										  'green': self.GreenPressed,
 										  'yellow': self.doDownload,
+										  'blue': self.keyResstore,
 										  "menu": self.createSetup,
 										  "up": self.refreshUp,
 										  "down": self.refreshDown,
 										  "displayHelp": self.doDownload,
+										  'ok': self.keyResstore,
 										  }, -1)
-			if getImageFileSystem().replace(' ','') not in ('tar.bz2', 'hd-emmc'):
-				self['restoreaction'] = ActionMap(['ColorActions', 'OkCancelActions'],
-											  {
-											  "ok": self.keyResstore,
-											  'blue': self.keyResstore,
-											  }, -1)
 
 			self.BackupDirectory = config.imagemanager.backuplocation.value + 'imagebackups/'
 			s = statvfs(config.imagemanager.backuplocation.value)
@@ -382,9 +371,12 @@ class VIXImageManager(Screen):
 	def keyResstore(self):
 		self.sel = self['list'].getCurrent()
 		if self.sel:
-			message = _("Are you sure you want to flash this image:\n ") + self.sel
+			if getImageFileSystem().replace(' ','') in ('tar.bz2', 'hd-emmc'):
+				message = _("You are about to flash an eMMC flash, we cannot take any responsibility for any errors or damage to your box during this process.\nProceed with CAUTION!:\nAre you sure you want to flash this image:\n ") + self.sel
+			else:
+				message = _("Are you sure you want to flash this image:\n ") + self.sel
 			ybox = self.session.openWithCallback(self.keyResstore2, MessageBox, message, MessageBox.TYPE_YESNO)
-			ybox.setTitle(_("Restore confirmation"))
+			ybox.setTitle(_("Flash confirmation"))
 		else:
 			self.session.open(MessageBox, _("You have no image to flash."), MessageBox.TYPE_INFO, timeout=10)
 
@@ -413,7 +405,7 @@ class VIXImageManager(Screen):
 			MAINDEST = '%s/%s' % (self.TEMPDESTROOT,getImageFolder())
 			CMD = '/usr/bin/ofgwrite -r%s -k%s %s/' % (rootMTD, kernelMTD, MAINDEST)
 			config.imagemanager.restoreimage.setValue(self.sel)
-			print '[ImageManager] running commnd:',CMD
+			print '[ImageManager] running command:',CMD
 			self.Console.ePopen(CMD, self.ofgwriteResult)
 
 # We'll only arrive at this function if the ofgwrite failed.
@@ -1001,7 +993,7 @@ class ImageBackup(Screen):
 
 class ImageManagerDownload(Screen):
 	skin = """
-	<screen name="VIXImageManager" position="center,center" size="560,400" title="Image Manager" flags="wfBorder" >
+	<screen name="VIXImageManager" position="center,center" size="560,400" title="Image Manager">
 		<ePixmap pixmap="skin_default/buttons/red.png" position="0,0" size="140,40" alphatest="on" />
 		<ePixmap pixmap="skin_default/buttons/green.png" position="140,0" size="140,40" alphatest="on" />
 		<ePixmap pixmap="skin_default/buttons/yellow.png" position="280,0" size="140,40" alphatest="on" />
@@ -1085,6 +1077,7 @@ class ImageManagerDownload(Screen):
 				'gbquad'          : 'GiGaBlue-HD-QUAD',
 				'gbquadplus'      : 'GiGaBlue-HD-QUAD-PLUS',
 				'gbquad4k'        : 'GiGaBlue-UHD-QUAD-4K',
+				'gbue4k'          : 'GiGaBlue-UHD-UE-4K',				
 				'gbultraue'       : 'GiGaBlue-HD-ULTRA-UE',
 				'gbx1'            : 'GiGaBlue-HD-X1',
 				'gbx3'            : 'GiGaBlue-HD-X3',
@@ -1110,6 +1103,7 @@ class ImageManagerDownload(Screen):
 				'osmega'          : 'OS-mega',
 				'osmini'          : 'OS-mini',
 				'osminiplus'      : 'OS-miniplus',
+				'osnino'          : 'OS-nino',				
 				'qb800solo'       : 'GiGaBlue-HD800Solo',
 				'sf8'             : 'OCTAGON-SF8-HD',
 				'sf128'           : 'OCTAGON-SF128',
@@ -1117,6 +1111,7 @@ class ImageManagerDownload(Screen):
 				'sf228'           : 'OCTAGON-SF228',
 				'sf4008'          : 'OCTAGON-SF4008',
 				'spycat'          : 'Spycat',
+				'tiviaraplus'     : 'TiviarAlphaPlus',				
 				'tm2t'            : 'TM-2T',
 				'tmnano'          : 'TM-Nano-OE',
 				'tmnano2super'    : 'TM-Nano2-Super',
@@ -1143,7 +1138,9 @@ class ImageManagerDownload(Screen):
 				'vuultimo4k'      : 'Vu+Ultimo4K',
 				'vuuno'           : 'Vu+Uno',
 				'vuuno4k'         : 'Vu+Uno4K',
+				'vuuno4kse'       : 'Vu+Uno4KSE',
 				'vuzero'          : 'Vu+Zero',
+				'vuzero4k'        : 'Vu+Zero4K',
 				'xp1000max'       : 'MaxDigital-XP1000',
 				'xp1000plus'      : 'OCTAGON-XP1000PLUS',
 				'xpeedlx'         : 'GI-Xpeed-LX',
