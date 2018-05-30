@@ -4,7 +4,7 @@ from os import path, stat, system, mkdir, makedirs, listdir, remove, rename, sta
 from shutil import rmtree, move, copy
 from time import localtime, time, strftime, mktime
 
-from enigma import eTimer
+from enigma import eTimer, fbClass
 
 from . import _, PluginLanguageDomain
 import Components.Task
@@ -15,6 +15,7 @@ from Components.MenuList import MenuList
 from Components.config import config, ConfigSubsection, ConfigYesNo, ConfigSelection, ConfigText, ConfigNumber, NoSave, ConfigClock
 from Components.Harddisk import harddiskmanager, getProcMounts
 from Components.Sources.StaticText import StaticText
+from Components.SystemInfo import SystemInfo
 from Screens.Screen import Screen
 from Screens.Setup import Setup
 from Components.Console import Console
@@ -25,6 +26,7 @@ from Screens.MessageBox import MessageBox
 from Screens.Standby import TryQuitMainloop
 from Tools.Notifications import AddPopupWithCallback
 import Tools.CopyFiles
+from Tools.Multiboot import GetImagelist, GetCurrentImage
 
 import urllib
 
@@ -126,6 +128,9 @@ class VIXImageManager(Screen):
 		self["key_red"] = Button(_("Delete"))
 
 		self.BackupRunning = False
+		self.getImageList = None
+		if SystemInfo["canMultiBoot"]:
+			self.addin = SystemInfo["canMultiBoot"][0]
 		self.onChangedEntry = []
 		self.oldlist = None
 		self.emlist = []
@@ -134,8 +139,8 @@ class VIXImageManager(Screen):
 		self.activityTimer = eTimer()
 		self.activityTimer.timeout.get().append(self.backupRunning)
 		self.activityTimer.start(10)
-
 		self.Console = Console()
+		self.multibootslot = 1
 
 		if BackupTime > 0:
 			t = localtime(BackupTime)
@@ -228,12 +233,12 @@ class VIXImageManager(Screen):
 											  'red': self.keyDelete,
 											  'green': self.GreenPressed,
 											  'yellow': self.doDownload,
-											  'blue': self.keyResstore,
+											  'blue': self.keyRestore,
 											  "menu": self.createSetup,
 											  "up": self.refreshUp,
 											  "down": self.refreshDown,
 											  "displayHelp": self.doDownload,
-											  'ok': self.keyResstore,
+											  'ok': self.keyRestore,
 											  }, -1)
 
 				self.BackupDirectory = '/media/hdd/imagebackups/'
@@ -255,12 +260,12 @@ class VIXImageManager(Screen):
 										  'red': self.keyDelete,
 										  'green': self.GreenPressed,
 										  'yellow': self.doDownload,
-										  'blue': self.keyResstore,
+										  'blue': self.keyRestore,
 										  "menu": self.createSetup,
 										  "up": self.refreshUp,
 										  "down": self.refreshDown,
 										  "displayHelp": self.doDownload,
-										  'ok': self.keyResstore,
+										  'ok': self.keyRestore,
 										  }, -1)
 
 			self.BackupDirectory = config.imagemanager.backuplocation.value + 'imagebackups/'
@@ -366,57 +371,139 @@ class VIXImageManager(Screen):
 		for job in Components.Task.job_manager.getPendingJobs():
 			if job.name.startswith(_('Backup manager')):
 				break
-		self.session.openWithCallback(self.keyResstore3, JobView, job,  cancelable = False, backgroundable = False, afterEventChangeable = False, afterEvent="close")
+		self.session.openWithCallback(self.keyRestore3, JobView, job,  cancelable = False, backgroundable = False, afterEventChangeable = False, afterEvent="close")
 
-	def keyResstore(self):
+	def keyRestore(self):
 		self.sel = self['list'].getCurrent()
-		if self.sel:
-			if getImageFileSystem().replace(' ','') in ('tar.bz2', 'hd-emmc'):
-				message = _("You are about to flash an eMMC flash, we cannot take any responsibility for any errors or damage to your box during this process.\nProceed with CAUTION!:\nAre you sure you want to flash this image:\n ") + self.sel
-			else:
-				message = _("Are you sure you want to flash this image:\n ") + self.sel
-			ybox = self.session.openWithCallback(self.keyResstore2, MessageBox, message, MessageBox.TYPE_YESNO)
-			ybox.setTitle(_("Flash confirmation"))
+		if getMachineMake() == 'et8500' and path.exists('/proc/mtd'):
+			self.dualboot = self.dualBoot()
+		recordings = self.session.nav.getRecordings()
+		if not recordings:
+			next_rec_time = self.session.nav.RecordTimer.getNextRecordingTime()
+		if recordings or (next_rec_time > 0 and (next_rec_time - time()) < 360):
+			self.message = _("Recording(s) are in progress or coming up in few seconds!\nDo you still want to flash image\n%s?") % self.sel
 		else:
-			self.session.open(MessageBox, _("You have no image to flash."), MessageBox.TYPE_INFO, timeout=10)
+			self.message = _("Do you want to flash image\n%s") % self.sel
+		if getImageFileSystem().replace(' ','') in ('tar.bz2', 'hd-emmc'):
+			message = _("You are about to flash an eMMC flash, we cannot take any responsibility for any errors or damage to your box during this process.\nProceed with CAUTION!:\nAre you sure you want to flash this image:\n ") + self.sel
+		else:
+			message = _("Are you sure you want to flash this image:\n ") + self.sel
+		ybox = self.session.openWithCallback(self.keyResstore0, MessageBox, message, MessageBox.TYPE_YESNO)
+		ybox.setTitle(_("Flash confirmation"))
 
-	def keyResstore2(self, answer):
+	def keyResstore0(self, answer):
 		if answer:
-			if config.imagemanager.autosettingsbackup.value:
+			if SystemInfo["canMultiBoot"]:
+				self.getImageList = GetImagelist(self.keyRestore1)
+			elif config.imagemanager.autosettingsbackup.value:
 				self.doSettingsBackup()
 			else:
-				self.keyResstore3()
+				self.keyRestore3()
 
-	def keyResstore3(self, val = None):
-		self.restore_infobox = self.session.open(MessageBox, _("Please wait while the flash prepares"), MessageBox.TYPE_INFO, timeout=60, enable_input=False)
+
+	def keyRestore1(self, imagedict):
+		self.getImageList = None
+		choices = []
+		HIslot = len(imagedict) + 1
+		currentimageslot = GetCurrentImage()
+		for x in range(1,HIslot):
+			choices.append(((_("slot%s - %s (current image)") if x == currentimageslot else _("slot%s - %s")) % (x, imagedict[x]['imagename']), (x)))
+		self.session.openWithCallback(self.keyRestore2, MessageBox, self.message, list=choices, default=currentimageslot, simple=True)
+
+	def keyRestore2(self, retval):
+		if retval:
+			if SystemInfo["canMultiBoot"]:
+				self.multibootslot = retval
+			if self.sel:
+				if config.imagemanager.autosettingsbackup.value:
+					self.doSettingsBackup()
+				else:
+					self.keyRestore3()
+			else:
+				self.session.open(MessageBox, _("You have no image to flash."), MessageBox.TYPE_INFO, timeout=10)
+		else:
+			self.session.open(MessageBox, _("You have decided not to flash image."), MessageBox.TYPE_INFO, timeout=10)
+
+
+	def keyRestore3(self, val = None):
+		self.restore_infobox = self.session.open(MessageBox, _("Please wait while the flash prepares"), MessageBox.TYPE_INFO, timeout=180, enable_input=False)			
 		self.TEMPDESTROOT = self.BackupDirectory + 'imagerestore'
 		if self.sel.endswith('.zip'):
 			if not path.exists(self.TEMPDESTROOT):
 				mkdir(self.TEMPDESTROOT, 0755)
-			self.Console.ePopen('unzip -o %s%s -d %s' % (self.BackupDirectory, self.sel, self.TEMPDESTROOT), self.keyResstore4)
+			self.Console.ePopen('unzip -o %s%s -d %s' % (self.BackupDirectory, self.sel, self.TEMPDESTROOT), self.keyRestore4)
 		else:
 			self.TEMPDESTROOT = self.BackupDirectory + self.sel
-			self.keyResstore4(0, 0)
+			self.keyRestore4(0, 0)
 
-	def keyResstore4(self, result, retval, extra_args=None):
+	def keyRestore4(self, result, retval, extra_args=None):
 		if retval == 0:
-			kernelMTD = getMachineMtdKernel()
-			rootMTD = getMachineMtdRoot()
-			MAINDEST = '%s/%s' % (self.TEMPDESTROOT,getImageFolder())
-			CMD = '/usr/bin/ofgwrite -r%s -k%s %s/' % (rootMTD, kernelMTD, MAINDEST)
-			config.imagemanager.restoreimage.setValue(self.sel)
-			print '[ImageManager] running command:',CMD
-			self.Console.ePopen(CMD, self.ofgwriteResult)
+			self.session.openWithCallback(self.restore_infobox.close, MessageBox, _("flash image unzip successful"), MessageBox.TYPE_INFO, timeout=4)
+			if getMachineMake() == 'et8500' and self.dualboot:
+				message = _("ET8500 Multiboot: Yes to restore OS1 No to restore OS2:\n ") + self.sel
+				ybox = self.session.openWithCallback(self.keyRestore5_ET8500, MessageBox, message, MessageBox.TYPE_YESNO)
+				ybox.setTitle(_("ET8500 Image Restore"))
+			else:
+				self.keyRestore6(0)
+		else:
+			self.session.openWithCallback(self.restore_infobox.close, MessageBox, _("unzip error (also sent to any debug log):\n%s") % result, MessageBox.TYPE_INFO, timeout=20)
+			print "[ImageManager] unzip failed:\n", result
+			self.close()
 
-# We'll only arrive at this function if the ofgwrite failed.
-# If it succeeded it will have rebooted the system.
-# This displays the errors to the user, and puts them into any debug
-# log, for reporting.
-#
+	def keyRestore5_ET8500(self, answer):
+		if answer:
+			self.keyRestore6(0)
+		else:
+			self.keyRestore6(1)
+
+	def keyRestore6(self,ret):
+		MAINDEST = '%s/%s' % (self.TEMPDESTROOT,getImageFolder())
+		if ret == 0:
+			if SystemInfo["canMultiBoot"]:
+				CMD = "/usr/bin/ofgwrite -k -r -m%s '%s'" % (self.multibootslot, MAINDEST)
+			else:
+				CMD = "/usr/bin/ofgwrite -k -r '%s'" % MAINDEST
+		else:
+			CMD = '/usr/bin/ofgwrite -rmtd4 -kmtd3  %s/' % (MAINDEST)			
+		config.imagemanager.restoreimage.setValue(self.sel)
+		print '[ImageManager] running commnd:',CMD
+		self.Console.ePopen(CMD, self.ofgwriteResult)
+		fbClass.getInstance().lock()
+
 	def ofgwriteResult(self, result, retval, extra_args=None):
-		if retval != 0:
+		fbClass.getInstance().unlock()
+		if retval == 0:
+			if not SystemInfo["canMultiBoot"]:
+				self.session.open(TryQuitMainloop, 2)
+			else:
+				import shutil
+				shutil.copyfile("/boot/STARTUP_%s" % self.multibootslot, "/boot/STARTUP")
+				self.session.open(TryQuitMainloop, 2)
+		else:
 			self.session.openWithCallback(self.restore_infobox.close, MessageBox, _("ofgwrite error (also sent to any debug log):\n%s") % result, MessageBox.TYPE_INFO, timeout=20)
 			print "[ImageManager] OFGWriteResult failed:\n", result
+
+
+
+	def ReExit(self):
+		self.session.open(TryQuitMainloop, 2)
+
+
+	def dualBoot(self):
+		rootfs2 = False
+		kernel2 = False
+		f = open("/proc/mtd")
+		L = f.readlines()
+		for x in L:
+			if 'rootfs2' in x:
+				rootfs2 = True
+			if 'kernel2' in x:
+				kernel2 = True
+		f.close()
+		if rootfs2 and kernel2:
+			return True
+		else:
+			return False
 
 class AutoImageManagerTimer:
 	def __init__(self, session):
@@ -1080,7 +1167,9 @@ class ImageManagerDownload(Screen):
 				'gbue4k'          : 'GiGaBlue-UHD-UE-4K',				
 				'gbultraue'       : 'GiGaBlue-HD-ULTRA-UE',
 				'gbx1'            : 'GiGaBlue-HD-X1',
+				'gbx2'            : 'GiGaBlue-HD-X2',				
 				'gbx3'            : 'GiGaBlue-HD-X3',
+				'gbx3h'           : 'GiGaBlue-HD-X3H',				
 				'iqonios100hd'    : 'iqon-IOS-100HD',
 				'iqonios200hd'    : 'iqon-IOS-200HD',
 				'iqonios300hd'    : 'iqon-IOS-300HD',
