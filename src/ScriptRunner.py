@@ -29,8 +29,6 @@ class VIXScriptRunner(IpkgInstaller):
 	def __init__(self, session, list=None, menu_path=""):
 		if not list:
 			list = []
-			if path.exists('/usr/scripts'):
-				rename('/usr/scripts', '/usr/script')
 			if not path.exists('/usr/script'):
 				mkdir('/usr/script', 0755)
 			f = listdir('/usr/script')
