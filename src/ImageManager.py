@@ -1257,6 +1257,7 @@ class ImageManagerDownload(Screen):
 			supportedMachines = {
 				'vuduo'           : 'Vu+Duo',
 				'vuduo2'          : 'Vu+Duo2',
+				'vuduo4k'         : 'Vu+Duo4K',
 				'vusolo'          : 'Vu+Solo',
 				'vusolo2'         : 'Vu+Solo2',
 				'vusolo4k'        : 'Vu+Solo4K',
