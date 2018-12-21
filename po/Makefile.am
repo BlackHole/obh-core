@@ -1,5 +1,7 @@
 dist_noinst_SCRIPTS = xml2po.py
 
+plugindir = $(libdir)/enigma2/python/Plugins/SystemPlugins/OBH
+
 LANGS = ar bg ca cs da de el en en_GB es et fa fi fr fy he hr hu is it ku lt lv nl no nb pl pt pt_BR ro ru sv sk sl sr th tr uk
 LANGMO = $(LANGS:=.mo)
 LANGPO = $(LANGS:=.po)
@@ -35,13 +37,13 @@ dist-hook: $(LANGPO)
 
 install-data-local: $(LANGMO)
 	for lang in $(LANGS); do \
-		$(mkinstalldirs) $(DESTDIR)/usr/lib/enigma2/python/Plugins/SystemPlugins/OBH/locale/$$lang/LC_MESSAGES; \
-		$(INSTALL_DATA) $$lang.po $(DESTDIR)/usr/lib/enigma2/python/Plugins/SystemPlugins/OBH/locale/obh-$$lang.po; \
-		$(INSTALL_DATA) $$lang.mo $(DESTDIR)/usr/lib/enigma2/python/Plugins/SystemPlugins/OBH/locale/$$lang/LC_MESSAGES/obh.mo; \
+		$(mkinstalldirs) $(DESTDIR)$(plugindir)/locale/$$lang/LC_MESSAGES; \
+		$(INSTALL_DATA) $$lang.po $(DESTDIR)$(plugindir)/locale/obh-$$lang.po; \
+		$(INSTALL_DATA) $$lang.mo $(DESTDIR)$(plugindir)/locale/$$lang/LC_MESSAGES/obh.mo; \
 	done
 
 uninstall-local:
 	for lang in $(LANGS); do \
-		$(RM) $(DESTDIR)/usr/lib/enigma2/python/Plugins/SystemPlugins/OBH/locale/obh-$$lang.po; \
-		$(RM) $(DESTDIR)/usr/lib/enigma2/python/Plugins/SystemPlugins/OBH/locale/$$lang/LC_MESSAGES/obh.mo; \
+		$(RM) $(DESTDIR)$(plugindir)/locale/obh-$$lang.po; \
+		$(RM) $(DESTDIR)$(plugindir)/locale/$$lang/LC_MESSAGES/obh.mo; \
 	done
