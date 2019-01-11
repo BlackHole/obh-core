@@ -1,4 +1,4 @@
-vix-core
+obh-core
 ========
 
-OpenViX Core plugin
+OpenBH Core plugin
