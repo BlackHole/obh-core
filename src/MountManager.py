@@ -1,5 +1,5 @@
 # for localized messages
-from boxbranding import getMachineBrand, getMachineName
+from boxbranding import getMachineBrand, getMachineName, getMachineBuild
 from os import system, rename, path, mkdir, remove
 from time import sleep
 import re
@@ -18,8 +18,9 @@ from Components.Console import Console
 from Components.Sources.List import List
 from Components.Sources.StaticText import StaticText
 from Components.Harddisk import Harddisk
+from Components.SystemInfo import SystemInfo
 from Tools.LoadPixmap import LoadPixmap
-from Tools.Directories import SCOPE_ACTIVE_SKIN, resolveFilename
+from Tools.Directories import SCOPE_ACTIVE_SKIN, resolveFilename, pathExists
 
 class VIXDevicesPanel(Screen):
 	skin = """
@@ -131,45 +132,65 @@ class VIXDevicesPanel(Screen):
 			if not parts:
 				continue
 			device = parts[3]
-			if not re.search('sd[a-z][1-9]', device):
+			if not re.search('sd[a-z][1-9]', device) and not re.search('mmcblk[0-9]p[1-9]', device):
+				continue
+			if SystemInfo["HasSDmmc"] and pathExists("/dev/sda4") and re.search('sd[a][1-4]', device):
 				continue
 			if device in list2:
 				continue
 			self.buildMy_rec(device)
 			list2.append(device)
-
 		f.close()
 		self['list'].list = self.list
 		self['lab1'].hide()
 
 	def buildMy_rec(self, device):
-		device2 = re.sub('[0-9]', '', device)
+		if re.search('mmcblk[0-9]p[0-9][0-9]', device):
+			device2 = re.sub('p[0-9][0-9]', '', device)
+		elif re.search('mmcblk[0-9]p[0-9]', device):
+			device2 = re.sub('p[0-9]', '', device)
+		else:
+			device2 = re.sub('[0-9]', '', device)
 		devicetype = path.realpath('/sys/block/' + device2 + '/device')
+		print 'DEVICETYPE:',devicetype
+		print 'TEST TYPE MMC:',devicetype.find('mmc')
+		print 'TEST TYPE SDHCI:',devicetype.find('rdb')
+		if devicetype.find('mmc') != -1 and (devicetype.find('rdb') != -1 or (devicetype.find('soc') != -1 and getMachineBuild() != 'h9')):
+			return
 		d2 = device
 		name = _("HARD DISK: ")
-		if path.exists(resolveFilename(SCOPE_ACTIVE_SKIN, "vixcore/dev_hdd.png")):
-			mypixmap = resolveFilename(SCOPE_ACTIVE_SKIN, "vixcore/dev_hdd.png")
+		if path.exists(resolveFilename(SCOPE_ACTIVE_SKIN, "obhcore/dev_hdd.png")):
+			mypixmap = resolveFilename(SCOPE_ACTIVE_SKIN, "obhcore/dev_hdd.png")
 		else:
-			mypixmap = '/usr/lib/enigma2/python/Plugins/SystemPlugins/ViX/images/dev_hdd.png'
-		model = file('/sys/block/' + device2 + '/device/model').read()
+			mypixmap = '/usr/lib/enigma2/python/Plugins/SystemPlugins/OBH/images/dev_hdd.png'
+		if pathExists('/sys/block/' + device2 + '/device/model'):
+			model = file('/sys/block/' + device2 + '/device/model').read()
+		elif pathExists('/sys/block/' + device2 + '/device/name'):
+			model = file('/sys/block/' + device2 + '/device/name').read()
 		model = str(model).replace('\n', '')
 		des = ''
 		if devicetype.find('usb') != -1:
 			name = _('USB: ')
-			if path.exists(resolveFilename(SCOPE_ACTIVE_SKIN, "vixcore/dev_usb.png")):
-				mypixmap = resolveFilename(SCOPE_ACTIVE_SKIN, "vixcore/dev_usb.png")
+			if path.exists(resolveFilename(SCOPE_ACTIVE_SKIN, "obhcore/dev_usb.png")):
+				mypixmap = resolveFilename(SCOPE_ACTIVE_SKIN, "obhcore/dev_usb.png")
 			else:
-				mypixmap = '/usr/lib/enigma2/python/Plugins/SystemPlugins/ViX/images/dev_usb.png'
+				mypixmap = '/usr/lib/enigma2/python/Plugins/SystemPlugins/OBH/images/dev_usb.png'
+		elif devicetype.find('mmc') != -1:
+			name = _('SDCARD: ')
+			if path.exists(resolveFilename(SCOPE_ACTIVE_SKIN, "obhcore/dev_sd.png")):
+				mypixmap = resolveFilename(SCOPE_ACTIVE_SKIN, "obhcore/dev_sd.png")
+			else:
+				mypixmap = '/usr/lib/enigma2/python/Plugins/SystemPlugins/OBH/images/dev_sd.png'
 		name += model
-		self.Console.ePopen("sfdisk -l /dev/sd? | grep swap | awk '{print $(NF-9)}' >/tmp/devices.tmp")
-		sleep(0.5)
-		f = open('/tmp/devices.tmp', 'r')
-		swapdevices = f.read()
-		f.close()
-		if path.exists('/tmp/devices.tmp'):
-			remove('/tmp/devices.tmp')
-		swapdevices = swapdevices.replace('\n', '')
-		swapdevices = swapdevices.split('/')
+		# self.Console.ePopen("sfdisk -l /dev/sd? | grep swap | awk '{print $(NF-9)}' >/tmp/devices.tmp")
+		# sleep(0.5)
+		# f = open('/tmp/devices.tmp', 'r')
+		# swapdevices = f.read()
+		# f.close()
+		# if path.exists('/tmp/devices.tmp'):
+		# 	remove('/tmp/devices.tmp')
+		# swapdevices = swapdevices.replace('\n', '')
+		# swapdevices = swapdevices.split('/')
 		f = open('/proc/mounts', 'r')
 		d1 = _("None")
 		dtype = _("unavailable")
@@ -181,13 +202,13 @@ class VIXDevicesPanel(Screen):
 				dtype = parts[2]
 				rw = parts[3]
 				break
-			else:
-				if device in swapdevices:
-					parts = line.strip().split()
-					d1 = _("None")
-					dtype = 'swap'
-					rw = _("None")
-					break
+			# else:
+			# 	if device in swapdevices:
+			# 		parts = line.strip().split()
+			# 		d1 = _("None")
+			# 		dtype = 'swap'
+			# 		rw = _("None")
+			# 		break
 		f.close()
 		size = Harddisk(device).diskSize()
 
@@ -323,35 +344,46 @@ class VIXDevicePanelConf(Screen, ConfigListScreen):
 
 		self['key_green'] = Label(_("Save"))
 		self['key_red'] = Label(_("Cancel"))
-		self['Linconn'] = Label(_("Please wait while scanning your %s %s devices...") % (getMachineBrand(), getMachineName()))
+		self['Linconn'] = Label()
 		self['actions'] = ActionMap(['WizardActions', 'ColorActions'], {'green': self.saveMypoints, 'red': self.close, 'back': self.close})
 		self.Console = Console()
+		self.activityTimer = eTimer()
+		self.activityTimer.timeout.get().append(self.updateList2)
 		self.updateList()
 
-	def updateList(self):
+	def updateList(self, result=None, retval=None, extra_args=None):
+		scanning = _("Please wait while scanning your %s %s devices...") % (getMachineBrand(), getMachineName())
+		self['Linconn'].setText(scanning)
+		self.activityTimer.start(10)
+
+	def updateList2(self):
+		self.activityTimer.stop()
 		self.list = []
 		list2 = []
-		self.Console.ePopen("sfdisk -l /dev/sd? | grep swap | awk '{print $(NF-9)}' >/tmp/devices.tmp")
-		sleep(0.5)
-		f = open('/tmp/devices.tmp', 'r')
-		swapdevices = f.read()
-		f.close()
-		if path.exists('/tmp/devices.tmp'):
-			remove('/tmp/devices.tmp')
-		swapdevices = swapdevices.replace('\n', '')
-		swapdevices = swapdevices.split('/')
+		# self.Console.ePopen("sfdisk -l /dev/sd? | grep swap | awk '{print $(NF-9)}' >/tmp/devices.tmp")
+		# sleep(0.5)
+		# swapdevices = ''
+		# if path.exists('/tmp/devices.tmp'):
+		# 	f = open('/tmp/devices.tmp', 'r')
+		# 	swapdevices = f.read()
+		# 	f.close()
+		# 	remove('/tmp/devices.tmp')
+		# swapdevices = swapdevices.replace('\n', '')
+		# swapdevices = swapdevices.split('/')
 		f = open('/proc/partitions', 'r')
 		for line in f.readlines():
 			parts = line.strip().split()
 			if not parts:
 				continue
 			device = parts[3]
-			if not re.search('sd[a-z][1-9]', device):
+			if not re.search('sd[a-z][1-9]', device) and not re.search('mmcblk[0-9]p[1-9]', device):
+				continue
+			if SystemInfo["HasSDmmc"] and pathExists("/dev/sda4") and re.search('sd[a][1-4]', device):
 				continue
 			if device in list2:
 				continue
-			if device in swapdevices:
-				continue
+			# if device in swapdevices:
+			# 	continue
 			self.buildMy_rec(device)
 			list2.append(device)
 		f.close()
@@ -360,23 +392,39 @@ class VIXDevicePanelConf(Screen, ConfigListScreen):
 		self['Linconn'].hide()
 
 	def buildMy_rec(self, device):
-		device2 = re.sub('[0-9]', '', device)
+		if re.search('mmcblk[0-9]p[0-9][0-9]', device):
+			device2 = re.sub('p[0-9][0-9]', '', device)
+		elif re.search('mmcblk[0-9]p[0-9]', device):
+			device2 = re.sub('p[0-9]', '', device)
+		else:
+			device2 = re.sub('[0-9]', '', device)
 		devicetype = path.realpath('/sys/block/' + device2 + '/device')
+		if devicetype.find('mmc') != -1 and (devicetype.find('rdb') != -1 or (devicetype.find('soc') != -1 and getMachineBuild() != 'h9')):
+			return
 		d2 = device
 		name = _("HARD DISK: ")
-		if path.exists(resolveFilename(SCOPE_ACTIVE_SKIN, "vixcore/dev_hdd.png")):
-			mypixmap = resolveFilename(SCOPE_ACTIVE_SKIN, "vixcore/dev_hdd.png")
+		if path.exists(resolveFilename(SCOPE_ACTIVE_SKIN, "obhcore/dev_hdd.png")):
+			mypixmap = resolveFilename(SCOPE_ACTIVE_SKIN, "obhcore/dev_hdd.png")
 		else:
-			mypixmap = '/usr/lib/enigma2/python/Plugins/SystemPlugins/ViX/images/dev_hdd.png'
-		model = file('/sys/block/' + device2 + '/device/model').read()
+			mypixmap = '/usr/lib/enigma2/python/Plugins/SystemPlugins/OBH/images/dev_hdd.png'
+		if pathExists('/sys/block/' + device2 + '/device/model'):
+			model = file('/sys/block/' + device2 + '/device/model').read()
+		elif pathExists('/sys/block/' + device2 + '/device/name'):
+			model = file('/sys/block/' + device2 + '/device/name').read()
 		model = str(model).replace('\n', '')
 		des = ''
 		if devicetype.find('usb') != -1:
 			name = _('USB: ')
-			if path.exists(resolveFilename(SCOPE_ACTIVE_SKIN, "vixcore/dev_usb.png")):
-				mypixmap = resolveFilename(SCOPE_ACTIVE_SKIN, "vixcore/dev_usb.png")
+			if path.exists(resolveFilename(SCOPE_ACTIVE_SKIN, "obhcore/dev_usb.png")):
+				mypixmap = resolveFilename(SCOPE_ACTIVE_SKIN, "obhcore/dev_usb.png")
 			else:
-				mypixmap = '/usr/lib/enigma2/python/Plugins/SystemPlugins/ViX/images/dev_usb.png'
+				mypixmap = '/usr/lib/enigma2/python/Plugins/SystemPlugins/OBH/images/dev_usb.png'
+		elif devicetype.find('mmc') != -1:
+			name = _('SDCARD: ')
+			if path.exists(resolveFilename(SCOPE_ACTIVE_SKIN, "obhcore/dev_sd.png")):
+				mypixmap = resolveFilename(SCOPE_ACTIVE_SKIN, "obhcore/dev_sd.png")
+			else:
+				mypixmap = '/usr/lib/enigma2/python/Plugins/SystemPlugins/OBH/images/dev_sd.png'
 		name += model
 		d1 = _("None")
 		dtype = _("unavailable")
@@ -405,9 +453,10 @@ class VIXDevicePanelConf(Screen, ConfigListScreen):
 																		   ('/media/hdd3', '/media/hdd3'),
 																		   ('/media/usb', '/media/usb'),
 																		   ('/media/usb2', '/media/usb2'),
-																		   ('/media/usb3', '/media/usb3')]))
+																		   ('/media/usb3', '/media/usb3'),
+																		   ('/media/sdcard', '/media/sdcard')]))
 		if dtype == 'Linux':
-			dtype = 'ext3'
+			dtype = 'ext4'
 		else:
 			dtype = 'auto'
 		item.value = d1.strip()
@@ -435,7 +484,7 @@ class VIXDevicePanelConf(Screen, ConfigListScreen):
 		ybox.setTitle(_("Restart %s %s.") % (getMachineBrand(), getMachineName()))
 
 	def add_fstab(self, result=None, retval=None, extra_args=None):
-		print '[MountManager] RESULT:', result
+		# print '[MountManager] RESULT:', result
 		if result:
 			self.device = extra_args[0]
 			self.mountp = extra_args[1]
@@ -484,5 +533,3 @@ class VIXDevicesPanelSummary(Screen):
 	def selectionChanged(self, name, desc):
 		self["entry"].text = name
 		self["desc"].text = desc
-
-
