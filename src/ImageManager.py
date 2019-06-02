@@ -1430,30 +1430,6 @@ class ImageManagerDownload(Screen):
 			import urllib2
 			from bs4 import BeautifulSoup
 
-#			supportedMachines = {
-#				'vuduo'           : 'Vu+Duo',
-#				'vuduo2'          : 'Vu+Duo2',
-#				'vuduo4k'         : 'Vu+Duo4k',				
-#				'vusolo'          : 'Vu+Solo',
-#				'vusolo2'         : 'Vu+Solo2',
-#				'vusolo4k'        : 'Vu+Solo4K',
-#				'vusolose'        : 'Vu+Solo-SE',
-#				'vuultimo'        : 'Vu+Ultimo',
-#				'vuultimo4k'      : 'Vu+Ultimo4K',
-#				'vuuno'           : 'Vu+Uno',
-#				'vuuno4k'         : 'Vu+Uno4K',
-#				'vuuno4kse'       : 'Vu+Uno4KSE',
-#				'vuzero'          : 'Vu+Zero',
-#				'vuzero4k'        : 'Vu+Zero4K',
-#			}
-#			}
-#
-#			try:
-#				self.boxtype = supportedMachines[getMachineMake()]
-#			except:
-#				print "[ImageManager][populate_List] the %s is not currently supported by OpenBH." % getMachineMake()
-#				self.boxtype = 'UNKNOWN'
-
 			self.boxtype = getMachineMake()
 
 			url = 'http://www.vuplus-community.net/openbh-builds/'+self.boxtype+'/'
