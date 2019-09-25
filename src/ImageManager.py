@@ -381,7 +381,7 @@ class VIXImageManager(Screen):
 		self.HasSDmmc = False
 		self.multibootslot = 1
 		self.MTDKERNEL = getMachineMtdKernel()
-		self.MTDROOTFS = getMachineMtdRoot()	
+		self.MTDROOTFS = getMachineMtdRoot()
 		if getMachineMake() == 'et8500' and path.exists('/proc/mtd'):
 			self.dualboot = self.dualBoot()
 		recordings = self.session.nav.getRecordings()
@@ -441,7 +441,7 @@ class VIXImageManager(Screen):
 						self.MTDROOTFS = "%s" %(self.imagelist[retval]['part'])
 					else:
 						self.MTDKERNEL = getMachineMtdKernel()
-						self.MTDROOTFS = getMachineMtdRoot()					
+						self.MTDROOTFS = getMachineMtdRoot()
 			if self.sel:
 				if config.imagemanager.autosettingsbackup.value:
 					self.doSettingsBackup()
@@ -495,25 +495,21 @@ class VIXImageManager(Screen):
 
 	def keyRestore6(self,ret):
 		MAINDEST = '%s/%s' % (self.TEMPDESTROOT,getImageFolder())
-		CMD = "/usr/bin/ofgwrite -r -k '%s'" % MAINDEST
 		if ret == 0:
+			CMD = "/usr/bin/ofgwrite -r -k '%s'" % MAINDEST
 			if SystemInfo["canMultiBoot"]:
+				CMD = "/usr/bin/ofgwrite -r -k -m%s '%s'" % (self.multibootslot, MAINDEST)
  				if SystemInfo["HasSDmmc"]:
 					CMD = "/usr/bin/ofgwrite -r%s -k%s '%s'" % (self.MTDROOTFS, self.MTDKERNEL, MAINDEST)
-				elif SystemInfo["HasRootSubdir"] and not SystemInfo["canMode12"]:
-					CMD = "/usr/bin/ofgwrite -f -r -k -m%s '%s'" % (self.multibootslot, MAINDEST)
-				else:
-					CMD = "/usr/bin/ofgwrite -r -k -m%s '%s'" % (self.multibootslot, MAINDEST)
  			elif SystemInfo["HasHiSi"]:
 				CMD = "/usr/bin/ofgwrite -r%s -k%s '%s'" % (self.MTDROOTFS, self.MTDKERNEL, MAINDEST)
-			elif SystemInfo["HasH9SD"]: 
+			elif SystemInfo["HasH9SD"]:
 				if  fileHas("/proc/cmdline", "root=/dev/mmcblk0p1") is True and fileExists("%s/rootfs.tar.bz2" %MAINDEST):
 					CMD = "/usr/bin/ofgwrite -rmmcblk0p1 '%s'" % (MAINDEST)
-			elif fileExists("%s/rootfs.ubi" %MAINDEST) and fileExists("%s/rootfs.tar.bz2" %MAINDEST):
-				rename('%s/rootfs.tar.bz2' %MAINDEST, '%s/xx.txt' %MAINDEST)
+				elif fileExists("%s/rootfs.ubi" %MAINDEST) and fileExists("%s/rootfs.tar.bz2" %MAINDEST):
+					rename('%s/rootfs.tar.bz2' %MAINDEST, '%s/xx.txt' %MAINDEST)
 		else:
 			CMD = '/usr/bin/ofgwrite -rmtd4 -kmtd3  %s/' % (MAINDEST)
-		config.imagemanager.restoreimage.setValue(self.sel)
 		print '[ImageManager] running commnd:',CMD
 		self.Console.ePopen(CMD, self.ofgwriteResult)
 		fbClass.getInstance().lock()
@@ -767,7 +763,7 @@ class ImageBackup(Screen):
 				self.MTDKERNEL = "%s%s" %(SystemInfo["canMultiBoot"][2], kern)
 				self.MTDROOTFS = "%s%s" %(SystemInfo["canMultiBoot"][2], root)
 				self.ROOTFSSUBDIR = "linuxrootfs%s" %self.rootdir
-			else:					
+			else:
 				self.addin = SystemInfo["canMultiBoot"][0]
 				self.MTDKERNEL = "%s%s" %(SystemInfo["canMultiBoot"][2], kernel*2 +self.addin -1)
 				self.MTDROOTFS = "%s%s" %(SystemInfo["canMultiBoot"][2], kernel*2 +self.addin)
@@ -839,7 +835,7 @@ class ImageBackup(Screen):
 		task = Components.Task.ConditionTask(job, _("Backing up eMMC partitions for USB flash..."), timeoutCount=900)
 		task.check = lambda: self.Stage3Completed
 		task.weighting = 15
-	
+
 		task = Components.Task.PythonTask(job, _("Removing temp mounts..."))
 		task.work = self.doBackup4
 		task.weighting = 5
@@ -1002,7 +998,7 @@ class ImageBackup(Screen):
 			self.commands.append('mount --bind / %s/root' % self.TMPDIR)
 			if getMachineBuild() in ("h9","i55plus"):
 				z = open('/proc/cmdline', 'r').read()
-				if SystemInfo["HasMMC"] and "root=/dev/mmcblk0p1" in z: 
+				if SystemInfo["HasMMC"] and "root=/dev/mmcblk0p1" in z:
 					self.ROOTFSTYPE = "tar.bz2"
 					self.commands.append("/bin/tar -cf %s/rootfs.tar -C %s/root --exclude ./var/nmbd --exclude ./.resizerootfs --exclude ./.resize-rootfs --exclude ./.resize-linuxrootfs --exclude ./.resize-userdata --exclude ./var/lib/samba/private/msg.sock ." % (self.WORKDIR, self.TMPDIR))
 					self.commands.append("/usr/bin/bzip2 %s/rootfs.tar" % self.WORKDIR)
@@ -1088,7 +1084,7 @@ class ImageBackup(Screen):
 			self.commandMB.append('parted -s %s unit KiB mkpart linuxkernel4 %s %s' % (EMMC_IMAGE, FOURTH_KERNEL_PARTITION_OFFSET, PARTED_END_KERNEL4 ))
 			try:
 				rd = open("/proc/swaps", "r").read()
-				if "mmcblk0p7" in rd: 
+				if "mmcblk0p7" in rd:
 					SWAP_PARTITION_OFFSET = int(FOURTH_KERNEL_PARTITION_OFFSET) + int(KERNEL_PARTITION_SIZE)
 					SWAP_PARTITION_SIZE = int(262144)
 					MULTI_ROOTFS_PARTITION_OFFSET = int(SWAP_PARTITION_OFFSET) + int(SWAP_PARTITION_SIZE)
@@ -1112,7 +1108,7 @@ class ImageBackup(Screen):
 			IMAGE_ROOTFS_ALIGNMENT=1024
 			BOOT_PARTITION_SIZE=3072
 			KERNEL_PARTITION_SIZE=8192
-			ROOTFS_PARTITION_SIZE=1898496				
+			ROOTFS_PARTITION_SIZE=1898496
 			EMMC_IMAGE_SIZE=7634944
 			KERNEL_PARTITION_OFFSET = int(IMAGE_ROOTFS_ALIGNMENT) + int(BOOT_PARTITION_SIZE)
 			ROOTFS_PARTITION_OFFSET = int(KERNEL_PARTITION_OFFSET) + int(KERNEL_PARTITION_SIZE)
@@ -1171,7 +1167,7 @@ class ImageBackup(Screen):
 			f.write('<Part Sel="1" PartitionName="rootfs" FlashType="emmc" FileSystem="ext3/4" Start="98M" Length="7000M" SelectFile="rootfs.ext4"/>\n')
 			f.write('</Partition_Info>\n')
 			f.close()
-			print '[ImageManager] Trio4K sf8008: Executing', '/usr/bin/mkupdate -s 00000003-00000001-01010101 -f %s/emmc_partitions.xml -d %s/%s' % (self.WORKDIR,self.WORKDIR,self.EMMCIMG) 
+			print '[ImageManager] Trio4K sf8008: Executing', '/usr/bin/mkupdate -s 00000003-00000001-01010101 -f %s/emmc_partitions.xml -d %s/%s' % (self.WORKDIR,self.WORKDIR,self.EMMCIMG)
 			self.commandMB.append('echo " "')
 			self.commandMB.append('echo "Create: fastboot dump"')
 			self.commandMB.append("dd if=/dev/mmcblk0p1 of=%s/fastboot.bin" % self.WORKDIR)
@@ -1247,7 +1243,7 @@ class ImageBackup(Screen):
 			system('cp -f /usr/share/fastboot.bin %s/fastboot.bin' %(self.MAINDEST2))
 			system('cp -f /usr/share/bootargs.bin %s/bootargs.bin' %(self.MAINDEST2))
 			z = open('/proc/cmdline', 'r').read()
-			if SystemInfo["HasMMC"] and "root=/dev/mmcblk0p1" in z: 
+			if SystemInfo["HasMMC"] and "root=/dev/mmcblk0p1" in z:
 				move('%s/rootfs.tar.bz2' % self.WORKDIR, '%s/rootfs.tar.bz2' % (self.MAINDEST))
 			else:
 				move('%s/rootfs.%s' % (self.WORKDIR, self.ROOTFSTYPE), '%s/%s' % (self.MAINDEST, self.ROOTFSFILE))
@@ -1291,13 +1287,13 @@ class ImageBackup(Screen):
 			if path.exists('/usr/lib/enigma2/python/Plugins/SystemPlugins/OBH/burn.bat'):
 				copy('/usr/lib/enigma2/python/Plugins/SystemPlugins/OBH/burn.bat', self.MAINDESTROOT + '/burn.bat')
 		elif SystemInfo["HasRootSubdir"]:
-				fileout = open(self.MAINDEST + '/force_%s_READ.ME' %self.MCBUILD, 'w')  
+				fileout = open(self.MAINDEST + '/force_%s_READ.ME' %self.MCBUILD, 'w')
 				line1 = "Rename the unforce_%s.txt to force_%s.txt and move it to the root of your usb-stick" %(self.MCBUILD, self.MCBUILD)
-				line2 = "When you enter the recovery menu then it will force the image to be installed in the linux selection" 
+				line2 = "When you enter the recovery menu then it will force the image to be installed in the linux selection"
 				fileout.write(line1)
 				fileout.write(line2)
 				fileout.close()
-				fileout = open(self.MAINDEST2 + '/unforce_%s.txt' %self.MCBUILD, 'w') 
+				fileout = open(self.MAINDEST2 + '/unforce_%s.txt' %self.MCBUILD, 'w')
 				line1 = 'rename this unforce_%s.txt to force_%s.txt to force an update without confirmation' %(self.MCBUILD, self.MCBUILD)
 				fileout.write(line1)
 				fileout.close()
