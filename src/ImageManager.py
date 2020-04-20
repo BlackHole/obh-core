@@ -397,7 +397,7 @@ class VIXImageManager(Screen):
 				self.multibootslot = retval
 				print "ImageManager", retval, self.imagelist
 				self.MTDKERNEL = SystemInfo["canMultiBoot"][self.multibootslot]["kernel"].split("/")[2]
-				self.MTDROOTFS = SystemInfo["canMultiBoot"][self.multibootslot]["device"].split("/")[2]
+				self.MTDROOTFS = SystemInfo["canMultiBoot"][self.multibootslot]["root"].split("/")[2]
 			if self.sel:
 				if config.imagemanager.autosettingsbackup.value:
 					self.doSettingsBackup()
@@ -453,7 +453,7 @@ class VIXImageManager(Screen):
 			if SystemInfo["canMultiBoot"]:
 				if SystemInfo["HasHiSi"] and SystemInfo["HasRootSubdir"] is False:  # SF8008 type receiver with single eMMC & SD card multiboot
 					CMD = "/usr/bin/ofgwrite -r%s -k%s '%s'" % (self.MTDROOTFS, self.MTDKERNEL, MAINDEST)
-				elif (SystemInfo["canMultiBoot"][self.multibootslot]["rootsubdir"]) is None:	# sf8008 type receiver using SD card in multiboot
+				elif SystemInfo["HasHiSi"] and SystemInfo["canMultiBoot"][self.multibootslot]["rootsubdir"] is None:	# sf8008 type receiver using SD card in multiboot
 					CMD = "/usr/bin/ofgwrite -r%s -k%s -m0 '%s'" % (self.MTDROOTFS, self.MTDKERNEL, MAINDEST)
 				else:
 					CMD = "/usr/bin/ofgwrite -r -k -m%s '%s'" % (self.multibootslot, MAINDEST)	# Normal multiboot
@@ -691,7 +691,7 @@ class ImageBackup(Screen):
 		if SystemInfo["canMultiBoot"]:
 			slot = GetCurrentImage()
 			self.MTDKERNEL = SystemInfo["canMultiBoot"][slot]["kernel"].split("/")[2]
-			self.MTDROOTFS = SystemInfo["canMultiBoot"][slot]["device"].split("/")[2]
+			self.MTDROOTFS = SystemInfo["canMultiBoot"][slot]["root"].split("/")[2]
 			if SystemInfo["HasRootSubdir"]:
 				self.ROOTFSSUBDIR = SystemInfo["canMultiBoot"][slot]["rootsubdir"]
 		else:
