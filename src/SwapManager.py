@@ -18,7 +18,7 @@ from Components.Console import Console
 from Components.Sources.StaticText import StaticText
 
 
-config.vixsettings.swapautostart = ConfigYesNo(default=False)
+config.obhsettings.swapautostart = ConfigYesNo(default=False)
 
 startswap = None
 
@@ -26,7 +26,7 @@ startswap = None
 def SwapAutostart(reason, session=None, **kwargs):
 	global startswap
 	if reason == 0:
-		if config.vixsettings.swapautostart.value:
+		if config.obhsettings.swapautostart.value:
 			print "[SwapManager] autostart"
 			startswap = StartSwap()
 			startswap.start()
@@ -160,8 +160,8 @@ class VIXSwap(Screen):
 		self.activityTimer.stop()
 		if path.exists('/etc/rcS.d/S98SwapManager'):
 			remove('/etc/rcS.d/S98SwapManager')
-			config.vixsettings.swapautostart.value = True
-			config.vixsettings.swapautostart.save()
+			config.obhsettings.swapautostart.value = True
+			config.obhsettings.swapautostart.save()
 		if path.exists('/tmp/swapdevices.tmp'):
 			remove('/tmp/swapdevices.tmp')
 		self.Console.ePopen("parted -l /dev/sd? | grep swap", self.updateSwap2)
@@ -204,12 +204,12 @@ class VIXSwap(Screen):
 						self.swapsize = info[stat.ST_SIZE]
 						continue
 
-		if config.vixsettings.swapautostart.value and self.swap_place:
+		if config.obhsettings.swapautostart.value and self.swap_place:
 			self['autostart_off'].hide()
 			self['autostart_on'].show()
 		else:
-			config.vixsettings.swapautostart.setValue(False)
-			config.vixsettings.swapautostart.save()
+			config.obhsettings.swapautostart.setValue(False)
+			config.obhsettings.swapautostart.save()
 			configfile.save()
 			self['autostart_on'].hide()
 			self['autostart_off'].show()
@@ -286,9 +286,9 @@ class VIXSwap(Screen):
 	def createDel2(self, result, retval, extra_args=None):
 		if retval == 0:
 			remove(self.swap_place)
-			if config.vixsettings.swapautostart.value:
-				config.vixsettings.swapautostart.setValue(False)
-				config.vixsettings.swapautostart.save()
+			if config.obhsettings.swapautostart.value:
+				config.obhsettings.swapautostart.setValue(False)
+				config.obhsettings.swapautostart.save()
 				configfile.save()
 			self.updateSwap()
 
@@ -326,12 +326,12 @@ class VIXSwap(Screen):
 
 	def autoSsWap(self):
 		if self.swap_place:
-			if config.vixsettings.swapautostart.value:
-				config.vixsettings.swapautostart.setValue(False)
-				config.vixsettings.swapautostart.save()
+			if config.obhsettings.swapautostart.value:
+				config.obhsettings.swapautostart.setValue(False)
+				config.obhsettings.swapautostart.save()
 			else:
-				config.vixsettings.swapautostart.setValue(True)
-				config.vixsettings.swapautostart.save()
+				config.obhsettings.swapautostart.setValue(True)
+				config.obhsettings.swapautostart.save()
 			configfile.save()
 		else:
 			mybox = self.session.open(MessageBox, _("You have to create a SWAP file before trying to activate the autostart."), MessageBox.TYPE_INFO)
