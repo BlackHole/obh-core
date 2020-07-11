@@ -126,28 +126,10 @@ class VIXBackupManager(Screen):
 		</applet>
 	</screen>"""
 
-	def __init__(self, session, menu_path=""):
+	def __init__(self, session):
 		Screen.__init__(self, session)
 		screentitle =  _("Backup manager")
-		self.menu_path = menu_path
-		if config.usage.show_menupath.value == 'large':
-			self.menu_path += screentitle
-			title = self.menu_path
-			self["menu_path_compressed"] = StaticText("")
-			self.menu_path += ' / '
-		elif config.usage.show_menupath.value == 'small':
-			title = screentitle
-			condtext = ""
-			if self.menu_path and not self.menu_path.endswith(' / '):
-				condtext = self.menu_path + " >"
-			elif self.menu_path:
-				condtext = self.menu_path[:-3] + " >"
-			self["menu_path_compressed"] = StaticText(condtext)
-			self.menu_path += screentitle + ' / '
-		else:
-			title = screentitle
-			self["menu_path_compressed"] = StaticText("")
-		Screen.setTitle(self, title)
+		self.setTitle(_("Backup manager"))
 
 		self['lab1'] = Label()
 		self["backupstatus"] = Label()
@@ -268,20 +250,20 @@ class VIXBackupManager(Screen):
 				self['lab1'].setText(_("Device: ") + config.backupmanager.backuplocation.value + "\n" + _("There is a problem with this device. Please reformat it and try again."))
 
 	def createSetup(self):
-		self.session.openWithCallback(self.setupDone, VIXBackupManagerMenu, 'vixbackupmanager', 'SystemPlugins/OBH', self.menu_path, PluginLanguageDomain)
+		self.session.openWithCallback(self.setupDone, VIXBackupManagerMenu, 'vixbackupmanager', 'SystemPlugins/OBH', PluginLanguageDomain)
 
 	def showLog(self):
 		self.sel = self['list'].getCurrent()
 		if self.sel:
 			filename = self.BackupDirectory + self.sel
-			self.session.open(VIXBackupManagerLogView, self.menu_path, filename)
+			self.session.open(VIXBackupManagerLogView, filename)
 
 	def setupDone(self, test=None):
 		if config.backupmanager.folderprefix.value == '':
 			config.backupmanager.folderprefix.value = defaultprefix
 			config.backupmanager.folderprefix.save()
 # If the prefix doesn't start with the defaultprefix it is a tag...
-# 
+#
 		if not config.backupmanager.folderprefix.value.startswith(defaultprefix):
 			config.backupmanager.folderprefix.value = defaultprefix + "-" + config.backupmanager.folderprefix.value
 			config.backupmanager.folderprefix.save()
@@ -504,7 +486,7 @@ class VIXBackupManager(Screen):
 	def Stage2Complete(self, result, retval, extra_args):
 		print '[BackupManager] Restoring Stage 2: Result ', result
 		if result.find('wget returned 4') != -1: # probably no network adaptor connected
-			self.feeds = 'NONETWORK' 
+			self.feeds = 'NONETWORK'
 			self.Stage2Completed = True
 		if result.find('wget returned 8') != -1 or result.find('wget returned 1') != -1 or result.find('wget returned 255') != -1 or result.find('404 Not Found') != -1: # Server issued an error response, or there was a wget generic error code.
 			self.feeds = 'DOWN'
@@ -725,21 +707,9 @@ class BackupSelection(Screen):
 			<widget name="checkList" position="5,50" size="550,250" transparent="1" scrollbarMode="showOnDemand"/>
 		</screen>"""
 
-	def __init__(self, session, menu_path):
+	def __init__(self, session):
 		Screen.__init__(self, session)
-		screentitle = _("Select files/folders to backup")
-		if config.usage.show_menupath.value == 'large':
-			menu_path += screentitle
-			print 'menu_pathoo',menu_path
-			title = menu_path
-			self["menu_path_compressed"] = StaticText("")
-		elif config.usage.show_menupath.value == 'small':
-			title = screentitle
-			self["menu_path_compressed"] = StaticText(menu_path + " >" if not menu_path.endswith(' / ') else menu_path[:-3] + " >" or "")
-		else:
-			title = screentitle
-			self["menu_path_compressed"] = StaticText("")
-		Screen.setTitle(self, title)
+		self.setTitle(_("Select files/folders to backup"))
 
 		self["key_red"] = StaticText(_("Cancel"))
 		self["key_green"] = StaticText(_("Save"))
@@ -826,20 +796,9 @@ class XtraPluginsSelection(Screen):
 			<widget name="checkList" position="5,50" size="550,250" transparent="1" scrollbarMode="showOnDemand"/>
 		</screen>"""
 
-	def __init__(self, session, menu_path):
+	def __init__(self, session):
 		Screen.__init__(self, session)
-		screentitle = _("Select extra packages folder")
-		if config.usage.show_menupath.value == 'large':
-			menu_path += screentitle
-			title = menu_path
-			self["menu_path_compressed"] = StaticText("")
-		elif config.usage.show_menupath.value == 'small':
-			title = screentitle
-			self["menu_path_compressed"] = StaticText(menu_path + " >" if not menu_path.endswith(' / ') else menu_path[:-3] + " >" or "")
-		else:
-			title = screentitle
-			self["menu_path_compressed"] = StaticText("")
-		Screen.setTitle(self, title)
+		self.setTitle(_("Select extra packages folder"))
 
 		self["key_red"] = StaticText(_("Cancel"))
 		self["key_green"] = StaticText(_("Save"))
@@ -929,9 +888,8 @@ class VIXBackupManagerMenu(Setup):
 		<widget name="description" position="0,e-75" size="560,75" font="Regular;18" halign="center" valign="top" transparent="0" zPosition="1"/>
 	</screen>"""
 
-	def __init__(self, session, setup, plugin=None, menu_path=None, PluginLanguageDomain=None):
-		Setup.__init__(self, session, setup, plugin, menu_path, PluginLanguageDomain)
-		self.menu_path = menu_path
+	def __init__(self, session, setup, plugin=None, PluginLanguageDomain=None):
+		Setup.__init__(self, session, setup, plugin, PluginLanguageDomain)
 		self.skinName = "VIXBackupManagerMenu"
 
 		self["actions2"] = ActionMap(["SetupActions", 'ColorActions', 'VirtualKeyboardActions', "MenuActions"],
@@ -946,10 +904,10 @@ class VIXBackupManagerMenu(Setup):
 		self["key_blue"] = Button(_("Choose local IPK's folder"))
 
 	def chooseFiles(self):
-		self.session.openWithCallback(self.backupfiles_choosen, BackupSelection, self.menu_path)
+		self.session.openWithCallback(self.backupfiles_choosen, BackupSelection)
 
 	def chooseXtraPluginDir(self):
-		self.session.open(XtraPluginsSelection, self.menu_path)
+		self.session.open(XtraPluginsSelection)
 
 	def backupfiles_choosen(self, ret):
 		self.backupdirs = ' '.join(config.backupmanager.backupdirs.value)
@@ -963,21 +921,10 @@ class VIXBackupManagerLogView(Screen):
 	<widget name="list" position="0,0" size="560,400" font="Regular;16"/>
 </screen>"""
 
-	def __init__(self, session, menu_path, filename):
+	def __init__(self, session, filename):
 		self.session = session
 		Screen.__init__(self, session)
-		screentitle =  _("Logs")
-		if config.usage.show_menupath.value == 'large':
-			menu_path += screentitle
-			title = menu_path
-			self["menu_path_compressed"] = StaticText("")
-		elif config.usage.show_menupath.value == 'small':
-			title = screentitle
-			self["menu_path_compressed"] = StaticText(menu_path + " >" if not menu_path.endswith(' / ') else menu_path[:-3] + " >" or "")
-		else:
-			title = screentitle
-			self["menu_path_compressed"] = StaticText("")
-		Screen.setTitle(self, title)
+		self.setTitle(_("Logs"))
 
 		self.skinName = "VIXBackupManagerLogView"
 		filedate = str(date.fromtimestamp(stat(filename).st_mtime))

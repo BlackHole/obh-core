@@ -1,5 +1,4 @@
-import urllib
-import urllib2
+from urllib2 import urlopen, HTTPError
 import json
 
 from boxbranding import getBoxType, getImageType, getImageDistro, getImageVersion, getImageBuild, getImageDevBuild, getImageFolder, getImageFileSystem, getBrandOEM, getMachineBrand, getMachineName, getMachineBuild, getMachineMake, getMachineMtdRoot, getMachineRootFile, getMachineMtdKernel, getMachineKernelFile, getMachineMKUBIFS, getMachineUBINIZE
@@ -99,28 +98,9 @@ class VIXImageManager(Screen):
 		</applet>
 	</screen>"""
 
-	def __init__(self, session, menu_path=""):
+	def __init__(self, session):
 		Screen.__init__(self, session)
-		screentitle = _("Image manager")
-		self.menu_path = menu_path
-		if config.usage.show_menupath.value == "large":
-			self.menu_path += screentitle
-			title = self.menu_path
-			self["menu_path_compressed"] = StaticText("")
-			self.menu_path += " / "
-		elif config.usage.show_menupath.value == "small":
-			title = screentitle
-			condtext = ""
-			if self.menu_path and not self.menu_path.endswith(" / "):
-				condtext = self.menu_path + " >"
-			elif self.menu_path:
-				condtext = self.menu_path[:-3] + " >"
-			self["menu_path_compressed"] = StaticText(condtext)
-			self.menu_path += screentitle + " / "
-		else:
-			title = screentitle
-			self["menu_path_compressed"] = StaticText("")
-		Screen.setTitle(self, title)
+		self.setTitle(_("Image manager"))
 
 		self["lab1"] = Label()
 		self["backupstatus"] = Label()
@@ -251,10 +231,10 @@ class VIXImageManager(Screen):
 				self["lab1"].setText(_("Device: ") + config.imagemanager.backuplocation.value + "\n" + _("There is a problem with this device. Please reformat it and try again."))
 
 	def createSetup(self):
-		self.session.openWithCallback(self.setupDone, Setup, "viximagemanager", "SystemPlugins/OBH", self.menu_path, PluginLanguageDomain)
+		self.session.openWithCallback(self.setupDone, Setup, "viximagemanager", "SystemPlugins/OBH", PluginLanguageDomain)
 
 	def doDownload(self):
-		self.session.openWithCallback(self.populate_List, ImageManagerDownload, self.menu_path, self.BackupDirectory)
+		self.session.openWithCallback(self.populate_List, ImageManagerDownload, self.BackupDirectory)
 
 	def setupDone(self, test=None):
 		if config.imagemanager.folderprefix.value == "":
@@ -448,6 +428,8 @@ class VIXImageManager(Screen):
 					CMD = "/usr/bin/ofgwrite -r%s -k%s '%s'" % (self.MTDROOTFS, self.MTDKERNEL, MAINDEST)
 				elif SystemInfo["HasHiSi"] and SystemInfo["canMultiBoot"][self.multibootslot]["rootsubdir"] is None:	# sf8008 type receiver using SD card in multiboot
 					CMD = "/usr/bin/ofgwrite -r%s -k%s -m0 '%s'" % (self.MTDROOTFS, self.MTDKERNEL, MAINDEST)
+					if fileExists("/boot/STARTUP") and fileExists("/boot/STARTUP_6"):
+						copyfile("/boot/STARTUP_%s" % self.multibootslot, "/boot/STARTUP")
 				else:
 					CMD = "/usr/bin/ofgwrite -r -k -m%s '%s'" % (self.multibootslot, MAINDEST)	# Normal multiboot
 			elif SystemInfo["HasH9SD"]:
@@ -1297,21 +1279,9 @@ class ImageManagerDownload(Screen):
 		</applet>
 	</screen>"""
 
-	def __init__(self, session, menu_path, BackupDirectory):
+	def __init__(self, session, BackupDirectory):
 		Screen.__init__(self, session)
-		screentitle = _("Downloads")
-		if config.usage.show_menupath.value == 'large':
-			menu_path += screentitle
-			title = menu_path
-			self["menu_path_compressed"] = StaticText("")
-		elif config.usage.show_menupath.value == 'small':
-			title = screentitle
-			self["menu_path_compressed"] = StaticText(menu_path + " >" if not menu_path.endswith(' / ') else menu_path[:-3] + " >" or "")
-		else:
-			title = screentitle
-			self["menu_path_compressed"] = StaticText("")
-		Screen.setTitle(self, title)
-
+		self.setTitle(_("Downloads"))
 		self.BackupDirectory = BackupDirectory
 		self['lab1'] = Label(_("Select an image to download:"))
 		self["key_red"] = Button(_("Close"))
