@@ -192,7 +192,7 @@ msgid "Choose files"
 msgstr "Выбрать файлы"
 
 msgid "Choose local IPK's folder"
-msgstr "Выбрать локальную папку с IPK"
+msgstr "Выбрать папку с IPK"
 
 msgid "Choose where to mount your devices to:"
 msgstr "Выберите, точки монтирования устройств:"
