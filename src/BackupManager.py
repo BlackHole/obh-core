@@ -41,7 +41,7 @@ for p in harddiskmanager.getMountedPartitions():
 
 config.backupmanager = ConfigSubsection()
 config.backupmanager.showboxname = ConfigYesNo(default=False)
-defaultprefix = getImageDistro()[4:]
+defaultprefix = "obh"
 config.backupmanager.folderprefix = ConfigText(default=defaultprefix, fixed_size=False)
 config.backupmanager.backuplocation = ConfigSelection(choices=hddchoices)
 config.backupmanager.schedule = ConfigYesNo(default=False)
