@@ -15093,3 +15093,18 @@ msgstr "مساعدة في الريموت كنترول"
 
 msgid "YouTube TV is a new way to watch YouTube videos on Vu+"
 msgstr "طريقة جديدة لمشاهدة مقاطع اليوتيوب على أجهزة الفوبلس"
+
+msgid "Tuners & Scanning"
+msgstr "المؤالفات و البحث"
+
+msgid "Hide number markers"
+msgstr "إخفاء علامات الارقام"
+
+msgid "Zap key delay for channel number input"
+msgstr "تأخير مفتاح التنقل أثناء إدخال رقم القناة"
+
+msgid "Wake On LAN"
+msgstr "تفعيل شبكة الانترنت عبر الكيبل"
+
+msgid "Enable OpenTV EPG"
+msgstr "تفعيل دليل البرامج الالكتروينة للقنوات المفتوحة"
