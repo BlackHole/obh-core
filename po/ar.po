@@ -2,14 +2,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OBH enigma2\n"
 "POT-Creation-Date: 2018-11-12 22:49+0100\n"
-"PO-Revision-Date: 2019-04-12 12:36+0300\n"
+"PO-Revision-Date: 2020-11-17 12:47+0300\n"
 "Last-Translator: mosad - مساعد الجعيد <abo-mishal@hotmail.com>\n"
 "Language-Team: mosad - مساعد الجعيد\n"
 "Language: ar\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.2.1\n"
+"X-Generator: Poedit 2.4.1\n"
 "X-Poedit-Basepath: .\n"
 "Plural-Forms: nplurals=6; plural=(n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5);\n"
 "X-Poedit-SearchPath-0: D:/Decoder/VU+/OBH 4.2/it/LC_MESSAGES/enigma2/OBH/OBH LOCALE\n"
@@ -15108,3 +15108,473 @@ msgstr "تفعيل شبكة الانترنت عبر الكيبل"
 
 msgid "Enable OpenTV EPG"
 msgstr "تفعيل دليل البرامج الالكتروينة للقنوات المفتوحة"
+
+msgid "Standby & Restart"
+msgstr "وضع الاستعداد و إعادة التشغيل"
+
+msgid "Recordings, Playback & Timeshift"
+msgstr "التسجيل, تشغيل و التحكم الزمني في البث المباشر"
+
+msgid "Automatic Language"
+msgstr "اللغة التلقائية"
+
+msgid "Tuner Setup"
+msgstr "ضبط المؤالف"
+
+msgid "Channel Selection"
+msgstr "إختيار القناة"
+
+msgid "Skin Setup"
+msgstr "ضبط السكن"
+
+msgid "Button Setup"
+msgstr "ضبط المفاتيح"
+
+msgid "Parental Control"
+msgstr "الرقابة الأبوية"
+
+msgid "Infobar EPG activation"
+msgstr "تنشيط الدليل الإلكتروني في شريط المعلومات"
+
+msgid "Show screen path"
+msgstr "عرض مسار الشاشة"
+
+msgid "Show two lines per entry"
+msgstr "عرض سطرين لكل قناة في المفضلة"
+
+msgid "Show picons during channel number input"
+msgstr "عرض الأيقونات أثناء التنقل برقم القناة"
+
+msgid "Number of digits in channel number"
+msgstr "عدد أرقام ترقيم القنوات"
+
+msgid "3D Setup"
+msgstr "ضبط شاشة العرض ثلاثية الابعاد"
+
+msgid "OSD Position"
+msgstr "مكان شاشة العرض المصغرة"
+
+msgid "Use separate Picon pack for Front Display"
+msgstr "إستخدام حزمة أيقونات منفصلة لشاشة العرض الأمامية"
+
+msgid "Add Language"
+msgstr "إضافة لغة"
+
+msgid "Delete Language(s)"
+msgstr "حذف اللغة (اللغات)"
+
+msgid "Recording & Playback"
+msgstr "التسجيل و إعادة التشغيل"
+
+msgid "Split event detection (minutes)"
+msgstr "تقسيم الكشف عن الحدث (دقائق)"
+
+msgid "Initialize Devices"
+msgstr "تهيئة الأجهزة"
+
+msgid "Time zone area"
+msgstr "المنطقة الزمنية"
+
+msgid "Time zone"
+msgstr "المنطقة الزمنية"
+
+msgid "Software Update"
+msgstr "تحديث البرنامج التشغيلي"
+
+msgid "Input Devices"
+msgstr "الاجهزة المدخلة"
+
+msgid "Remote Control Code"
+msgstr "رمز ريموت التحكم عن بعد"
+
+msgid "ServiceApp"
+msgstr "تطبيق خدمات القنوات الصوتية"
+
+msgid "Factory Reset"
+msgstr "إعادة ضبط المنصع"
+
+msgid "Customise settings"
+msgstr "تخصيص الإعدادات"
+
+msgid "Main Menu"
+msgstr "القائمة الرئيسية"
+
+msgid "Fallback Configuration"
+msgstr "إعدادات التراجع"
+
+msgid "scan for transponders"
+msgstr "البحث عن الترددات"
+
+msgid "Front Panel Display"
+msgstr "عرض اللوحة الأمامية"
+
+msgid "Select how to activate the Infobar EPG. This will affect Infobar behavior (Default: as plugin inextended bar)"
+msgstr ""
+"حدد كيفية تنشيط شريط المعلومات الدليل الإلكتروني. سيؤثر هذا على سلوك شريط المعلومات (الافتراضي: البلجن في\n"
+"شريط موسع)"
+
+msgid "Use piconlcd directory for picons on color LCD (Default:no)"
+msgstr "استخدم مسار أيقونات الشاشة الصغيرة للأيقونات على الشاشة الملونة الصغيرة (الافتراضي: لا)"
+
+msgid "When enabled, number markers will be hidden. (Default:yes)"
+msgstr "عند تمكين، سيتم إخفاء علامات الأرقام. (الافتراضي:نعم)"
+
+msgid "Show the service infomation on two lines in the channel selection screen. You can choose betweenthe current event description below the channel name, or the current event description next to thechannel name, and the next event description on the second line. (Default:nothing)"
+msgstr "عرض معلومات دليل القناة على سطرين في شاشة تحديد القناة. يمكنك الاختيار بين وصف الحدث الحالي أسفل اسم القناة، أو وصف الحدث الحالي بجوار اسم القناة، ووصف الحدث التالي على السطر الثاني. (الافتراضي: لا شيء)"
+
+msgid "In live view wait this many seconds after a numeric key press before assuming the required channelnumber has been entered. Default: 5 seconds. Setting zero will require confirmation with 'OK'.(Default:5)"
+msgstr "في العرض المباشر ، انتظر عدة ثوانٍ بعد الضغط على مفتاح رقمي قبل افتراض إدخال رقم القناة المطلوب. الافتراضي: 5 ثواني. سيتطلب ضبط الصفر تأكيدًا مع 'موافق'.(الافتراضي:5)"
+
+msgid "Configure whether service picons will be shown in number zap. (Default:yes)"
+msgstr "إعدادات تكوين ما إذا كان سيتم عرض أيقونات القنوات في رقم التنقل بين القنوات.(الافتراضي:نعم)"
+
+msgid "This allow you to set the number of digits you can input when selecting channels using numberinput. (Default: 4)"
+msgstr "يسمح لك هذا بتعيين عدد الأرقام التي يمكنك إدخالها عند تحديد القنوات باستخدام رقم الإدخال. (الافتراضي: 4)"
+
+msgid "Cron Timers"
+msgstr "جدولة أوامر المؤقتات"
+
+msgid "Power Timers"
+msgstr "مؤقتات عند الاغلاق"
+
+msgid "Streaming Clients"
+msgstr "المشاركين في البث"
+
+msgid "Streaming Clients Info"
+msgstr "معلومات المشاركين في البث"
+
+msgid "Poster Preview (TMBD)"
+msgstr "معاينة الغلاف (قاعدة بيانات الأفلام)"
+
+msgid "Search for movie in TMBD"
+msgstr "البحث عن الفلم في قاعدة بيانات الافلام"
+
+msgid "Play with ServiceExtEplayer3"
+msgstr "تشغيل مع خدمة المشغل الثلاثي الإضافي"
+
+msgid "Play with ServiceGstPlayer"
+msgstr "تشغيل مع خدمة جي ستريمر"
+
+msgid "TMBD Details"
+msgstr "تفاصيل قاعدة بيانات الافلام"
+
+msgid "Enigma2 playback system"
+msgstr "نظام مشغل الانجما2"
+
+msgid "ServiceGstPlayer (5001)"
+msgstr "خدمة مشغل جي ستريمر (5001)"
+
+msgid "GstPlayer"
+msgstr "مشغل جي ستريمر"
+
+msgid "ServiceExtEplayer3 (5002)"
+msgstr "خدمة المشغل الثلاثي الإضافي (5002)"
+
+msgid "ExtEplayer3"
+msgstr "المشغل الثلاثي الإضافي"
+
+msgid "AAC software decoding"
+msgstr "نظام تشغيل صيغ الصوت المضغوطة"
+
+msgid "EAC3 software decoding"
+msgstr "نظام تشغيل الصوت الثلاثي المنخفض المحسن"
+
+msgid "AC3 software decoding"
+msgstr "نظام تشغيل الصوت الثلاثي المنخفض"
+
+msgid "DTS software decoding"
+msgstr "نظام تشغيل الصوت المحيطي المخصص"
+
+msgid "MP3 software decoding"
+msgstr "نظام تشغيل الصوتي الثلاثي"
+
+msgid "WMA software decoding"
+msgstr "نظام تشغيل صوت وسائط الوندوز"
+
+msgid "Stereo downmix"
+msgstr "الصوت المزدوج"
+
+msgid "LPCM injection"
+msgstr "إخراج الصوت المحيطي"
+
+msgid "RTMP protocol implementation"
+msgstr "تشغيل بروتوكول إرسال الصوت والفديو من الإنترنت"
+
+msgid "Auto turn on subtitles"
+msgstr "تشغيل الترجمة تلقائيا"
+
+msgid "HLS Explorer"
+msgstr "متصفح قنوات البث المباشر"
+
+msgid "Auto select stream"
+msgstr "تحديد تلقائي للبث"
+
+msgid "Connection speed"
+msgstr "سرعه الاتصال"
+
+msgid "Player"
+msgstr "تشغيل"
+
+msgid "gstplayer"
+msgstr "المشغل جي ستريمر"
+
+msgid "exteplayer3"
+msgstr "المشغل الثلاثي الإضافي"
+
+msgid "not installed"
+msgstr "غير مثبت"
+
+msgid "Debug log time format*"
+msgstr "تنسيق وقت سجل التصحيح *"
+
+msgid "boot time"
+msgstr "وقت التشغيل"
+
+msgid "local time"
+msgstr "التوقيت المحلي"
+
+msgid "boot time and local time"
+msgstr "وقت التشغيل والوقت المحلي"
+
+msgid "This is the prefix of each entry in the debug log. 'boot time' is the number of seconds since thereceiver was last booted. (Default: boot time)"
+msgstr "هذه هي البادئة لكل إدخال في سجل التصحيح. \"وقت التشغيل\" هو عدد الثواني منذ آخر مرة تم فيها تشغيل جهاز الاستقبال. (الافتراضي: وقت التشغيل)"
+
+msgid "Allows you to set the maximum size (MB) of the individual debug logs. When that size is reached, thelog file will be truncated to the maximum size every 60 minutes. (Default: 4)"
+msgstr "يسمح لك بتعيين الحد الأقصى للحجم (ميغا بايت) لسجلات تصحيح الأخطاء الفردية. عند الوصول إلى هذا الحجم ، سيتم اقتطاع ملف السجل إلى الحد الأقصى للحجم كل 60 دقيقة. (الافتراضي: 4)"
+
+msgid "Disconnect"
+msgstr "قطع الاتصال"
+
+msgid "When enabled the set top box is able to wakeup on LAN (Default: no)"
+msgstr "عند التمكين ، يمكن أن يكون جهاز الاستقبال قادرًا على الاتصال عبر كيبل الإنترنت"
+
+msgid "Select your time zone area or region. (Default: Europe)"
+msgstr "حدد منطقة المنطقة الزمنية أو المنطقة. (الافتراضي: أوروبا)"
+
+msgid "Select the time zone within the area or region. (Default: Aden)"
+msgstr "حدد المنطقة الزمنية داخل المنطقة أو المنطقة. (الافتراضي: عدن)"
+
+msgid "Video & Audio Settings"
+msgstr "إعدادات الفيديو والصوت"
+
+msgid "serviceapp"
+msgstr "تطبيق خدمات القنوات الصوتية"
+
+msgid "ServiceMp3 (4097)"
+msgstr "خدمة تشغيل المقاطع الصوتية (4097)"
+
+msgid "Black Hole Blue Panel"
+msgstr "لوحة تحكم بلاكهول الزرقاء"
+
+msgid "Open Black Hole Info"
+msgstr "معلومات صورة أوبن بلاكهول"
+
+msgid "Black Hole Green Panel"
+msgstr "لوحة تحكم بلاكهول الخضراء"
+
+msgid "Downloads Manager"
+msgstr "مدير التحميلات"
+
+msgid "Install Plugins"
+msgstr "تثبيت الإضافات"
+
+msgid "Black Hole E2 Statistics"
+msgstr "إحصائيات صورة بلاكهول"
+
+msgid "Script Panel"
+msgstr "لوحة السكريبتات"
+
+msgid "This script will show you the uptime"
+msgstr "السكريبت سوف يعرض مدة التشغيل"
+
+msgid "Ok"
+msgstr "موافق"
+
+msgid "Custom skip time for '1'/'3' buttons"
+msgstr "تخطي الوقت العادي مع المفاتيح '1'/'3'"
+
+msgid "Show picons in timer list"
+msgstr "عرض الإيقونات في قائمة المؤقت"
+
+msgid "Position of finished timers in timer list"
+msgstr "مكان المؤقتات المنتهية في قائمة المؤقت"
+
+msgid "Remove finished timers after (days)"
+msgstr "إزالة المؤقتات المنتهية بعد (أيام)"
+
+msgid "Date first"
+msgstr "التاريخ أولاً"
+
+msgid "Set the default location for your recordings. Press 'OK' to add new locations, LEFFT/RIGHT to select from any existing location."
+msgstr "قم بتعيين الموقع الافتراضي للتسجيلات الخاصة بك. اضغط على 'موافق' لإضافة مواقع جديدة ، لليسار / لليمين للاختيار من أي موقع موجود. (افتراضي: /media/hdd/movies/)"
+
+msgid "Set the default location for your timers. Press 'OK' to add new locations, LEFT/RIGHT to select from any existing location."
+msgstr "تعيين الموقع الافتراضي لعدادات المؤقتات الخاصة بك. اضغط على 'موافق' لإضافة مواقع جديدة ، لليسار / لليمين للاختيار من أي موقع موجود. (افتراضي: <افتراضي>)"
+
+msgid "Set the default location for your instant recordings. Press 'OK' to add new locations, LEFT/RIGHT to select from any existing location."
+msgstr "حدد الموقع الافتراضي للتسجيلات الفورية الخاصة بك. اضغط على 'موافق' لإضافة مواقع جديدة ، لليسار / لليمين للاختيار من أي موقع موجود. (افتراضي: <افتراضي>)"
+
+msgid "Detect programs split by news bulletins. Choose the maximum duration in minutes to consider as abulletin, or 0 to disable."
+msgstr "كشف البرامج المقسمة حسب النشرات الإخبارية. اختر أقصى مدة بالدقائق لاعتبارها نشرة ، أو 0 للتعطيل. (الافتراضي: 15)"
+
+msgid "Configure if picons will be shown in the timer list. (Default: yes)"
+msgstr "إعدادات إذا كان سيتم عرض الايقونات في قائمة المؤقت. (الافتراضي: نعم)"
+
+msgid "Control how finished timers are shown in the timer list. If set to hide, disabled timers will still be shown."
+msgstr "التحكم في كيفية عرض المؤقتات المنتهية في قائمة المؤقت. في حالة التعيين على الإخفاء ، سيستمر عرض المؤقتات المعطلة (الافتراضي: المنتهية)"
+
+msgid "<default>"
+msgstr "<الافتراضي>"
+
+msgid "EPG button action"
+msgstr "وظيفة زر الدليل الإلكتروني"
+
+msgid "Choose what will be displayed when the 'EPG' button is pressed. (Default: information of event)"
+msgstr "اختر ما سيتم عرضه عند الضغط على زر 'دليل البرامج الالكتروني'. (افتراضي: معلومات عن الحدث)"
+
+msgid "Use OpenTV EPG infomation when it is available. For reading OpenTV EPG data tuning to a dedicated transponder is required (Default: yes)"
+msgstr "استخدم معلومات الدليل الالكتروني للقنوات المفتوحة عندما تكون متاحة. لقراءة بيانات الدليل الالكتروني للقنوات المفتوحة ، يلزم ضبط بيانات جهاز تردد  الاستقبال وتخصيصه (الافتراضي: نعم)"
+
+msgid "Black Hole Usb Format Wizard"
+msgstr "معالج تهئية الفلاش مموري على الأوبن بلاكهول"
+
+msgid "CrossEPG"
+msgstr "مستعرض دليل البرامج الإلكترونية"
+
+msgid "Grid EPG"
+msgstr "دليل البرامج الإلكترونية الشبكي"
+
+msgid "Infobar Single EPG"
+msgstr "شريط معلومات القناة لدليل إلكتروني واحد"
+
+msgid "Infobar Grid EPG"
+msgstr "شريط معلومات القناة لدليل إلكتروني شبكي"
+
+msgid "Load, Save & Delete EPG Cache"
+msgstr "تحميل، حفظ وحذف ذاكرة التخزين المؤقتة لدليل البرامج الإلكترونية"
+
+msgid "Load EPG Cache"
+msgstr "تحميل ذاكرة التخزين المؤقتة لدليل البرامج الإلكترونية"
+
+msgid "Save EPG Cache"
+msgstr "حفظ ذاكرة التخزين المؤقتة لدليل البرامج الإلكترونية"
+
+msgid "Delete EPG Cache"
+msgstr "حذف ذاكرة التخزين المؤقتة لدليل البرامج الإلكترونية"
+
+msgid "Select current service"
+msgstr "تحديد القناة الحالية"
+
+msgid "EPG button (short)"
+msgstr "مفتاح دليل البرامج (ضغط قصير)"
+
+msgid "EPG button (long)"
+msgstr "مفتاح دليل البرامج (ضغط مطول)"
+
+msgid "Rec button (short)"
+msgstr "مفتاح التسجيل (ضغط قصير)"
+
+msgid "Rec button (long)"
+msgstr "مفتاح التسجيل (ضغط مطول)"
+
+msgid "Red button (short)"
+msgstr "المفتاح الأحمر (ضغط قصير)"
+
+msgid "Red button (long)"
+msgstr "المفتاح الأحمر (ضغط مطول)"
+
+msgid "Green button (short)"
+msgstr "المفتاح الاخضر (ضغط قصير)"
+
+msgid "Green button (long)"
+msgstr "المفتاح الاخضر (ضغط مطول)"
+
+msgid "Yellow button (short)"
+msgstr "المفتاح الاصفر (ضغط قصير)"
+
+msgid "Yellow button (long)"
+msgstr "المفتاح الاصفر (ضغط مطول)"
+
+msgid "Blue button (short)"
+msgstr "المفتاح الازرق (ضغط قصير)"
+
+msgid "Blue button (long)"
+msgstr "المفتاح الأزرق (ضغط مطول)"
+
+msgid "Timer Menu"
+msgstr "قائمة المؤقت"
+
+msgid "Create Zap Timer"
+msgstr "إنشاء ينتقل للمؤقت"
+
+msgid "IMDb Search"
+msgstr "البحث في قاعدة بيانات معلومات الأفلام على الإنترنت"
+
+msgid "Show Timer List"
+msgstr "عرض قائمة المؤقت"
+
+msgid "EPG Search"
+msgstr "البحدث في دليل البرامج الإلكتروني"
+
+msgid "AutoTimer List"
+msgstr "قائمة المؤقت التلقائي"
+
+msgid "Choose what channel to select when the EPG opens. (Default: Select current service)"
+msgstr "اختر القناة التي تريد تحديدها عند فتح دليل البرامج الإلكتروني. (الافتراضي: حدد الخدمة الحالية)"
+
+msgid "Graphics Grid EPG"
+msgstr "شبكة رسومات دليل البرامج الإلكتروني"
+
+msgid "Choose the layout. Single channel, Graphics Grid EPG or Text Grid EPG. (Default: Graphics GridEPG)"
+msgstr "اختر الشكل. قناة واحدة أو شبكة رسومات دليل البرامج الإكتروني أو رسومات نصية لدليل البرامج الإلكترونية. (الافتراضي: شبكة رسومات دليل البرامج الإلكتروني)"
+
+msgid "Primetime"
+msgstr "فترات الذروة"
+
+msgid "Picture in graphic"
+msgstr "صورة في الرسومات"
+
+msgid "Number buttons mode"
+msgstr "وضع أزرار الأرقام"
+
+msgid "Ch+ button"
+msgstr "مفتاح تنقل القنوات للأعلى"
+
+msgid "Ch- button"
+msgstr "مفتاح تنقل القنوات للأسفل"
+
+msgid "ChromiumOS"
+msgstr "متصفح كروميوم"
+
+msgid "Start ChromiumOS"
+msgstr "تشغيل متصفح كروميوم"
+
+msgid "Dream-Explorer"
+msgstr "متصفح ملفات الجهاز"
+
+msgid "Explore your Dreambox."
+msgstr "تصفح ملفات جهاز الاستقبال الخاص بك."
+
+msgid "Wit.ai Speech to Text Setup"
+msgstr "ضبط خاصية تحويل الكلام إلى نص"
+
+msgid "Speech to text using Wit.ai for VUPLUS-BLE-RCU."
+msgstr "ضبط تحويل الكلام إلى نص عبر ميكرفون ريموت الفوبلس الذكي."
+
+msgid "YouTubeTV Settings"
+msgstr "إعدادت اليوتيوب التلفزيوني"
+
+msgid "Dream"
+msgstr "الجهاز"
+
+msgid "Explorer"
+msgstr "متصفح ملفات"
+
+msgid "CrossEPG Downloader"
+msgstr "تحميل مستعرض دليل البرامج الإلكترونية"
+
+msgid "NetSpeedTest"
+msgstr "أختبار سرعة الانترنت"
+
+msgid "Test your net speed"
+msgstr "أختبار سرعة الانترنت الخاصة بك"
