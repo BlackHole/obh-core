@@ -900,7 +900,7 @@ class VIXBackupManagerMenu(Setup):
 		self["key_red"] = Button(_("Cancel"))
 		self["key_green"] = Button(_("OK"))
 		self["key_yellow"] = Button(_("Choose files"))
-		self["key_blue"] = Button(_("Choose local IPK's folder"))
+		self["key_blue"] = Button(_("Choose IPK folder(s)"))
 
 	def chooseFiles(self):
 		self.session.openWithCallback(self.backupfiles_choosen, BackupSelection)
