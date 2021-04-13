@@ -50,7 +50,7 @@ def checkConfigBackup():
 					files = []
 				if len(files):
 					for file in files:
-						if file.endswith('.tar.gz') and file.startswith('%s' %defaultprefix):
+						if file.endswith('.tar.gz') and file.startswith('%s' % defaultprefix):
 							list.append((path.join(devpath, file)))
  		if len(list):
 			print '[RestoreWizard] Backup Image:', list[0]

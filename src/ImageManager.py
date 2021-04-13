@@ -1325,7 +1325,7 @@ class ImageManagerDownload(Screen):
 
 			self.boxtype = getMachineMake()
 
-			url = 'http://www.vuplus-community.net/openbh-builds/'+self.boxtype+'/'
+			url = 'http://www.vuplus-community.net/openbh-builds/' + self.boxtype + '/'
 			conn = urllib2.urlopen(url)
 			html = conn.read()
 

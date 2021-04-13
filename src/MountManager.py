@@ -134,10 +134,10 @@ class VIXDevicesPanel(Screen):
 		else:
 			device2 = re.sub('[0-9]', '', device)
 		devicetype = path.realpath('/sys/block/' + device2 + '/device')
-		if devicetype.find('mmc') != -1 and (devicetype.find('rdb') != -1 or (devicetype.find('soc') != -1 and  not SystemInfo["HasSDnomount"])):
+		if devicetype.find('mmc') != -1 and (devicetype.find('rdb') != -1 or (devicetype.find('soc') != -1 and not SystemInfo["HasSDnomount"])):
 			return
-		if  SystemInfo["HasSDnomount"]:											# h9/i55 use mmcblk0p[0-3] for sdcard, h9combo uses mmcblk1p[0-3]
-			if SystemInfo["HasSDnomount"][0] == 'Yes' and "%s" %SystemInfo["HasSDnomount"][1] in device:
+		if SystemInfo["HasSDnomount"]:											# h9/i55 use mmcblk0p[0-3] for sdcard, h9combo uses mmcblk1p[0-3]
+			if SystemInfo["HasSDnomount"][0] == 'Yes' and "%s" % SystemInfo["HasSDnomount"][1] in device:
 				return
 		d2 = device
 		name = _("HARD DISK: ")
@@ -377,10 +377,10 @@ class VIXDevicePanelConf(Screen, ConfigListScreen):
 		else:
 			device2=re.sub('[0-9]', '', device)
 		devicetype=path.realpath('/sys/block/' + device2 + '/device')
-		if devicetype.find('mmc') != -1 and (devicetype.find('rdb') != -1 or (devicetype.find('soc') != -1 and  not SystemInfo["HasSDnomount"])):
+		if devicetype.find('mmc') != -1 and (devicetype.find('rdb') != -1 or (devicetype.find('soc') != -1 and not SystemInfo["HasSDnomount"])):
 			return
-		if  SystemInfo["HasSDnomount"]:											# h9/i55 use mmcblk0p[0-3] for sdcard, h9combo uses mmcblk1p[0-3]
-			if SystemInfo["HasSDnomount"][0] == 'Yes' and "%s" %SystemInfo["HasSDnomount"][1] in device:
+		if SystemInfo["HasSDnomount"]:											# h9/i55 use mmcblk0p[0-3] for sdcard, h9combo uses mmcblk1p[0-3]
+			if SystemInfo["HasSDnomount"][0] == 'Yes' and "%s" % SystemInfo["HasSDnomount"][1] in device:
 				return
 		d2=device
 		name=_("HARD DISK: ")

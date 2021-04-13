@@ -113,11 +113,11 @@ class MultiBoot(Screen):
 		if self.currentSelected != None:
 			if self.currentSelected[0][1] != "Queued":
 				if SystemInfo["HasRootSubdir"]:
-					message = _("Removal of this slot will not show in %s Gui.  Are you sure you want to delete image slot %s ?" %(getMachineBuild(), self.currentSelected[0][1]))
+					message = _("Removal of this slot will not show in %s Gui.  Are you sure you want to delete image slot %s ?" % (getMachineBuild(), self.currentSelected[0][1]))
 					ybox = self.session.openWithCallback(self.doErase, MessageBox, message, MessageBox.TYPE_YESNO, default=True)
 					ybox.setTitle(_("Remove confirmation"))
 				else:
-					message = _("Are you sure you want to delete image slot %s ?" %self.currentSelected[0][1])
+					message = _("Are you sure you want to delete image slot %s ?" % self.currentSelected[0][1])
 					ybox = self.session.openWithCallback(self.doErase, MessageBox, message, MessageBox.TYPE_YESNO, default=True)
 					ybox.setTitle(_("Remove confirmation"))
 
@@ -132,7 +132,7 @@ class MultiBoot(Screen):
 				self.session.open(MessageBox, _("Multiboot manager - Cannot initialise SDcard when running image on SDcard."), MessageBox.TYPE_INFO, timeout=10)
 				self.close
 			else:
-				message = _("Multiboot manager - to use this routine %s image must be at OpenViX 4.2.043 or later and USB flashed - reply Yes to continue" %getMachineBuild())
+				message = _("Multiboot manager - to use this routine %s image must be at OpenViX 4.2.043 or later and USB flashed - reply Yes to continue" % getMachineBuild())
 				ybox = self.session.openWithCallback(self.doFormat, MessageBox, message, MessageBox.TYPE_YESNO, default=True)
 				ybox.setTitle(_("Remove confirmation"))
 
@@ -141,13 +141,13 @@ class MultiBoot(Screen):
 			from Components.Harddisk import Harddisk
 			sda = "sda"
 			size = Harddisk(sda).diskSize()
-			if size/1024 < 7:
+			if size / 1024 < 7:
 				self.session.open(MessageBox, _("Multiboot manager - The SDcard must be at least 8MB."), MessageBox.TYPE_INFO, timeout=10)
 				self.close
 			else:
-				IMAGE_ALIGNMENT=1024
-				KERNEL_PARTITION_SIZE=8192
-				ROOTFS_PARTITION_SIZE=2097152
+				IMAGE_ALIGNMENT = 1024
+				KERNEL_PARTITION_SIZE = 8192
+				ROOTFS_PARTITION_SIZE = 2097152
 				PARTED_START_KERNEL2 = IMAGE_ALIGNMENT
 				PARTED_END_KERNEL2 = int(PARTED_START_KERNEL2) + int(KERNEL_PARTITION_SIZE)
 				PARTED_START_ROOTFS2 = PARTED_END_KERNEL2
@@ -159,18 +159,18 @@ class MultiBoot(Screen):
 
 				self.session.open(MessageBox, _("Multiboot manager - SDcard initialization run, please restart your Image."), MessageBox.TYPE_INFO, timeout=10)
 				cmdlist = []
-				cmdlist.append("for n in /dev/%s* ; do umount $n > /dev/null 2>&1 ; done"%sda)
-				cmdlist.append("for n in /dev/%s* ; do parted -s /dev/%s rm  ${n:8} > /dev/null 2>&1; done"%(sda,sda))
-				cmdlist.append("dd if=/dev/zero of=/dev/%s bs=512 count=10240 conv=notrunc"%sda)
-				cmdlist.append("partprobe /dev/%s"%sda)
-				cmdlist.append("parted -s /dev/%s mklabel gpt"%sda)
-				cmdlist.append("parted -s /dev/%s unit KiB mkpart kernel2 ext2 %s %s"%(sda,PARTED_START_KERNEL2,PARTED_END_KERNEL2))
-				cmdlist.append("parted -s /dev/%s unit KiB mkpart rootfs2 ext4 %s %s "%(sda,PARTED_START_ROOTFS2,PARTED_END_ROOTFS2))
-				cmdlist.append("parted -s /dev/%s unit KiB mkpart kernel3 ext2 %s %s"%(sda,PARTED_START_KERNEL3,PARTED_END_KERNEL3))
-				cmdlist.append("parted -s /dev/%s unit KiB mkpart rootfs3 ext4 %s %s "%(sda,PARTED_START_ROOTFS3,PARTED_END_ROOTFS3))
-				cmdlist.append("parted -s /dev/%s unit KiB mkpart userdata ext4 %s 100%% "%(sda,PARTED_END_ROOTFS3))
-				cmdlist.append("for n in /dev/%s{1..5} ; do mkfs.ext4 $n ; done"%sda)   
-				cmdlist.append("partprobe /dev/%s"%sda)
+				cmdlist.append("for n in /dev/%s* ; do umount $n > /dev/null 2>&1 ; done" % sda)
+				cmdlist.append("for n in /dev/%s* ; do parted -s /dev/%s rm  ${n:8} > /dev/null 2>&1; done" % (sda,sda))
+				cmdlist.append("dd if=/dev/zero of=/dev/%s bs=512 count=10240 conv=notrunc" % sda)
+				cmdlist.append("partprobe /dev/%s" % sda)
+				cmdlist.append("parted -s /dev/%s mklabel gpt" % sda)
+				cmdlist.append("parted -s /dev/%s unit KiB mkpart kernel2 ext2 %s %s" % (sda,PARTED_START_KERNEL2,PARTED_END_KERNEL2))
+				cmdlist.append("parted -s /dev/%s unit KiB mkpart rootfs2 ext4 %s %s " % (sda,PARTED_START_ROOTFS2,PARTED_END_ROOTFS2))
+				cmdlist.append("parted -s /dev/%s unit KiB mkpart kernel3 ext2 %s %s" % (sda,PARTED_START_KERNEL3,PARTED_END_KERNEL3))
+				cmdlist.append("parted -s /dev/%s unit KiB mkpart rootfs3 ext4 %s %s " % (sda,PARTED_START_ROOTFS3,PARTED_END_ROOTFS3))
+				cmdlist.append("parted -s /dev/%s unit KiB mkpart userdata ext4 %s 100%% " % (sda,PARTED_END_ROOTFS3))
+				cmdlist.append("for n in /dev/%s{1..5} ; do mkfs.ext4 $n ; done" % sda)   
+				cmdlist.append("partprobe /dev/%s" % sda)
 				self.session.open(Console, title=self.TITLE, cmdlist=cmdlist, closeOnSuccess=True)
 		else:
 			self.close()
