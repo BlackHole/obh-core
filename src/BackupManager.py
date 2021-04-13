@@ -3,7 +3,8 @@ from boxbranding import getBoxType, getImageType, getImageDistro, getImageVersio
 from os import path, stat, mkdir, listdir, remove, statvfs, chmod
 from time import localtime, time, strftime, mktime
 from datetime import date, datetime
-import tarfile, glob
+import tarfile
+import glob
 from enigma import eTimer, eEnv, eDVBDB, quitMainloop
 from . import _, PluginLanguageDomain
 from Components.About import about
