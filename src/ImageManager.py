@@ -344,7 +344,7 @@ class VIXImageManager(Screen):
 			self.message = _("Recording(s) are in progress or coming up in few seconds!\nDo you still want to flash image\n%s?") % self.sel
 		else:
 			self.message = _("Do you want to flash image\n%s") % self.sel
-		if getImageFileSystem().replace(" ","") in ("tar.bz2", "hd-emmc", "hdemmc", "octagonemmc", "dinobotemmc"):
+		if getImageFileSystem().replace(" ", "") in ("tar.bz2", "hd-emmc", "hdemmc", "octagonemmc", "dinobotemmc"):
 			message = _("You are about to flash an eMMC flash; we cannot take any responsibility for any errors or damage to your box during this process.\nProceed with CAUTION!:\nAre you sure you want to flash this image:\n ") + self.sel
 		else:
 			message = _("Are you sure you want to flash this image:\n ") + self.sel
@@ -1334,7 +1334,7 @@ class ImageManagerDownload(Screen):
 
 			del self.emlist[:]
 			for tag in links:
-				link = tag.get('href',None)
+				link = tag.get('href', None)
 				if link != None and link.endswith('zip') and link.find(getMachineMake()) != -1:
 					self.emlist.append(str(link))
 
@@ -1364,7 +1364,7 @@ class ImageManagerDownload(Screen):
 			selectedimage = self['list'].getCurrent()
 			fileurl = 'http://www.vuplus-community.net/openbh-builds/%s/%s' % (self.boxtype, selectedimage)
 			fileloc = self.BackupDirectory + selectedimage
-			Tools.CopyFiles.downloadFile(fileurl, fileloc, selectedimage.replace('_usb',''))
+			Tools.CopyFiles.downloadFile(fileurl, fileloc, selectedimage.replace('_usb', ''))
 			for job in Components.Task.job_manager.getPendingJobs():
 				if job.name.startswith(_("Downloading")):
 					break

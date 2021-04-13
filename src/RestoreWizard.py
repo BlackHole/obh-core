@@ -303,7 +303,7 @@ class RestoreWizard(WizardLanguage, Rc):
 				self.thirdpartyPluginsLocation = "".join(self.thirdpartyPluginsLocation)
 				self.thirdpartyPluginsLocation = self.thirdpartyPluginsLocation.replace('\n', '')
 				self.thirdpartyPluginsLocation = self.thirdpartyPluginsLocation.replace(' ', '%20')
-				self.plugfiles = self.thirdpartyPluginsLocation.split('/',3)
+				self.plugfiles = self.thirdpartyPluginsLocation.split('/', 3)
 			else:
 				self.thirdpartyPluginsLocation = " "
 
