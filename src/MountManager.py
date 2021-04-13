@@ -224,39 +224,39 @@ class VIXDevicesPanel(Screen):
 		self.session.openWithCallback(self.updateList, VIXDevicePanelConf
 
 	def Mount(self):
-		sel = self['list'].getCurrent()
+		sel=self['list'].getCurrent()
 		if sel:
-			des = sel[1]
-			des = des.replace('\n', '\t')
-			parts = des.strip().split('\t')
-			mountp = parts[1].replace(_("Mount: "), '')
-			device = parts[2].replace(_("Device: "), '')
+			des=sel[1]
+			des=des.replace('\n', '\t')
+			parts=des.strip().split('\t')
+			mountp=parts[1].replace(_("Mount: "), '')
+			device=parts[2].replace(_("Device: "), '')
 			system('mount ' + device)
-			mountok = False
-			f = open('/proc/mounts', 'r')
+			mountok=False
+			f=open('/proc/mounts', 'r')
 			for line in f.readlines():
 				if line.find(device) != -1:
-					mountok = True
+					mountok=True
 			f.close()
 			if not mountok:
 				self.session.open(MessageBox, _("Mount failed."), MessageBox.TYPE_INFO, timeout=5)
 			self.updateList()
 
 	def Unmount(self):
-		sel = self['list'].getCurrent()
+		sel=self['list'].getCurrent()
 		if sel:
-			des = sel[1]
-			des = des.replace('\n', '\t')
-			parts = des.strip().split('\t')
-			mountp = parts[1].replace(_("Mount: "), '')
-			device = parts[2].replace(_("Device: "), '')
+			des=sel[1]
+			des=des.replace('\n', '\t')
+			parts=des.strip().split('\t')
+			mountp=parts[1].replace(_("Mount: "), '')
+			device=parts[2].replace(_("Device: "), '')
 			system('umount ' + mountp)
 			try:
-				mounts = open("/proc/mounts")
-				mountcheck = mounts.readlines()
+				mounts=open("/proc/mounts")
+				mountcheck=mounts.readlines()
 				mounts.close()
 				for line in mountcheck:
-					parts = line.strip().split(" ")
+					parts=line.strip().split(" ")
 					if path.realpath(parts[0]).startswith(device):
 						self.session.open(MessageBox, _("Can't un-mount the partition; make sure it is not being used for SWAP or record/timeshift paths."), MessageBox.TYPE_INFO)
 			except IOError:
@@ -264,11 +264,11 @@ class VIXDevicesPanel(Screen):
 			self.updateList()
 
 	def saveMypoints(self):
-		sel = self['list'].getCurrent()
+		sel=self['list'].getCurrent()
 		if sel:
-			parts = sel[1].split()
-			self.device = parts[5]
-			self.mountp = parts[3]
+			parts=sel[1].split()
+			self.device=parts[5]
+			self.mountp=parts[3]
 			self.Console.ePopen('umount ' + self.device)
 			if self.mountp.find('/media/hdd') < 0:
 				self.Console.ePopen('umount /media/hdd')
@@ -277,9 +277,9 @@ class VIXDevicesPanel(Screen):
 				self.session.open(MessageBox, _("This device is already mounted as HDD."), MessageBox.TYPE_INFO, timeout=10, close_on_any_key=True)
 
 	def add_fstab(self, result=None, retval=None, extra_args=None):
-		self.device = extra_args[0]
-		self.mountp = extra_args[1]
-		self.device_uuid = 'UUID=' + result.split('UUID=')[1].split(' ')[0].replace('"', '')
+		self.device=extra_args[0]
+		self.mountp=extra_args[1]
+		self.device_uuid='UUID=' + result.split('UUID=')[1].split(' ')[0].replace('"', '')
 		if not path.exists(self.mountp):
 			mkdir(self.mountp, 0755)
 		file('/etc/fstab.tmp', 'w').writelines([l for l in file('/etc/fstab').readlines() if '/media/hdd' not in l])
@@ -288,8 +288,8 @@ class VIXDevicesPanel(Screen):
 		rename('/etc/fstab.tmp', '/etc/fstab')
 		file('/etc/fstab.tmp', 'w').writelines([l for l in file('/etc/fstab').readlines() if self.device_uuid not in l])
 		rename('/etc/fstab.tmp', '/etc/fstab')
-		out = open('/etc/fstab', 'a')
-		line = self.device_uuid + '\t/media/hdd\tauto\tdefaults\t0 0\n'
+		out=open('/etc/fstab', 'a')
+		line=self.device_uuid + '\t/media/hdd\tauto\tdefaults\t0 0\n'
 		out.write(line)
 		out.close()
 		self.Console.ePopen('mount -a', self.updateList)
@@ -302,7 +302,7 @@ class VIXDevicesPanel(Screen):
 			self.selectionChanged()
 
 class VIXDevicePanelConf(Screen, ConfigListScreen):
-	skin = """
+	skin="""
 	<screen position="center,center" size="640,460">
 		<ePixmap pixmap="skin_default/buttons/red.png" position="25,0" size="140,40" alphatest="on"/>
 		<ePixmap pixmap="skin_default/buttons/green.png" position="175,0" size="140,40" alphatest="on"/>
@@ -314,28 +314,28 @@ class VIXDevicePanelConf(Screen, ConfigListScreen):
 
 	def __init__(self, session):
 		Screen.__init__(self, session)
-		self.list = []
+		self.list=[]
 		ConfigListScreen.__init__(self, self.list)
 		self.setTitle(_("Choose where to mount your devices to:"))
 
-		self['key_green'] = Label(_("Save"))
-		self['key_red'] = Label(_("Cancel"))
-		self['Linconn'] = Label()
-		self['actions'] = ActionMap(['WizardActions', 'ColorActions'], {'green': self.saveMypoints, 'red': self.close, 'back': self.close})
-		self.Console = Console()
-		self.activityTimer = eTimer()
+		self['key_green']=Label(_("Save"))
+		self['key_red']=Label(_("Cancel"))
+		self['Linconn']=Label()
+		self['actions']=ActionMap(['WizardActions', 'ColorActions'], {'green': self.saveMypoints, 'red': self.close, 'back': self.close})
+		self.Console=Console()
+		self.activityTimer=eTimer()
 		self.activityTimer.timeout.get().append(self.updateList2)
 		self.updateList()
 
 	def updateList(self, result=None, retval=None, extra_args=None):
-		scanning = _("Please wait while scanning your %s %s devices...") % (getMachineBrand(), getMachineName())
+		scanning=_("Please wait while scanning your %s %s devices...") % (getMachineBrand(), getMachineName())
 		self['Linconn'].setText(scanning)
 		self.activityTimer.start(10)
 
 	def updateList2(self):
 		self.activityTimer.stop()
-		self.list = []
-		list2 = []
+		self.list=[]
+		list2=[]
 		# self.Console.ePopen("sfdisk -l /dev/sd? | grep swap | awk '{print $(NF-9)}' >/tmp/devices.tmp")
 		# sleep(0.5)
 		# swapdevices = ''
@@ -346,12 +346,12 @@ class VIXDevicePanelConf(Screen, ConfigListScreen):
 		# 	remove('/tmp/devices.tmp')
 		# swapdevices = swapdevices.replace('\n', '')
 		# swapdevices = swapdevices.split('/')
-		f = open('/proc/partitions', 'r')
+		f=open('/proc/partitions', 'r')
 		for line in f.readlines():
-			parts = line.strip().split()
+			parts=line.strip().split()
 			if not parts:
 				continue
-			device = parts[3]
+			device=parts[3]
 			if not re.search('sd[a-z][1-9]', device) and not re.search('mmcblk[0-9]p[1-9]', device):
 				continue
 			if SystemInfo["HasHiSi"] and pathExists("/dev/sda4") and re.search('sd[a][1-4]', device):
@@ -365,74 +365,74 @@ class VIXDevicePanelConf(Screen, ConfigListScreen):
 			self.buildMy_rec(device)
 			list2.append(device)
 		f.close()
-		self['config'].list = self.list
+		self['config'].list=self.list
 		self['config'].l.setList(self.list)
 		self['Linconn'].hide()
 
 	def buildMy_rec(self, device):
 		if re.search('mmcblk[0-9]p[0-9][0-9]', device):
-			device2 = re.sub('p[0-9][0-9]', '', device)
+			device2=re.sub('p[0-9][0-9]', '', device)
 		elif re.search('mmcblk[0-9]p[0-9]', device):
-			device2 = re.sub('p[0-9]', '', device)
+			device2=re.sub('p[0-9]', '', device)
 		else:
-			device2 = re.sub('[0-9]', '', device)
-		devicetype = path.realpath('/sys/block/' + device2 + '/device')
+			device2=re.sub('[0-9]', '', device)
+		devicetype=path.realpath('/sys/block/' + device2 + '/device')
 		if devicetype.find('mmc') != -1 and (devicetype.find('rdb') != -1 or (devicetype.find('soc') != -1 and  not SystemInfo["HasSDnomount"])):
 			return
 		if  SystemInfo["HasSDnomount"]:											# h9/i55 use mmcblk0p[0-3] for sdcard, h9combo uses mmcblk1p[0-3]
 			if SystemInfo["HasSDnomount"][0] == 'Yes' and "%s" %SystemInfo["HasSDnomount"][1] in device:
 				return
-		d2 = device
-		name = _("HARD DISK: ")
+		d2=device
+		name=_("HARD DISK: ")
 		if path.exists(resolveFilename(SCOPE_ACTIVE_SKIN, "obhcore/dev_hdd.png")):
-			mypixmap = resolveFilename(SCOPE_ACTIVE_SKIN, "obhcore/dev_hdd.png")
+			mypixmap=resolveFilename(SCOPE_ACTIVE_SKIN, "obhcore/dev_hdd.png")
 		else:
-			mypixmap = '/usr/lib/enigma2/python/Plugins/SystemPlugins/OBH/images/dev_hdd.png'
+			mypixmap='/usr/lib/enigma2/python/Plugins/SystemPlugins/OBH/images/dev_hdd.png'
 		if pathExists('/sys/block/' + device2 + '/device/model'):
-			model = file('/sys/block/' + device2 + '/device/model').read()
+			model=file('/sys/block/' + device2 + '/device/model').read()
 		elif pathExists('/sys/block/' + device2 + '/device/name'):
-			model = file('/sys/block/' + device2 + '/device/name').read()
-		model = str(model).replace('\n', '')
-		des = ''
+			model=file('/sys/block/' + device2 + '/device/name').read()
+		model=str(model).replace('\n', '')
+		des=''
 		if devicetype.find('usb') != -1:
-			name = _('USB: ')
+			name=_('USB: ')
 			if path.exists(resolveFilename(SCOPE_ACTIVE_SKIN, "obhcore/dev_usb.png")):
-				mypixmap = resolveFilename(SCOPE_ACTIVE_SKIN, "obhcore/dev_usb.png")
+				mypixmap=resolveFilename(SCOPE_ACTIVE_SKIN, "obhcore/dev_usb.png")
 			else:
-				mypixmap = '/usr/lib/enigma2/python/Plugins/SystemPlugins/OBH/images/dev_usb.png'
+				mypixmap='/usr/lib/enigma2/python/Plugins/SystemPlugins/OBH/images/dev_usb.png'
 		elif devicetype.find('mmc') != -1:
-			name = _('SDCARD: ')
+			name=_('SDCARD: ')
 			if path.exists(resolveFilename(SCOPE_ACTIVE_SKIN, "obhcore/dev_sd.png")):
-				mypixmap = resolveFilename(SCOPE_ACTIVE_SKIN, "obhcore/dev_sd.png")
+				mypixmap=resolveFilename(SCOPE_ACTIVE_SKIN, "obhcore/dev_sd.png")
 			else:
-				mypixmap = '/usr/lib/enigma2/python/Plugins/SystemPlugins/OBH/images/dev_sd.png'
+				mypixmap='/usr/lib/enigma2/python/Plugins/SystemPlugins/OBH/images/dev_sd.png'
 		name += model
-		d1 = _("None")
-		dtype = _("unavailable")
-		f = open('/proc/mounts', 'r')
+		d1=_("None")
+		dtype=_("unavailable")
+		f=open('/proc/mounts', 'r')
 		for line in f.readlines():
 			if line.find(device) != -1:
-				parts = line.strip().split()
-				d1 = parts[1]
-				dtype = parts[2]
+				parts=line.strip().split()
+				d1=parts[1]
+				dtype=parts[2]
 				break
 		f.close()
 		if d1 == _("None") or d1 == None:
-			des = _("Size: ") + _("unavailable")
+			des=_("Size: ") + _("unavailable")
 		else:
-			stat = statvfs(d1)
-			cap = int(stat.f_blocks * stat.f_bsize)
-			size = cap / 1000 / 1000
+			stat=statvfs(d1)
+			cap=int(stat.f_blocks * stat.f_bsize)
+			size=cap / 1000 / 1000
 			if ((float(size) / 1024) / 1024) >= 1:
-				des = _("Size: ") + str(round(((float(size) / 1024) / 1024), 2)) + _("TB")
+				des=_("Size: ") + str(round(((float(size) / 1024) / 1024), 2)) + _("TB")
 			elif (size / 1024) >= 1:
-				des = _("Size: ") + str(round((float(size) / 1024), 2)) + _("GB")
+				des=_("Size: ") + str(round((float(size) / 1024), 2)) + _("GB")
 			elif size >= 1:
-				des = _("Size: ") + str(size) + _("MB")
+				des=_("Size: ") + str(size) + _("MB")
 			else:
-				des = _("Size: ") + _("unavailable")
+				des=_("Size: ") + _("unavailable")
 
-		item = NoSave(ConfigSelection(default='/media/' + device, choices=[('/media/' + device, '/media/' + device),
+		item=NoSave(ConfigSelection(default='/media/' + device, choices=[('/media/' + device, '/media/' + device),
 																		   ('/media/hdd', '/media/hdd'),
 																		   ('/media/hdd2', '/media/hdd2'),
 																		   ('/media/hdd3', '/media/hdd3'),
@@ -441,47 +441,47 @@ class VIXDevicePanelConf(Screen, ConfigListScreen):
 																		   ('/media/usb3', '/media/usb3'),
 																		   ('/media/sdcard', '/media/sdcard')]))
 		if dtype == 'Linux':
-			dtype = 'ext4'
+			dtype='ext4'
 		else:
-			dtype = 'auto'
-		item.value = d1.strip()
-		text = name + ' ' + des + ' /dev/' + device
-		res = getConfigListEntry(text, item, device, dtype)
+			dtype='auto'
+		item.value=d1.strip()
+		text=name + ' ' + des + ' /dev/' + device
+		res=getConfigListEntry(text, item, device, dtype)
 
 		if des != '' and self.list.append(res):
 			pass
 
 	def saveMypoints(self):
-		mycheck = False
+		mycheck=False
 		for x in self['config'].list:
-			self.device = x[2]
-			self.mountp = x[1].value
-			self.type = x[3]
+			self.device=x[2]
+			self.mountp=x[1].value
+			self.type=x[3]
 			self.Console.ePopen('umount ' + self.device)
 			self.Console.ePopen("/sbin/blkid | grep " + self.device + " && opkg list-installed ntfs-3g", self.add_fstab, [self.device, self.mountp])
-		message = _("Updating mount locations...")
-		ybox = self.session.openWithCallback(self.delay, MessageBox, message, type=MessageBox.TYPE_INFO, timeout=5, enable_input=False)
+		message=_("Updating mount locations...")
+		ybox=self.session.openWithCallback(self.delay, MessageBox, message, type=MessageBox.TYPE_INFO, timeout=5, enable_input=False)
 		ybox.setTitle(_("Please wait."))
 
 	def delay(self, val):
-		message = _("The changes need a system restart to take effect.\nRestart your %s %s now?") % (getMachineBrand(), getMachineName())
-		ybox = self.session.openWithCallback(self.restartBox, MessageBox, message, MessageBox.TYPE_YESNO)
+		message=_("The changes need a system restart to take effect.\nRestart your %s %s now?") % (getMachineBrand(), getMachineName())
+		ybox=self.session.openWithCallback(self.restartBox, MessageBox, message, MessageBox.TYPE_YESNO)
 		ybox.setTitle(_("Restart %s %s.") % (getMachineBrand(), getMachineName()))
 
 	def add_fstab(self, result=None, retval=None, extra_args=None):
 		# print '[MountManager] RESULT:', result
 		if result:
-			self.device = extra_args[0]
-			self.mountp = extra_args[1]
-			self.device_uuid = 'UUID=' + result.split('UUID=')[1].split(' ')[0].replace('"', '')
-			self.device_type = result.split('TYPE=')[1].split(' ')[0].replace('"', '')
+			self.device=extra_args[0]
+			self.mountp=extra_args[1]
+			self.device_uuid='UUID=' + result.split('UUID=')[1].split(' ')[0].replace('"', '')
+			self.device_type=result.split('TYPE=')[1].split(' ')[0].replace('"', '')
 
 			if self.device_type.startswith('ext'):
-				self.device_type = 'auto'
+				self.device_type='auto'
 			elif self.device_type.startswith('ntfs') and result.find('ntfs-3g') != -1:
-				self.device_type = 'ntfs-3g'
+				self.device_type='ntfs-3g'
 			elif self.device_type.startswith('ntfs') and result.find('ntfs-3g') == -1:
-				self.device_type = 'ntfs'
+				self.device_type='ntfs'
 
 			if not path.exists(self.mountp):
 				mkdir(self.mountp, 0755)
@@ -489,8 +489,8 @@ class VIXDevicePanelConf(Screen, ConfigListScreen):
 			rename('/etc/fstab.tmp', '/etc/fstab')
 			file('/etc/fstab.tmp', 'w').writelines([l for l in file('/etc/fstab').readlines() if self.device_uuid not in l])
 			rename('/etc/fstab.tmp', '/etc/fstab')
-			out = open('/etc/fstab', 'a')
-			line = self.device_uuid + '\t' + self.mountp + '\t' + self.device_type + '\tdefaults\t0 0\n'
+			out=open('/etc/fstab', 'a')
+			line=self.device_uuid + '\t' + self.mountp + '\t' + self.device_type + '\tdefaults\t0 0\n'
 			out.write(line)
 			out.close()
 
@@ -503,8 +503,8 @@ class VIXDevicePanelConf(Screen, ConfigListScreen):
 class VIXDevicesPanelSummary(Screen):
 	def __init__(self, session, parent):
 		Screen.__init__(self, session, parent=parent)
-		self["entry"] = StaticText("")
-		self["desc"] = StaticText("")
+		self["entry"]=StaticText("")
+		self["desc"]=StaticText("")
 		self.onShow.append(self.addWatcher)
 		self.onHide.append(self.removeWatcher)
 
@@ -516,5 +516,5 @@ class VIXDevicesPanelSummary(Screen):
 		self.parent.onChangedEntry.remove(self.selectionChanged)
 
 	def selectionChanged(self, name, desc):
-		self["entry"].text = name
-		self["desc"].text = desc
+		self["entry"].text=name
+		self["desc"].text=desc

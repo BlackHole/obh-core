@@ -171,7 +171,7 @@ class MultiBoot(Screen):
 				cmdlist.append("parted -s /dev/%s unit KiB mkpart userdata ext4 %s 100%% "%(sda,PARTED_END_ROOTFS3))
 				cmdlist.append("for n in /dev/%s{1..5} ; do mkfs.ext4 $n ; done"%sda)   
 				cmdlist.append("partprobe /dev/%s"%sda)
-				self.session.open(Console, title = self.TITLE, cmdlist = cmdlist, closeOnSuccess = True)
+				self.session.open(Console, title=self.TITLE, cmdlist=cmdlist, closeOnSuccess=True)
 		else:
 			self.close()
 
