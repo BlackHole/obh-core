@@ -69,6 +69,7 @@ if path.exists(TMPDIR + "/root") and path.ismount(TMPDIR + "/root"):
 	except Exception:
 		pass				
 
+
 def ImageManagerautostart(reason, session=None, **kwargs):
 	"""called with reason=1 to during /sbin/shutdown.sysvinit, with reason=0 at startup?"""
 	global autoImageManagerTimer
@@ -84,6 +85,7 @@ def ImageManagerautostart(reason, session=None, **kwargs):
 		if autoImageManagerTimer is not None:
 			print "[ImageManager] Stop"
 			autoImageManagerTimer.stop()
+
 
 class VIXImageManager(Screen):
 	skin = """<screen name="VIXImageManager" position="center,center" size="560,400">
@@ -326,7 +328,6 @@ class VIXImageManager(Screen):
 				break
 		self.session.openWithCallback(self.keyRestore3, JobView, job, cancelable=False, backgroundable=False, afterEventChangeable=False, afterEvent="close")
 
-
 	def keyRestore(self):
 		self.sel = self["list"].getCurrent()
 		if not self.sel:
@@ -493,6 +494,7 @@ class VIXImageManager(Screen):
 			else:
 				return False
 
+
 class AutoImageManagerTimer:
 	def __init__(self, session):
 		self.session = session
@@ -612,6 +614,7 @@ class AutoImageManagerTimer:
 			config.imagemanager.lastbackup.value = sched_t
 			config.imagemanager.lastbackup.save()
 		# self.close()
+
 
 class ImageBackup(Screen):
 	skin = """
@@ -1268,6 +1271,7 @@ class ImageBackup(Screen):
 			autoImageManagerTimer.backupupdate(atLeast)
 		else:
 			autoImageManagerTimer.backupstop()
+
 
 class ImageManagerDownload(Screen):
 	skin = """

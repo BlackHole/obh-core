@@ -21,6 +21,7 @@ from Components.SystemInfo import SystemInfo
 from Tools.LoadPixmap import LoadPixmap
 from Tools.Directories import SCOPE_ACTIVE_SKIN, resolveFilename, pathExists
 
+
 class VIXDevicesPanel(Screen):
 	skin = """
 	<screen position="center,center" size="640,460">
