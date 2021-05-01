@@ -10,6 +10,7 @@ from Screens.ParentalControlSetup import ProtectedScreen
 from Components.config import config
 from Components.SystemInfo import SystemInfo
 
+
 class VIXMenu(Screen, ProtectedScreen):
 	skin = """
 		<screen name="VIXMenu" position="center,center" size="610,410">

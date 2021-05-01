@@ -3,7 +3,8 @@ from boxbranding import getBoxType, getImageType, getImageDistro, getImageVersio
 from os import path, stat, mkdir, listdir, remove, statvfs, chmod
 from time import localtime, time, strftime, mktime
 from datetime import date, datetime
-import tarfile, glob
+import tarfile
+import glob
 from enigma import eTimer, eEnv, eDVBDB, quitMainloop
 from . import _, PluginLanguageDomain
 from Components.About import about
@@ -69,6 +70,7 @@ config.backupmanager.backupdirs = ConfigLocations(
 config.backupmanager.xtraplugindir = ConfigDirectory(default='')
 config.backupmanager.lastlog = ConfigText(default=' ', fixed_size=False)
 
+
 def isRestorableSettings(imageversion):
 	minimum_version = 4.2
 	try:
@@ -76,6 +78,7 @@ def isRestorableSettings(imageversion):
 	except:
 		return False
 	return imageversion >= minimum_version
+
 
 def isRestorablePlugins(imageversion):
 	minimum_version = 4.2
@@ -85,11 +88,13 @@ def isRestorablePlugins(imageversion):
 		return False
 	return imageversion >= minimum_version
 
+
 def isRestorableKernel(kernelversion):
 	# This check should no longer be necessary since auto-installed packages are no longer listed in the plugins backup.
 	# For more information please consult commit https://github.com/BlackHole/obh-core/commit/53a95067677651a3f2579a1b0d1f70172ccc493b
 	return True
 	#return kernelversion == about.getKernelVersionString()
+
 
 def BackupManagerautostart(reason, session=None, **kwargs):
 	"""called with reason=1 to during /sbin/shutdown.sysvinit, with reason=0 at startup?"""
@@ -236,9 +241,9 @@ class VIXBackupManager(Screen):
 				for fil in images:
 					if fil.endswith('.tar.gz'): # prefix should only be used for naming files, not browsing them...
 						if fil.startswith(defaultprefix):   # Ensure the current image backup are sorted to the top
-							prefix="B"
+							prefix = "B"
 						else:
-							prefix="A"
+							prefix = "A"
 						key = "%s-%012u" % (prefix, stat(self.BackupDirectory + fil).st_mtime)
 						mtimes.append((fil, key)) # (filname, prefix-mtime)
 				for fil in [x[0] for x in sorted(mtimes, key=lambda x: x[1], reverse=True)]: # sort by mtime
@@ -581,13 +586,13 @@ class VIXBackupManager(Screen):
 			if config.backupmanager.xtraplugindir.value:
 				self.thirdpartyPluginsLocation = config.backupmanager.xtraplugindir.value
 				self.thirdpartyPluginsLocation = self.thirdpartyPluginsLocation.replace(' ', '%20')
-				self.plugfiles = self.thirdpartyPluginsLocation.split('/',3)
+				self.plugfiles = self.thirdpartyPluginsLocation.split('/', 3)
 			elif path.exists('/tmp/3rdPartyPluginsLocation'):
 				self.thirdpartyPluginsLocation = open('/tmp/3rdPartyPluginsLocation', 'r').readlines()
 				self.thirdpartyPluginsLocation = "".join(self.thirdpartyPluginsLocation)
 				self.thirdpartyPluginsLocation = self.thirdpartyPluginsLocation.replace('\n', '')
 				self.thirdpartyPluginsLocation = self.thirdpartyPluginsLocation.replace(' ', '%20')
-				self.plugfiles = self.thirdpartyPluginsLocation.split('/',3)
+				self.plugfiles = self.thirdpartyPluginsLocation.split('/', 3)
 			tmppluginslist2 = open('/tmp/3rdPartyPlugins', 'r').readlines()
 			available = None
 			for line in tmppluginslist2:
@@ -601,7 +606,7 @@ class VIXBackupManager(Screen):
 							devmounts = []
 							files = []
 							self.plugfile = self.plugfiles[3]
-							for dir in ["/media/%s/%s" %(media, self.plugfile)  for media in listdir("/media/") if path.isdir(path.join("/media/", media))]:
+							for dir in ["/media/%s/%s" % (media, self.plugfile) for media in listdir("/media/") if path.isdir(path.join("/media/", media))]:
 								if media != "autofs" or "net":
 									devmounts.append(dir)
 							if len(devmounts):
@@ -693,6 +698,7 @@ class VIXBackupManager(Screen):
 		else:
 			print '[BackupManager] Restoring failed or canceled'
 			self.close()
+
 
 class BackupSelection(Screen):
 	skin = """
@@ -867,6 +873,7 @@ class XtraPluginsSelection(Screen):
 	def closeRecursive(self):
 		self.close(True)
 
+
 class VIXBackupManagerMenu(Setup):
 	skin = """
 	<screen name="VIXBackupManagerMenu" position="center,center" size="560,550">
@@ -914,6 +921,7 @@ class VIXBackupManagerMenu(Setup):
 		config.backupmanager.save()
 		config.save()
 
+
 class VIXBackupManagerLogView(Screen):
 	skin = """
 <screen name="VIXBackupManagerLogView" position="center,center" size="560,400">
@@ -952,6 +960,7 @@ class VIXBackupManagerLogView(Screen):
 	def closeRecursive(self):
 		self.close(True)
 
+
 class AutoBackupManagerTimer:
 	def __init__(self, session):
 		self.session = session
@@ -988,11 +997,11 @@ class AutoBackupManagerTimer:
 #
 		lastbkup_t = int(config.backupmanager.lastbackup.value)
 		if config.backupmanager.repeattype.value == "daily":
-			nextbkup_t = lastbkup_t + 24*3600
+			nextbkup_t = lastbkup_t + 24 * 3600
 		elif config.backupmanager.repeattype.value == "weekly":
-			nextbkup_t = lastbkup_t + 7*24*3600
+			nextbkup_t = lastbkup_t + 7 * 24 * 3600
 		elif config.backupmanager.repeattype.value == "monthly":
-			nextbkup_t = lastbkup_t + 30*24*3600
+			nextbkup_t = lastbkup_t + 30 * 24 * 3600
 		nextbkup = localtime(nextbkup_t)
 		return int(mktime((nextbkup.tm_year, nextbkup.tm_mon, nextbkup.tm_mday, backupclock[0], backupclock[1], 0, nextbkup.tm_wday, nextbkup.tm_yday, nextbkup.tm_isdst)))
 
@@ -1072,6 +1081,7 @@ class AutoBackupManagerTimer:
 			sched_t = int(mktime((sched.tm_year, sched.tm_mon, sched.tm_mday, 12, 0, 0, sched.tm_wday, sched.tm_yday, sched.tm_isdst)))
 			config.backupmanager.lastbackup.value = sched_t
 			config.backupmanager.lastbackup.save()
+
 
 class BackupFiles(Screen):
 	def __init__(self, session, updatebackup=False, imagebackup=False):
@@ -1262,6 +1272,7 @@ class BackupFiles(Screen):
 
 # Filename for backup list
 	tar_flist = "/tmp/_backup-files.list"
+
 	def Stage5(self):
 		tmplist = config.backupmanager.backupdirs.value
 		tmplist.append('/tmp/ExtraInstalledPlugins')
@@ -1334,7 +1345,7 @@ class BackupFiles(Screen):
 # ...then, if we have too many, remove the <n> newest from the end
 # and delete what is left
 				if len(emlist) > config.backupmanager.number_to_keep.value:
-					emlist = emlist[0:len(emlist)-config.backupmanager.number_to_keep.value]
+					emlist = emlist[0:len(emlist) - config.backupmanager.number_to_keep.value]
 					for fil in emlist:
 						remove(self.BackupDirectory + fil)
 	    	except:

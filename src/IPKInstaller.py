@@ -16,6 +16,7 @@ from Screens.Ipkg import Ipkg
 from Screens.MessageBox import MessageBox
 from Screens.Standby import TryQuitMainloop
 
+
 class VIXIPKInstaller(Screen):
 	skin = """
 	<screen name="VIXIPKInstaller" position="center,center" size="560,400">
@@ -146,6 +147,7 @@ class VIXIPKInstaller(Screen):
 	def myclose(self):
 		self.close()
 
+
 class IpkgInstaller(Screen):
 	skin = """
 		<screen name="IpkgInstaller" position="center,center" size="550,450" >
@@ -192,4 +194,3 @@ class IpkgInstaller(Screen):
 		for item in list:
 			cmdList.append((IpkgComponent.CMD_INSTALL, {"package": item[1]}))
 		self.session.open(Ipkg, cmdList=cmdList)
-

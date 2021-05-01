@@ -62,12 +62,13 @@ if path.exists(config.imagemanager.backuplocation.value + "imagebackups/imageres
 		rmtree(config.imagemanager.backuplocation.value + "imagebackups/imagerestore")
 	except Exception:
 		pass
-TMPDIR = config.imagemanager.backuplocation.value + "imagebackups/" + config.imagemanager.folderprefix.value + "-" + getImageType() + "-mount"		
+TMPDIR = config.imagemanager.backuplocation.value + "imagebackups/" + config.imagemanager.folderprefix.value + "-" + getImageType() + "-mount"
 if path.exists(TMPDIR + "/root") and path.ismount(TMPDIR + "/root"):
 	try:
 		system("umount " + TMPDIR + "/root")
 	except Exception:
-		pass				
+		pass
+
 
 def ImageManagerautostart(reason, session=None, **kwargs):
 	"""called with reason=1 to during /sbin/shutdown.sysvinit, with reason=0 at startup?"""
@@ -84,6 +85,7 @@ def ImageManagerautostart(reason, session=None, **kwargs):
 		if autoImageManagerTimer is not None:
 			print "[ImageManager] Stop"
 			autoImageManagerTimer.stop()
+
 
 class VIXImageManager(Screen):
 	skin = """<screen name="VIXImageManager" position="center,center" size="560,400">
@@ -326,7 +328,6 @@ class VIXImageManager(Screen):
 				break
 		self.session.openWithCallback(self.keyRestore3, JobView, job, cancelable=False, backgroundable=False, afterEventChangeable=False, afterEvent="close")
 
-
 	def keyRestore(self):
 		self.sel = self["list"].getCurrent()
 		if not self.sel:
@@ -344,7 +345,7 @@ class VIXImageManager(Screen):
 			self.message = _("Recording(s) are in progress or coming up in few seconds!\nDo you still want to flash image\n%s?") % self.sel
 		else:
 			self.message = _("Do you want to flash image\n%s") % self.sel
-		if getImageFileSystem().replace(" ","") in ("tar.bz2", "hd-emmc", "hdemmc", "octagonemmc", "dinobotemmc"):
+		if getImageFileSystem().replace(" ", "") in ("tar.bz2", "hd-emmc", "hdemmc", "octagonemmc", "dinobotemmc"):
 			message = _("You are about to flash an eMMC flash; we cannot take any responsibility for any errors or damage to your box during this process.\nProceed with CAUTION!:\nAre you sure you want to flash this image:\n ") + self.sel
 		else:
 			message = _("Are you sure you want to flash this image:\n ") + self.sel
@@ -493,6 +494,7 @@ class VIXImageManager(Screen):
 			else:
 				return False
 
+
 class AutoImageManagerTimer:
 	def __init__(self, session):
 		self.session = session
@@ -612,6 +614,7 @@ class AutoImageManagerTimer:
 			config.imagemanager.lastbackup.value = sched_t
 			config.imagemanager.lastbackup.save()
 		# self.close()
+
 
 class ImageBackup(Screen):
 	skin = """
@@ -1269,6 +1272,7 @@ class ImageBackup(Screen):
 		else:
 			autoImageManagerTimer.backupstop()
 
+
 class ImageManagerDownload(Screen):
 	skin = """
 	<screen name="VIXImageManager" position="center,center" size="560,400">
@@ -1325,7 +1329,7 @@ class ImageManagerDownload(Screen):
 
 			self.boxtype = getMachineMake()
 
-			url = 'http://www.vuplus-community.net/openbh-builds/'+self.boxtype+'/'
+			url = 'http://www.vuplus-community.net/openbh-builds/' + self.boxtype + '/'
 			conn = urllib2.urlopen(url)
 			html = conn.read()
 
@@ -1334,7 +1338,7 @@ class ImageManagerDownload(Screen):
 
 			del self.emlist[:]
 			for tag in links:
-				link = tag.get('href',None)
+				link = tag.get('href', None)
 				if link != None and link.endswith('zip') and link.find(getMachineMake()) != -1:
 					self.emlist.append(str(link))
 
@@ -1364,7 +1368,7 @@ class ImageManagerDownload(Screen):
 			selectedimage = self['list'].getCurrent()
 			fileurl = 'http://www.vuplus-community.net/openbh-builds/%s/%s' % (self.boxtype, selectedimage)
 			fileloc = self.BackupDirectory + selectedimage
-			Tools.CopyFiles.downloadFile(fileurl, fileloc, selectedimage.replace('_usb',''))
+			Tools.CopyFiles.downloadFile(fileurl, fileloc, selectedimage.replace('_usb', ''))
 			for job in Components.Task.job_manager.getPendingJobs():
 				if job.name.startswith(_("Downloading")):
 					break

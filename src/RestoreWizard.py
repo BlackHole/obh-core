@@ -13,6 +13,7 @@ from Tools.Directories import fileExists, resolveFilename, SCOPE_PLUGINS
 
 from BackupManager import isRestorableSettings, isRestorablePlugins, isRestorableKernel
 
+
 class RestoreWizard(WizardLanguage, Rc):
 	def __init__(self, session):
 		self.xmlfile = resolveFilename(SCOPE_PLUGINS, "SystemPlugins/OBH/restorewizard.xml")
@@ -303,7 +304,7 @@ class RestoreWizard(WizardLanguage, Rc):
 				self.thirdpartyPluginsLocation = "".join(self.thirdpartyPluginsLocation)
 				self.thirdpartyPluginsLocation = self.thirdpartyPluginsLocation.replace('\n', '')
 				self.thirdpartyPluginsLocation = self.thirdpartyPluginsLocation.replace(' ', '%20')
-				self.plugfiles = self.thirdpartyPluginsLocation.split('/',3)
+				self.plugfiles = self.thirdpartyPluginsLocation.split('/', 3)
 			else:
 				self.thirdpartyPluginsLocation = " "
 
@@ -320,12 +321,12 @@ class RestoreWizard(WizardLanguage, Rc):
 							devmounts = []
 							files = []
 							self.plugfile = self.plugfiles[3]
-							for dir in ["/media/%s/%s" %(media, self.plugfile)  for media in listdir("/media/") if path.isdir(path.join("/media/", media))]:
+							for dir in ["/media/%s/%s" % (media, self.plugfile) for media in listdir("/media/") if path.isdir(path.join("/media/", media))]:
 								if media != "autofs" or "net":
 									devmounts.append(dir)
 							if len(devmounts):
 								for x in devmounts:
-									print "[BackupManager] search dir = %s" %devmounts
+									print "[BackupManager] search dir = %s" % devmounts
 									if path.exists(x):
 										self.thirdpartyPluginsLocation = x
 										try:
