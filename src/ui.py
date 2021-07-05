@@ -1,19 +1,22 @@
-# for localized messages
+from __future__ import print_function
+
 from os import listdir, path, mkdir
 
 from . import _
-from Screens.Screen import Screen
+
 from Components.ActionMap import NumberActionMap
+from Components.config import config
 from Components.Sources.StaticText import StaticText
 from Components.Sources.List import List
-from Screens.ParentalControlSetup import ProtectedScreen
-from Components.config import config
 from Components.SystemInfo import SystemInfo
+from Screens.ParentalControlSetup import ProtectedScreen
+from Screens.Screen import Screen
 
 
-class VIXMenu(Screen, ProtectedScreen):
+
+class BHMenu(Screen, ProtectedScreen):
 	skin = """
-		<screen name="VIXMenu" position="center,center" size="610,410">
+		<screen name="BHMenu" position="center,center" size="610,410">
 			<ePixmap pixmap="skin_default/buttons/red.png" position="0,0" size="140,40" alphatest="on"/>
 			<widget source="key_red" render="Label" position="0,0" zPosition="1" size="140,40" font="Regular;20" halign="center" valign="center" backgroundColor="#9f1313" transparent="1"/>
 			<widget source="menu" render="Listbox" position="15,60" size="330,290" scrollbarMode="showOnDemand">
@@ -46,13 +49,13 @@ class VIXMenu(Screen, ProtectedScreen):
 		self.menu = args
 		self.list = []
 		if self.menu == 0:
-			self.list.append(("backup-manager", _("Backup manager"), _("Manage the backups of your settings."), None))
-			self.list.append(("image-manager", _("Image manager"), _("Create and flash complete images of your system."), None))
+			self.list.append(("backup-manager", _("Backup manager"), _("Manage settings backup."), None))
+			self.list.append(("image-manager", _("Image manager"), _("Backup/Flash/ReBoot system image."), None))
 			self.list.append(("ipkg-install", _("Install local extension"), _("Install IPK's from your tmp folder."), None))
 			self.list.append(("mount-manager", _("Mount manager"), _("Manage your devices mount points."), None))
 			self.list.append(("script-runner", _("Script runner"), _("Run your shell scripts."), None))
 			self.list.append(("swap-manager", _("SWAP manager"), _("Create and Manage your SWAP files."), None))
- 			if SystemInfo["HasH9SD"]:
+			if SystemInfo["HasH9SD"]:
 				self.list.append(("H9SDcard manager", _("H9SDcard Manager"), _("Move Nand root to SD card"), None))
 		self["menu"] = List(self.list)
 		self["key_red"] = StaticText(_("Close"))
@@ -78,11 +81,10 @@ class VIXMenu(Screen, ProtectedScreen):
 		self["menu"].onSelectionChanged.append(self.selectionChanged)
 
 	def isProtected(self):
-		return config.ParentalControl.setuppinactive.value and config.ParentalControl.config_sections.vixmenu.value
+		return config.ParentalControl.setuppinactive.value and config.ParentalControl.config_sections.bhmenu.value
 
 	def createSummary(self):
 		from Screens.PluginBrowser import PluginBrowserSummary
-
 		return PluginBrowserSummary
 
 	def selectionChanged(self):
@@ -111,26 +113,26 @@ class VIXMenu(Screen, ProtectedScreen):
 			currentEntry = current[0]
 			if self.menu == 0:
 				if currentEntry == "backup-manager":
-					from BackupManager import VIXBackupManager
-					self.session.open(VIXBackupManager)
+					from .BackupManager import OBHBackupManager
+					self.session.open(OBHBackupManager)
 				elif currentEntry == "image-manager":
-					from ImageManager import VIXImageManager
-					self.session.open(VIXImageManager)
+					from .ImageManager import OBHImageManager
+					self.session.open(OBHImageManager)
 				elif currentEntry == "H9SDcard manager":
-					from H9SDmanager import H9SDmanager
+					from .H9SDmanager import H9SDmanager
 					self.session.open(H9SDmanager)
 				elif currentEntry == "ipkg-install":
-					from IPKInstaller import VIXIPKInstaller
-					self.session.open(VIXIPKInstaller)
+					from .IPKInstaller import OBHIPKInstaller
+					self.session.open(OBHIPKInstaller)
 				elif currentEntry == "mount-manager":
-					from MountManager import VIXDevicesPanel
-					self.session.open(VIXDevicesPanel)
+					from .MountManager import OBHDevicesPanel
+					self.session.open(OBHDevicesPanel)
 				elif currentEntry == "script-runner":
-					from ScriptRunner import VIXScriptRunner
-					self.session.open(VIXScriptRunner, None)
+					from .ScriptRunner import OBHScriptRunner
+					self.session.open(OBHScriptRunner, None)
 				elif currentEntry == "swap-manager":
-					from SwapManager import VIXSwap
-					self.session.open(VIXSwap)
+					from .SwapManager import OBHSwap
+					self.session.open(OBHSwap)
 
 	def closeRecursive(self):
 		self.close(True)

@@ -1,30 +1,36 @@
+from __future__ import print_function
+
 # for localized messages
 from os import listdir, path, walk, stat
 from boxbranding import getBoxType, getImageDistro
 
+
 from . import _
 from Plugins.Plugin import PluginDescriptor
 from Components.config import config, ConfigBoolean, configfile
-from BackupManager import BackupManagerautostart
-from ImageManager import ImageManagerautostart
-from SwapManager import SwapAutostart
-#from SoftcamManager import SoftcamAutostart
-from ScriptRunner import ScriptRunnerAutostart
-from IPKInstaller import IpkgInstaller
+
+from .BackupManager import BackupManagerautostart
+from .ImageManager import ImageManagerautostart
+from .IPKInstaller import IpkgInstaller
+from .ScriptRunner import ScriptRunnerAutostart
+from .SwapManager import SwapAutostart
+from .IPKInstaller import IpkgInstaller
 
 config.misc.restorewizardrun = ConfigBoolean(default=False)
 
 
 def setLanguageFromBackup(backupfile):
 	try:
-		print backupfile
+		print(backupfile)
 		import tarfile
 		tar = tarfile.open(backupfile)
 		for member in tar.getmembers():
-			if member.name == 'etc/enigma2/settings':
+			if member.name == "etc/enigma2/settings":
 				for line in tar.extractfile(member):
-					if line.startswith('config.osd.language'):
-						languageToSelect = line.strip().split('=')[1]
+					if line.startswith("config.osd.language"):
+						print(line)
+						languageToSelect = line.strip().split("=")[1]
+						print(languageToSelect)
 						if languageToSelect:
 							from Components.Language import language
 							language.activateLanguage(languageToSelect)
@@ -52,18 +58,18 @@ def checkConfigBackup():
 					files = []
 				if len(files):
 					for file in files:
-						if file.endswith('.tar.gz') and file.startswith('%s' % defaultprefix):
+						if file.endswith(".tar.gz") and "bh" in file.lower():
 							list.append((path.join(devpath, file)))
- 		if len(list):
-			print '[RestoreWizard] Backup Image:', list[0]
+		if len(list):
+			print("[RestoreWizard] Backup Image:", list[0])
 			backupfile = list[0]
 			if path.isfile(backupfile):
 				setLanguageFromBackup(backupfile)
 			return True
 		else:
 			return None
-	except IOError, e:
-		print "[OBH] unable to use device (%s)..." % str(e)
+	except IOError as e:
+		print("[OBH] unable to use device (%s)..." % str(e))
 		return None
 
 
@@ -74,41 +80,29 @@ if config.misc.firstrun.value and not config.misc.restorewizardrun.value:
 		backupAvailable = 1
 
 
-def VIXMenu(session):
-	import ui
-	return ui.VIXMenu(session)
+def BHMenu(session):
+	from .import ui
+	return ui.BHMenu(session)
 
 
 def UpgradeMain(session, **kwargs):
-	session.open(OBHMenu)
+	session.open(BHMenu)
 
 
 def startSetup(menuid):
 	if menuid != "setup":
 		return []
-	return []
+	return [(_("BH"), UpgradeMain, "bh_menu", 1010)]
 
 
 def RestoreWizard(*args, **kwargs):
-	from RestoreWizard import RestoreWizard
+	from .RestoreWizard import RestoreWizard
 	return RestoreWizard(*args, **kwargs)
-
-#def SoftcamManager(session):
-#	from SoftcamManager import VIXSoftcamManager
-#	return VIXSoftcamManager(session)
-
-#def SoftcamMenu(session, **kwargs):
-#	session.open(SoftcamManager)
-
-#def SoftcamSetup(menuid):
-#	if menuid == "cam":
-#		return []
-#	return []
 
 
 def BackupManager(session):
-	from BackupManager import VIXBackupManager
-	return VIXBackupManager(session)
+	from .BackupManager import OBHBackupManager
+	return OBHBackupManager(session)
 
 
 def BackupManagerMenu(session, **kwargs):
@@ -116,8 +110,8 @@ def BackupManagerMenu(session, **kwargs):
 
 
 def ImageManager(session):
-	from ImageManager import VIXImageManager
-	return VIXImageManager(session)
+	from ImageManager import OBHImageManager
+	return OBHImageManager(session)
 
 
 def ImageMangerMenu(session, **kwargs):
@@ -125,7 +119,7 @@ def ImageMangerMenu(session, **kwargs):
 
 
 def H9SDmanager(session):
-	from H9SDmanager import H9SDmanager
+	from .H9SDmanager import H9SDmanager
 	return H9SDmanager(session)
 
 
@@ -134,8 +128,8 @@ def H9SDmanagerMenu(session, **kwargs):
 
 
 def MountManager(session):
-	from MountManager import VIXDevicesPanel
-	return VIXDevicesPanel(session)
+	from .MountManager import OBHDevicesPanel
+	return OBHDevicesPanel(session)
 
 
 def MountManagerMenu(session, **kwargs):
@@ -143,8 +137,8 @@ def MountManagerMenu(session, **kwargs):
 
 
 def ScriptRunner(session):
-	from ScriptRunner import VIXScriptRunner
-	return VIXScriptRunner(session)
+	from .ScriptRunner import OBHScriptRunner
+	return OBHScriptRunner(session)
 
 
 def ScriptRunnerMenu(session, **kwargs):
@@ -152,8 +146,8 @@ def ScriptRunnerMenu(session, **kwargs):
 
 
 def SwapManager(session):
-	from SwapManager import VIXSwap
-	return VIXSwap(session)
+	from .SwapManager import OBHSwap
+	return OBHSwap(session)
 
 
 def SwapManagerMenu(session, **kwargs):
@@ -178,20 +172,14 @@ def filescan(**kwargs):
 
 
 def Plugins(**kwargs):
-	plist = [PluginDescriptor(where=PluginDescriptor.WHERE_MENU, needsRestart=False, fnc=startSetup)]
-#			 PluginDescriptor(where=PluginDescriptor.WHERE_MENU, fnc=SoftcamSetup)]
+	plist = [PluginDescriptor(where=PluginDescriptor.WHERE_MENU, needsRestart=False, fnc=startSetup),
+			 PluginDescriptor(name=_("OBH Image Management"), where=PluginDescriptor.WHERE_EXTENSIONSMENU, fnc=UpgradeMain)]
 	if config.scriptrunner.showinextensions.value:
 		plist.append(PluginDescriptor(name=_("Script runner"), where=PluginDescriptor.WHERE_EXTENSIONSMENU, fnc=ScriptRunnerMenu))
-#	plist.append(PluginDescriptor(where=PluginDescriptor.WHERE_AUTOSTART, fnc=SoftcamAutostart))
 	plist.append(PluginDescriptor(where=PluginDescriptor.WHERE_AUTOSTART, fnc=SwapAutostart))
 	plist.append(PluginDescriptor(where=PluginDescriptor.WHERE_SESSIONSTART, fnc=ImageManagerautostart))
 	plist.append(PluginDescriptor(where=PluginDescriptor.WHERE_SESSIONSTART, fnc=BackupManagerautostart))
 	if config.misc.firstrun.value and not config.misc.restorewizardrun.value and backupAvailable == 1:
 		plist.append(PluginDescriptor(name=_("Restore wizard"), where=PluginDescriptor.WHERE_WIZARD, needsRestart=False, fnc=(0, RestoreWizard)))
 	plist.append(PluginDescriptor(name=_("Ipkg"), where=PluginDescriptor.WHERE_FILESCAN, needsRestart=False, fnc=filescan))
-	plist.append(PluginDescriptor(name=_("ViX Backup manager"), where=PluginDescriptor.WHERE_VIXMENU, fnc=BackupManagerMenu))
-	plist.append(PluginDescriptor(name=_("ViX Image manager"), where=PluginDescriptor.WHERE_VIXMENU, fnc=ImageMangerMenu))
-	plist.append(PluginDescriptor(name=_("ViX Mount manager"), where=PluginDescriptor.WHERE_VIXMENU, fnc=MountManagerMenu))
-	plist.append(PluginDescriptor(name=_("ViX Script runner"), where=PluginDescriptor.WHERE_VIXMENU, fnc=ScriptRunnerMenu))
-	plist.append(PluginDescriptor(name=_("ViX SWAP manager"), where=PluginDescriptor.WHERE_VIXMENU, fnc=SwapManagerMenu))
 	return plist
