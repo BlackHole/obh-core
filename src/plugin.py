@@ -172,8 +172,7 @@ def filescan(**kwargs):
 
 
 def Plugins(**kwargs):
-	plist = [PluginDescriptor(where=PluginDescriptor.WHERE_MENU, needsRestart=False, fnc=startSetup),
-			 PluginDescriptor(name=_("OBH Image Management"), where=PluginDescriptor.WHERE_EXTENSIONSMENU, fnc=UpgradeMain)]
+	plist = [PluginDescriptor(needsRestart=False, fnc=startSetup)]
 	if config.scriptrunner.showinextensions.value:
 		plist.append(PluginDescriptor(name=_("Script runner"), where=PluginDescriptor.WHERE_EXTENSIONSMENU, fnc=ScriptRunnerMenu))
 	plist.append(PluginDescriptor(where=PluginDescriptor.WHERE_AUTOSTART, fnc=SwapAutostart))
