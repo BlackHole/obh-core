@@ -1451,13 +1451,6 @@ class ImageManagerSetup(Setup):
 	def keySave(self):
 		if config.imagemanager.folderprefix.value == "":
 			config.imagemanager.folderprefix.value = defaultprefix
-		for configElement in (config.imagemanager.developer_username, config.imagemanager.developer_password):
-			if not configElement.value:
-				configElement.value = configElement.default
-		if not configElement.value:
-			config.imagemanager.imagefeed_DevL.value = config.imagemanager.imagefeed_DevL.default
-		for configElement in (config.imagemanager.imagefeed_ViX, config.imagemanager.imagefeed_ATV, config.imagemanager.imagefeed_Pli):
-			self.check_URL_format(configElement)
 		for x in self["config"].list:
 			x[1].save()
 		configfile.save()
