@@ -1,24 +1,21 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: enigma2-vix-core\n"
+"Project-Id-Version: Simplified Chinese translation - OBH core\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-03-12 13:49+0000\n"
-"PO-Revision-Date: 2021-07-20 23:11+0800\n"
-"Last-Translator: 孤独之剑 <haotzyy1970@163.com>\n"
-"Language-Team: 孤独之剑 <haotzyy1970@163.com>\n"
+"POT-Creation-Date: 2021-08-07 14:06+0000\n"
+"PO-Revision-Date: \n"
+"Last-Translator: dd <hongxing526@gmail.com>\n"
+"Language-Team: Simplified Chinese localization by xingchong\n"
 "Language: zh_CN\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Poedit-SourceCharset: iso-8859-15\n"
-"X-Generator: Poedit 1.7.3\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Generator: Poedit 2.4.3\n"
 
 msgid "%a %e %b  %-H:%M"
 msgstr "%a %e %b  %-H:%M"
-
-msgid "'User' url has not been specified, please use MENU button to initialise"
-msgstr "尚未指定'用户'url, 请使用菜单按钮初始化"
 
 msgid "128 Mb"
 msgstr "128 Mb"
@@ -45,280 +42,209 @@ msgid "96 Mb"
 msgstr "96 Mb"
 
 msgid "A background update check is in progress, please try again."
-msgstr "正在进行后台更新检查,请再试一次."
+msgstr "在后台检查更新, 请稍后再试。"
 
 msgid "A backup has been detected."
-msgstr "已检测到备份."
+msgstr "备份已找到。"
 
 msgid "Activate"
-msgstr "激活"
+msgstr "启用"
 
 msgid "Active"
-msgstr "活跃的"
-
-msgid "Active:"
-msgstr "活跃的:"
+msgstr "活跃"
 
 msgid "Allows the script runner to be launched from extensions."
-msgstr "允许从扩展启动脚本运行程序."
-
-msgid "Allows the softcam manager to be launched from extensions."
-msgstr "允许从扩展启动softcam管理器."
-
-msgid ""
-"Allows the softcam to be checked if it stopped working, and restarted "
-"automatically if needed."
-msgstr "允许检查softcam是否停止工作,并在需要时自动重新启动."
+msgstr "允许从扩展启动脚本运行程序。"
 
 msgid "Allows you to close the window automatically."
-msgstr "允许您自动关闭窗口."
+msgstr "允许您自动关闭窗口。"
 
 msgid "Allows you to schedule your backups."
-msgstr "允许您计划备份."
+msgstr "允许您安装备份。"
 
 msgid "Allows you to schedule your image backups."
-msgstr "允许您计划映像备份."
+msgstr "允许您安装图像备份。"
 
 msgid "Allows you to tag your backups to a box."
-msgstr "允许您将备份标记到机顶盒中."
+msgstr "允许您为接收器创建备份。"
 
 msgid ""
 "Allows you to tag your image backup to a box. (default is box name/type)"
-msgstr "允许您将图像备份标记到机顶盒中(默认为机顶盒名称/类型)."
+msgstr "允许您将映像备份标记到一个框中。(默认为框名/类型)"
 
 msgid "Are you ready to install ?"
 msgstr "准备好安装了吗?"
 
 msgid "Are you sure you want to delete image slot %s ?"
-msgstr "确实要删除镜像插槽 %s 吗?"
-
-msgid ""
-"Are you sure you want to delete this backup:\n"
-" "
-msgstr ""
-"是否确实要删除此备份:\n"
-" "
-
-msgid ""
-"Are you sure you want to delete this image backup:\n"
-" "
-msgstr ""
-"是否确实要删除此映像备份:\n"
-"  "
+msgstr "您是否确定要删除图像插槽%s？"
 
 msgid ""
 "Are you sure you want to download this image:\n"
 " "
 msgstr ""
-"是否确实要下载此镜像:\n"
+"您确定要下载此固件:\n"
 " "
-
-msgid ""
-"Are you sure you want to flash this image:\n"
-" "
-msgstr ""
-"是否确实要刷写此镜像:\n"
-"  "
 
 msgid ""
 "Are you sure you want to restore this backup:\n"
 " "
 msgstr ""
-"是否确实要还原此备份:\n"
+"您确定要恢复此备份:\n"
 " "
 
 msgid "Automatic settings backup"
-msgstr "自动设置备份"
+msgstr "自动保存设置"
 
 msgid "Autostart"
 msgstr "自动启动"
 
 msgid "Backing up eMMC partitions for USB flash ..."
-msgstr "正在备份USB闪存的eMMC分区..."
+msgstr "将 eMMC 分区复制到 USB 闪存..."
 
 msgid "Backing up eMMC partitions for USB flash..."
-msgstr "正在备份USB闪存的eMMC分区..."
+msgstr "将 eMMC 分区复制到 USB 闪存..."
 
 msgid "Backing up files..."
 msgstr "正在备份文件..."
 
 msgid "Backing up kernel..."
-msgstr "正在备份内核..."
+msgstr "备份内核。。。"
 
 msgid "Backing up root file system..."
-msgstr "正在备份根文件系统..."
+msgstr "备份根文件系统..."
 
 msgid "Backup complete."
-msgstr "备份完成."
+msgstr "备份完成。"
 
 msgid "Backup complete..."
-msgstr "备份完成..."
+msgstr "备份完成 ..."
 
 msgid "Backup confirmation"
 msgstr "备份确认"
 
 msgid "Backup created"
-msgstr "已创建备份"
+msgstr "备份已创建"
 
 msgid ""
 "Backup failed - e. g. wrong backup destination or no space left on backup "
 "device."
-msgstr "备份失败-例如备份目标错误或备份设备上没有剩余空间."
+msgstr ""
+"目的地错误或备份备份错误！ 目的地错误或备份设备上没有剩余空间。设备上没有剩余"
+"空间。"
 
 msgid ""
 "Backup in progress,\n"
 "Please wait for it to finish, before trying again."
 msgstr ""
-"正在进行备份.\n"
-"请等待它完成,然后再尝试."
+"备份正在进行中，\n"
+"请等待它完成，然后再尝试。"
 
 msgid "Backup location"
 msgstr "备份位置"
 
 msgid "Backup manager"
-msgstr "备份管理器"
+msgstr "备份管理"
 
 msgid "Backup manager settings"
-msgstr "备份管理器设置"
-
-msgid "Backup/Flash/ReBoot system image."
-msgstr "备份/刷写/重新启动系统镜像."
+msgstr "备份管理设置"
 
 msgid "Backup prefix"
-msgstr "备份前缀"
+msgstr "复制前缀"
 
 msgid "Backups to keep"
-msgstr "备份保存"
-
-msgid "CCcam can't run whilst MGcamd is running"
-msgstr "MGcamd运行时CCcam无法运行"
-
-msgid "CCcam can't run whilst MGcamd is running."
-msgstr "MGcamd运行时CCcam无法运行."
-
-msgid ""
-"Can't un-mount the partition; make sure it is not being used for SWAP or "
-"record/timeshift paths."
-msgstr "无法卸载分区;请确保它未用于交换或录制/时间偏移路径."
+msgstr "要保留的备份"
 
 msgid "Cancel"
 msgstr "取消"
 
 msgid "Change location"
-msgstr "更改位置"
+msgstr "更改地点"
 
 msgid "Checking free RAM.."
-msgstr "正在检查可用内存..."
-
-msgid "Checking softcams..."
-msgstr "正在检查softcams..."
+msgstr "检查可用内存。"
 
 msgid "Choose files"
 msgstr "选择文件"
 
-msgid "Choose local IPK's folder"
-msgstr "选择本地IPK文件夹"
-
 msgid "Choose where to mount your devices to:"
-msgstr "选择将设备装载到的位置:"
+msgstr "选择设备的挂载点："
 
 msgid "Close"
 msgstr "关闭"
 
 msgid "Close window on success"
-msgstr "成功时关闭窗口"
+msgstr "关闭成功窗口"
 
 msgid "Comparing against backup..."
-msgstr "与备份相比..."
-
-msgid "Compress"
-msgstr "压缩"
+msgstr "与备份比较..."
 
 msgid "Create"
 msgstr "创建"
 
 msgid "Create a settings backup before updating."
-msgstr "更新前创建设置备份."
+msgstr "在更新之前创建设置备份。"
 
 msgid "Create and Manage your SWAP files."
-msgstr "创建和管理交换文件."
-
-msgid "Create and flash complete images of your system."
-msgstr "创建并刷写系统的完整镜像."
-
-msgid "Create empty slot."
-msgstr "创建空分区."
-
-msgid "Create:"
-msgstr "创建:"
+msgstr "创建和管理您的交换文件。"
 
 msgid "Creating SWAP.."
-msgstr "正在创建SWAP..."
+msgstr "创建交换文件..."
 
 msgid "Creating list of installed plugins..."
-msgstr "正在创建已安装插件的列表..."
+msgstr "创建已安装插件列表…"
 
 msgid "Creating zip..."
-msgstr "正在创建zip..."
+msgstr "创建 ZIP 存档..."
 
 msgid "Current status:"
-msgstr "现状:"
+msgstr "当前状态："
 
 msgid "Daily"
-msgstr "每日"
+msgstr "日常"
 
 msgid "Deactivate"
-msgstr "停用"
+msgstr "禁用"
 
 msgid "Delete"
 msgstr "删除"
 
 msgid "Deselect"
-msgstr "取消选择"
+msgstr "取消"
 
 msgid "Device: "
 msgstr "设备: "
 
 msgid "Device: None available"
-msgstr "设备:无可用"
+msgstr "设备：不可用"
 
 msgid "Device: none available"
-msgstr "设备:无可用"
-
-msgid "Disable startup"
-msgstr "禁用启动"
-
-msgid "Do you want to change download url"
-msgstr "是否要更改下载url"
+msgstr "设备：不可用"
 
 msgid ""
 "Do you want to create a full image backup?\n"
 "This can take about 6 minutes to complete."
 msgstr ""
-"是否要创建完整映像备份?\n"
-"这可能需要6分钟才能完成."
+"您是否要创建完整的图像备份？\n"
+"这可能需要大约 6 分钟才能完成。"
 
 msgid ""
 "Do you want to flash image\n"
 "%s"
 msgstr ""
-"你想刷写镜像吗\n"
+"是否要刷写新镜像?\n"
 "%s"
 
 msgid "Do you want to restart GUI now ?"
 msgstr "现在要重新启动GUI吗?"
 
 msgid "Do you want to restore your Enigma2 plugins ?"
-msgstr "你想恢复你的Enigma2插件吗?"
+msgstr "想要恢复您的 Enigma2 插件吗？"
 
 msgid "Do you want to restore your Enigma2 settings ?"
-msgstr "你想恢复你的Enigma2设置吗?"
+msgstr "想要恢复您的 Enigma2 设置吗？"
 
 msgid "Do you want to restore your enigma2 settings ?"
-msgstr "你想恢复你的enigma2设置吗?"
-
-msgid "DownLoad"
-msgstr "下载"
+msgstr "想要恢复您的 Enigma2 设置吗？"
 
 msgid "Download"
 msgstr "下载"
@@ -327,152 +253,70 @@ msgid "Download confirmation"
 msgstr "下载确认"
 
 msgid "Downloading"
-msgstr "下载"
-
-msgid "Downloads"
-msgstr "下载"
-
-msgid "ET8500 Image Restore"
-msgstr "ET8500镜像还原"
-
-msgid ""
-"ET8500 Multiboot: Yes to restore OS1 No to restore OS2:\n"
-" "
-msgstr ""
-"ET8500多引导:是还原OS1否还原OS2:\n"
-" "
+msgstr "正在下载"
 
 msgid "Empty slot"
-msgstr "空分区"
+msgstr "空位"
 
 msgid "Enable SWAP at startup"
-msgstr "启动时启用SWAP"
-
-msgid "Enable frozen check"
-msgstr "启用冻结检查"
-
-msgid "Enable startup"
-msgstr "启用启动"
+msgstr "启动时交换"
 
 msgid "Enough retries, delaying till next schedule."
-msgstr "重试次数足够,请延迟到下一个计划."
+msgstr "足够的检索，推迟到下一个时间表。"
 
 msgid "Erase"
-msgstr "擦除"
+msgstr "清除"
 
 msgid "Exit the restore wizard"
-msgstr "退出还原向导"
-
-msgid "Expand"
-msgstr "展开"
+msgstr "退出恢复向导"
 
 msgid "Extra IPK's"
-msgstr "额外IPK"
+msgstr "附加IPK"
 
 msgid "Flash"
-msgstr "刷写"
-
-msgid "Flash confirmation"
-msgstr "刷写确认"
+msgstr "闪烁"
 
 msgid "Flash image unzip successful."
-msgstr "刷写镜像解压成功."
-
-msgid "Found non-standard softcam, trying to start, this may fail."
-msgstr "发现非标准softcam,尝试启动,可能失败."
+msgstr "镜像已成功解压。"
 
 msgid "Free space:"
-msgstr "可用空间:"
-
-msgid "Frozen check interval"
-msgstr "冻结检查间隔"
-
-msgid "GB"
-msgstr "GB"
-
-msgid "H9 SDcard manager"
-msgstr "H9 SD卡管理器"
-
-msgid "H9SDcard Manager"
-msgstr "H9 SD卡管理器"
-
-msgid "HARD DISK: "
-msgstr "硬盘: "
-
-msgid "Http url for OpenATV Images"
-msgstr "OpenATV镜像HTTP url"
-
-msgid "Http url for OpenPli Images"
-msgstr "OpenPli镜像Http url"
-
-msgid "Http url for OpenViX Images"
-msgstr "OpenViX镜像Http url"
-
-msgid "Http url for User Images"
-msgstr "用户镜像Http url"
+msgstr "空闲内存："
 
 msgid "IPK installer"
-msgstr "IPK安装程序"
-
-msgid "Image Version %s"
-msgstr "镜像版本 %s"
+msgstr "安装IPK"
 
 msgid "Image manager"
-msgstr "镜像管理器"
+msgstr "固件管理"
 
 msgid "Image manager settings"
-msgstr "镜像管理器设置"
-
-msgid "ImageLib_ATV"
-msgstr "镜像库_ATV"
-
-msgid "ImageLib_Pli"
-msgstr "镜像库_Pli"
-
-msgid "ImageLib_User"
-msgstr "镜像库_用户"
-
-msgid "ImageLib_ViX"
-msgstr "镜像库_ViX"
+msgstr "图像管理器设置"
 
 msgid "Inactive"
-msgstr "不活动"
+msgstr "未启用"
 
 msgid "Include machine name in backup name"
-msgstr "在备份名中包含机器名"
+msgstr "在备份名称中包含接收方名称"
 
 msgid "Info"
 msgstr "信息"
-
-msgid "Init SDCARD"
-msgstr "初始化SD卡"
-
-msgid "Init SDcard"
-msgstr "初始化SD卡"
-
-msgid "Init Zgemma H9 SDCARD - please reboot after use."
-msgstr "初始化Zgemma H9 SD卡-使用后请重新启动."
-
-msgid "Init Zgemma H9 USB/SDA1 - please reboot after use."
-msgstr "初始化Zgemma H9 USB/SDA1卡-使用后请重新启动."
 
 msgid "Install"
 msgstr "安装"
 
 msgid "Install IPK's from your tmp folder."
-msgstr "从tmp文件夹安装IPK."
+msgstr "从tmp目录中安装IPK。"
 
 msgid "Install confirmation"
 msgstr "安装确认"
 
 msgid "Install extensions."
-msgstr "安装扩展."
+msgstr "安装插件。"
 
 msgid "Install local extension"
-msgstr "安装本地扩展"
+msgstr "安装本地插件"
 
 msgid "Installing..."
-msgstr "正在安装...."
+msgstr "安装中..."
 
 msgid "Invert"
 msgstr "倒置"
@@ -483,13 +327,13 @@ msgstr "Ipkg"
 msgid ""
 "It seems you have not setup an extra location. Please set it up in the "
 "Backup manager setup menu."
-msgstr "似乎你没有设置额外的位置.请在'备份管理器设置'菜单中设置"
+msgstr "您似乎没有设置额外的位置。请将其设置在备份管理器设置菜单中。"
 
 msgid "Location of where backup should be saved."
-msgstr "应保存备份的位置."
+msgstr "应保存备份的位置。"
 
 msgid "Location of where the image backup should be saved."
-msgstr "应保存映像备份的位置."
+msgstr "应保存图像备份的位置。"
 
 msgid "Logs"
 msgstr "日志"
@@ -497,32 +341,17 @@ msgstr "日志"
 msgid "MB"
 msgstr "MB"
 
-msgid "MGcamd can't run whilst CCcam is running."
-msgstr "当CCcam运行时,MGcamd无法运行."
-
-msgid "Manage settings backup."
-msgstr "管理备份设置."
-
-msgid "Main menu"
-msgstr "主菜单"
-
-msgid "Manage the backups of your settings."
-msgstr "管理设置的备份."
-
 msgid "Manage your devices mount points."
-msgstr "管理设备装载点."
+msgstr "管理您的设备挂载点。"
 
 msgid "Max backups to keep (0==all)"
-msgstr "要保留的最大备份数(0==全部)"
+msgstr "要保留的最大备份(0==all)"
 
 msgid "Max image backups to keep (0==all)"
-msgstr "要保留的最大映像备份数(0=全部)"
+msgstr "要保留的最大图像备份(0==all)"
 
 msgid "Mount"
 msgstr "安装"
-
-msgid "Mount failed."
-msgstr "安装失败."
 
 msgid "Mount manager"
 msgstr "安装管理器"
@@ -530,270 +359,162 @@ msgstr "安装管理器"
 msgid "Mount: "
 msgstr "安装: "
 
-msgid "Move Nand root to SD card"
-msgstr "将Nand根移动到SD卡"
-
 msgid "Moving to backup Location..."
-msgstr "正在移动到备份位置..."
-
-msgid "MultiBoot manager"
-msgstr "多引导管理器"
-
-msgid "Multiboot ERROR! - no STARTUP in boot partition."
-msgstr "多重启动错误！-启动分区中没有启动."
+msgstr "移动到备份目录..."
 
 msgid "Multiboot image manager"
 msgstr "多引导映像管理器"
 
-msgid ""
-"Multiboot manager - SDcard initialization run, please restart your Image."
-msgstr "多引导管理器-SD卡初始化运行,请重新启动映像."
-
-msgid "Multiboot manager - The SDcard must be at least 8MB."
-msgstr "多引导管理器-SD卡必须至少为8MB."
-
-msgid ""
-"Multiboot manager - to use this routine %s image must be at OpenViX 4.2.043 "
-"or later and USB flashed - reply Yes to continue"
-msgstr ""
-"多引导管理器-若要使用此例程 %s 映像必须是OpenViX 4.2.043 或更高版本,并且USB已"
-"格式化-按'OK'键以继续"
-
-msgid "Multiboot only able to restore this backup to mmc slot1"
-msgstr "多引导只能将此备份还原到mmc slot1"
-
 msgid "NO, do not restore plugins"
-msgstr "否,不还原插件"
+msgstr "不，不要恢复插件"
 
 msgid "NO, do not restore settings"
-msgstr "否,不还原设置"
+msgstr "不，不要还原设置"
 
 msgid "New backup"
 msgstr "新备份"
 
 msgid "Next backup: "
-msgstr "下一次备份: "
-
-msgid ""
-"No config files found, please setup CCcam first\n"
-"in /etc/CCcam.cfg."
-msgstr ""
-"找不到配置文件,请先设置CCcam\n"
-"在/etc/CCcam.cfg中."
-
-msgid ""
-"No config files found, please setup Hypercam first\n"
-"in /etc/hypercam.cfg."
-msgstr ""
-"找不到配置文件,请先安装Hypercam\n"
-"在 /etc/hypercam .cfg中."
-
-msgid ""
-"No config files found, please setup MGcamd first\n"
-"in /usr/keys."
-msgstr ""
-"找不到配置文件,请先设置MGcamd\n"
-"在 /usr/keys中."
-
-msgid ""
-"No config files found, please setup Oscam first\n"
-"in /etc/tuxbox/config"
-msgstr ""
-"找不到配置文件,请先设置Oscam\n"
-"在 /etc/tuxbox/config中"
-
-msgid ""
-"No config files found, please setup Oscam first\n"
-"in /etc/tuxbox/config."
-msgstr ""
-"找不到配置文件,请先设置Oscam\n"
-"在 /etc/tuxbox/config中."
-
-msgid ""
-"No images found for selected download server...if password check validity"
-msgstr "未找到所选下载服务器的镜像…请密检查码有效性"
-
-msgid "No plugins needed to be installed"
-msgstr "不需要安装插件"
+msgstr "下一个备份: "
 
 msgid "None"
 msgstr "无"
 
 msgid "Note: slot list does not show current image or empty slots."
-msgstr "注意:分区列表不显示当前镜像或空分区."
+msgstr "信息：插槽列表不显示当前图像或空插槽。"
 
 msgid "Now skipping restore process"
-msgstr "正在跳过还原过程..."
+msgstr "跳过恢复"
 
-msgid ""
-"OFGwrite error (also sent to any debug log):\n"
-"%s"
-msgstr ""
-"OfWrite错误(也被发送到任何调试日志):\n"
-"%s"
+msgid "OBH"
+msgstr "OBH"
 
 msgid "OK"
-msgstr "确定"
+msgstr "确认"
 
 msgid "OK, to perform a restore"
-msgstr "好,执行还原"
+msgstr "确定恢复"
 
 msgid "Please enter a folder that contains some packages."
-msgstr "请输入包含某些包的文件夹."
+msgstr "请输入一个包含一些软件包的文件夹。"
 
 msgid "Please select device to use as SWAP file location."
-msgstr "请选择要用作交换文件位置的设备."
+msgstr "请选择设备作为交换文件位置使用。"
 
 msgid "Please select the file to restore."
-msgstr "请选择要还原的文件."
+msgstr "请选择恢复文件。"
 
 msgid "Please wait while plugins restore completes..."
-msgstr "插件还原正在完成,请稍候..."
+msgstr "插件恢复完成，请稍候..."
 
 msgid "Please wait while scanning for devices..."
 msgstr "正在扫描设备,请稍候..."
 
 msgid "Please wait while scanning your %s %s devices..."
-msgstr "正在扫描 %s %s 设备,请稍候..."
+msgstr "正在扫描设备%s%s，请稍候..."
 
 msgid "Please wait while settings restore completes..."
-msgstr "正在完成设置还原,请稍候..."
-
-msgid "Please wait while starting\n"
-msgstr "正在启动,请稍候\n"
-
-msgid "Please wait while stopping\n"
-msgstr "请稍候,正在停止\n"
-
-msgid ""
-"Please wait while the flash prepares, after the image is flashed, your %s "
-"will restart - if error please use Recovery mode to restart."
-msgstr ""
-"正在准备,请稍候,映像刷新后,您的 %s 将重新启动-如果出现错误，请使用恢复模式重"
-"新启动."
+msgstr "正在恢复设置，请稍候..."
 
 msgid "Please wait while the flash prepares."
-msgstr "正在准备,请稍候..."
+msgstr "正在准备固件，请稍候。"
 
 msgid "Please wait while the system gathers information..."
-msgstr "系统正在收集信息,请稍候..."
+msgstr "系统正在收集信息，请稍候……"
 
 msgid "Please wait."
-msgstr "请稍候."
+msgstr "请稍等。"
 
 msgid ""
 "Plugin listing failed - e. g. wrong backup destination or no space left on "
 "backup device."
-msgstr "插件列表失败-例如备份目标错误或备份设备上没有剩余空间."
+msgstr "添加插件失败！ 目的地错误或备份设备上没有剩余空间。"
 
 msgid "Preparing extra plugins..."
-msgstr "正在准备额外的插件.."
-
-msgid "Press 'Menu' to select a storage device"
-msgstr "按'菜单'键选择存储设备"
-
-msgid "Press Init to format SDcard."
-msgstr "按Init格式化SD卡."
+msgstr "正在准备其他插件..."
 
 msgid "Press OK to toggle the selection."
-msgstr "按OK键切换选择."
-
-msgid "Press appropiate Init to move Nand root to SDcard."
-msgstr "按appropate Init将Nand root移动到SD卡."
+msgstr "按 OK 确认选择或取消。"
 
 msgid "Query before backup starts"
-msgstr "备份开始前查询"
+msgstr "备份开始前的请求"
 
 msgid "Query before image backup starts"
-msgstr "映像备份开始前的查询"
+msgstr "在启动映像备份之前进行请求"
 
 msgid "Query before starting backup."
-msgstr "启动备份前查询."
+msgstr "开始备份前查询。"
 
 msgid "Query before starting image backup."
-msgstr "启动映像备份前查询."
-
-msgid "Reboot"
-msgstr "Opnieuw opstarten"
+msgstr "在开始映像备份之前进行查询。"
 
 msgid "Rebooting..."
-msgstr "正在重新启动..."
+msgstr "重启..."
 
 msgid ""
 "Recording(s) are in progress or coming up in few seconds!\n"
 "Do you still want to flash image\n"
 "%s?"
 msgstr ""
-"正在录制或几秒钟后即将录制!\n"
-"你是否刷写镜像\n"
-"%s?"
-
-msgid ""
-"Removal of this slot will not show in %s Gui.  Are you sure you want to "
-"delete image slot %s ?"
-msgstr "删除此插分区不会显示在 %s GUI用户界面中. 确实要删除镜像分区 %s ?"
+"正在录制或将在接下来的几秒钟内开始录制！\n"
+"你还想刷图吗\n"
+"%s？"
 
 msgid "Remove confirmation"
-msgstr "删除确认"
+msgstr "确认删除"
 
 msgid "Removing temp mounts..."
-msgstr "正在删除临时安装..."
+msgstr "移除临时安装..."
 
 msgid "Repeat how often"
 msgstr "重复多久"
 
-msgid "Restart"
-msgstr "重新启动"
-
 msgid "Restart %s %s."
-msgstr "重新启动 %s %s."
+msgstr "重新启动%s% s。"
 
 msgid "Restart GUI."
-msgstr "重新启动GUI."
+msgstr "重启用户界面I."
 
 msgid "Restore"
-msgstr "还原"
+msgstr "恢复"
 
 msgid "Restore Confirmation"
-msgstr "还原确认"
+msgstr "恢复确认"
 
 msgid "Restore wizard"
-msgstr "还原向导"
+msgstr "恢复向导"
 
 msgid "Restoring backup..."
-msgstr "正在还原备份..."
+msgstr "正在恢复备份..."
 
 msgid "Restoring plugins, this can take a long time..."
-msgstr "正在还原插件,这可能需要很长时间..."
+msgstr "恢复插件，这可能需要很长时间…"
 
 msgid "Restoring plugins..."
-msgstr "正在还原插件..."
+msgstr "恢复插件…"
 
 msgid "Retrieving image slots - Please wait..."
-msgstr "正在检索镜像分区-请稍候..."
+msgstr "正在检索镜像分区-请稍..."
 
 msgid "Run"
 msgstr "运行"
 
 msgid "Run your shell scripts."
-msgstr "运行shell脚本."
-
-msgid "SDCARD: "
-msgstr "SD卡: "
+msgstr "运行您的shell脚本。"
 
 msgid ""
 "SWAP file not found. You have to create the file before you try to activate "
 "it."
-msgstr "找不到交换文件,您必须先创建文件,然后再尝试激活它."
+msgstr "找不到页面文件。 您必须先创建一个文件，然后才能尝试激活它。"
 
 msgid "SWAP manager"
-msgstr "交换管理器"
+msgstr "页面文件管理"
 
 msgid "SWAP place:"
-msgstr "交换地点:"
+msgstr "交换位置："
 
 msgid "SWAP size:"
-msgstr "交换大小:"
+msgstr "交换大小："
 
 msgid "Save"
 msgstr "保存"
@@ -802,7 +523,7 @@ msgid "Schedule backups"
 msgstr "计划备份"
 
 msgid "Script runner"
-msgstr "脚本运行程序"
+msgstr "运行脚本"
 
 msgid "Script runner settings"
 msgstr "脚本运行器设置"
@@ -811,19 +532,16 @@ msgid "Select"
 msgstr "选择"
 
 msgid "Select a backup to restore:"
-msgstr "选择要还原的备份:"
+msgstr "选择要还原的副本："
 
 msgid "Select a package to install:"
-msgstr "选择要安装的软件包:"
-
-msgid "Select an image to download for %s:"
-msgstr "选择要为 %s 下载的镜像:"
+msgstr "选择要安装的软件包："
 
 msgid "Select an image to flash:"
-msgstr "选择要刷写的镜像:"
+msgstr "选择固件映像："
 
 msgid "Select extra packages folder"
-msgstr "选择附加包文件夹"
+msgstr "请选择一个插件文件夹"
 
 msgid "Select files/folders to backup"
 msgstr "选择要备份的文件/文件夹"
@@ -832,162 +550,116 @@ msgid "Select folder that contains plugins"
 msgstr "选择包含插件的文件夹"
 
 msgid "Select the SWAP file size:"
-msgstr "选择交换文件大小:"
-
-msgid "Select:"
-msgstr "选择:"
-
-msgid "Set the interval to be checked in mins."
-msgstr "设置检查间隔(分钟)."
+msgstr "选择交换文件大小："
 
 msgid "Set the repeat interval of backup schedule."
-msgstr "设置计划备份的重复间隔."
+msgstr "设置备份计划的重复间隔。"
 
 msgid "Set the time of backup to start."
-msgstr "设置备份开始的时间."
+msgstr "设置备份开始的时间。"
 
 msgid "Setting up..."
-msgstr "正在设置..."
-
-msgid "Setup"
-msgstr "设置"
+msgstr "环境 ..."
 
 msgid "Setup mounts"
-msgstr "安装极轴"
+msgstr "设置"
 
 msgid "Show in extensions"
-msgstr "在扩展中显示"
+msgstr "在附加菜单中显示"
 
 msgid "Size: "
-msgstr "大小: "
-
-msgid "Softcam"
-msgstr "Softcam"
-
-msgid "Softcam manager"
-msgstr "Softcam管理器"
-
-msgid "Softcam manager settings"
-msgstr "Softcam管理器设置"
-
-msgid "Softcam starting..."
-msgstr "Softcam正在启动..."
-
-msgid "Softcam stopping..."
-msgstr "Softcam正在停止..."
-
-msgid "SoftcamCheck"
-msgstr "Softcam校验"
+msgstr "尺寸: "
 
 msgid ""
 "Sorry but that location does not exist or is not setup. Please set it up in "
 "the Backup manager setup menu."
-msgstr "抱歉,该位置不存在或未设置.请在'备份管理器设置'菜单中进行设置."
+msgstr "很抱歉，该位置不存在或未设置。请将其设置在备份管理器设置菜单中。"
 
 msgid "Sorry the feeds are down for maintenance. Please try again later."
-msgstr "抱歉,订阅源正在维护已关闭.请稍后再试."
+msgstr "很抱歉，源已关闭以进行维护。请稍后再试。"
 
 msgid ""
 "Sorry the feeds are down for maintenance. Please try using Backup manager to "
 "restore plugins later."
-msgstr "抱歉,订阅源正在维护已关闭.请稍后尝试使用备份管理器还原插件."
+msgstr "很抱歉，源已关闭以进行维护。请稍后尝试使用备份管理器恢复插件。"
 
 msgid ""
 "Sorry the feeds are down for maintenance. Please try using the Backup "
 "manager to restore plugins later."
-msgstr "抱歉,订阅源正在维护已关闭.请稍后尝试使用备份管理器还原插件."
+msgstr "抱歉，服务器停机维护。 要恢复插件，请稍后再试。"
 
 msgid "Sorry, but the file is not compatible with this image version."
-msgstr "抱歉,文件与此镜像版本不兼容."
+msgstr "抱歉，该文件与此版本的图像不兼容。"
 
 msgid "Sorry, but the restore failed."
-msgstr "抱歉,还原失败."
+msgstr "抱歉，恢复失败。"
 
 msgid ""
 "Sorry, no physical devices that supports SWAP attached. Can't create SWAP "
 "file on network or fat32 file-systems."
 msgstr ""
-"抱歉,没有支持交换连接的物理设备.无法在网络或fat32文件系统上创建交换文件."
+"对不起，没有物理设备，支持交换连接。无法在网络或fat32文件系统上创建交换文件。"
 
 msgid ""
 "Sorry, not enough free RAM found, and no physical devices that supports SWAP "
 "attached. Can't create SWAP file on network or fat32 file-systems, unable to "
 "make backup."
 msgstr ""
-"抱歉,找不到足够的可用RAM,并且没有支持交换连接的物理设备.无法在 网络或fat32文"
-"件系统上创建交换文件,无法进行备份."
-
-msgid "Start"
-msgstr "启动"
+"不幸的是，没有足够的可用 RAM 并且没有支持分页文件的设备。 无法创建备份."
 
 msgid "Starting..."
-msgstr "启动...."
+msgstr "开始..."
 
 msgid "Status:"
-msgstr "状态:"
-
-msgid "Stop"
-msgstr "停止"
-
-msgid "TB"
-msgstr "TB"
+msgstr "状态："
 
 msgid "Temp folder"
 msgstr "临时文件夹"
 
 msgid "The backup location does not have enough free space."
-msgstr "备份位置没有足够的可用空间."
+msgstr "备份存储中没有足够的可用空间。"
 
 msgid "The backup location does not have enough free space.\n"
-msgstr "备份位置没有足够的可用空间.\n"
+msgstr "备份位置没有足够的空闲空间。\n"
 
 msgid ""
 "The changes need a system restart to take effect.\n"
 "Restart your %s %s now?"
 msgstr ""
-"这些更改需要重新启动系统才能生效.\n"
-"现在重新启动 %s %s?"
+"更改需要重新启动系统才能生效。\n"
+"现在重新启动您的%s %s ?"
 
 msgid "The chosen location does not exist, using /media/hdd."
-msgstr "所选位置不存在,使用/media/hdd."
+msgstr "使用/媒体/硬盘不存在所选位置。"
 
 msgid ""
 "The name of the receiver can be included in the backup filename, but makes "
 "the filename lengthy."
-msgstr "接收器的名称可以包含在备份文件名中,但会使文件名变长."
+msgstr "接收器的名称可以包含在备份文件名中，但会使名称稍长一些。"
 
 msgid "The wizard is finished now, and will reboot."
-msgstr "向导已完成,并将重新启动."
+msgstr "向导现已完成，并将重新启动。"
 
 msgid "The wizard is finished now."
-msgstr "向导现在完成了."
+msgstr "向导已经完成了。"
 
 msgid "There is a problem with this device. Please reformat it and try again."
-msgstr "这个设备有问题.请重新格式化并重试."
-
-msgid "There is no backup to delete."
-msgstr "没有要删除的备份."
+msgstr "这个设备有问题。 请格式化并重试。"
 
 msgid "There is no backup to restore."
-msgstr "没有要还原的备份."
-
-msgid "There is no image to delete."
-msgstr "没有要删除的镜像."
+msgstr "没有备份来恢复。"
 
 msgid "There is no image to flash."
-msgstr "没有要刷写的镜像."
+msgstr "没有固件映像。"
 
 msgid "This device is already mounted as HDD."
-msgstr "此设备已经安装为硬盘驱动器."
+msgstr "此设备已安装为硬盘。"
 
 msgid "Time of backup to start"
-msgstr "备份开始时间"
+msgstr "开始备份的时间"
 
 msgid "Type: "
 msgstr "类型: "
-
-msgid "USB: "
-msgstr "USB: "
 
 msgid "Un-mount"
 msgstr "卸载"
@@ -996,143 +668,108 @@ msgid ""
 "Unzip error (also sent to any debug log):\n"
 "%s"
 msgstr ""
-"解压缩错误 (因此发送到任何调试日志):\n"
+"解包错误（也在调试日志中):\n"
 "%s"
 
 msgid "Updating mount locations..."
-msgstr "正在更新安装位置..."
+msgstr "更新安装位置。。。"
 
 msgid "Use as HDD"
-msgstr "用作硬盘驱动器"
+msgstr "作为硬盘使用"
 
 msgid "Use the cursor keys to select an installed image and then Erase button."
-msgstr "使用光标键选择已安装的镜像,然后单击'擦除'键."
-
-msgid "ViX"
-msgstr "ViX"
-
-msgid "ViX Backup manager"
-msgstr "ViX备份管理器"
-
-msgid "ViX Image manager"
-msgstr "ViX镜像管理器"
-
-msgid "ViX Mount manager"
-msgstr "ViX安装管理器"
-
-msgid "ViX SWAP manager"
-msgstr "ViX交换管理器"
-
-msgid "ViX Script runner"
-msgstr "ViX脚本运行程序"
+msgstr "使用光标键选择设置的图像，然后使用删除按钮。"
 
 msgid "View progress"
-msgstr "查看进度"
+msgstr "执行过程"
 
 msgid "Wait please while creating SWAP file..."
-msgstr "正在创建交换文件,请稍候..."
-
-msgid ""
-"Wait please while scanning\n"
-"for softcam's..."
-msgstr ""
-"正在扫描softcam\n"
-"请稍候..."
+msgstr "正在创建交换文件，请稍候..."
 
 msgid "Wait please while scanning..."
-msgstr "正在扫描,请稍候..."
+msgstr "正在扫描，请稍候..."
 
 msgid "Weekly"
 msgstr "每周"
 
 msgid ""
-"Welcome to the restore wizard.A backup has been detected.You can use this "
-"wizard to restore your settings and any extra plugins that were installed "
-"when the backup was created."
+"Welcome to the restore wizard.\n"
+"\n"
+"A backup has been detected.\n"
+"You can use this wizard to restore your settings and any extra plugins that "
+"were installed when the backup was created.\n"
 msgstr ""
-"欢迎使用还原向导.已检测到备份.可以使用此向导还原 创建备份时安装的设置和任何其"
-"他插件."
+"欢迎来到恢复向导。\n"
+"\n"
+"已检测到备份。\n"
+"您可以使用此向导来恢复已安装的设置和其他插件。\n"
 
 msgid "YES, to restore plugins"
-msgstr "是,恢复插件"
+msgstr "是的，恢复插件"
 
 msgid "YES, to restore settings"
-msgstr "是,恢复设置"
-
-msgid ""
-"You are about to flash an eMMC flash; we cannot take any responsibility for "
-"any errors or damage to your box during this process.\n"
-"Proceed with CAUTION!:\n"
-"Are you sure you want to flash this image:\n"
-" "
-msgstr ""
-"您将要做一个eMMC刷写;在此过程中,我们 不对您的盒子的任何错误或损坏承担任何责"
-"任.\n"
-"请谨慎!:\n"
-"您确定要刷写这个镜像\n"
-" "
+msgstr "是的，恢复设置"
 
 msgid "You have decided not to flash image."
-msgstr "是否退出刷写镜像."
+msgstr "您拒绝闪烁图像。"
 
 msgid "You have to create a SWAP file before trying to activate the autostart."
-msgstr "在尝试启动自动启动之前,必须创建一个交换文件."
+msgstr "在尝试激活自动启动之前，您必须创建一个交换文件。"
 
 msgid ""
 "Your %s %s could not connect to the plugin feeds at this time. Please try "
 "using the Backup manager to restore plugins later."
-msgstr "您的 %s %s 此时无法连接到插件源.请稍后尝试使用备份管理器还原插件."
+msgstr "您的 %s%s 无法连接到您的提要。 要恢复插件，请稍后再试。"
 
 msgid ""
 "Your %s %s is about to create a full image backup, this can take about 6 "
 "minutes to complete.\n"
 "Do you want to allow this?"
 msgstr ""
-"您的 %s %s 将要创建完整映像备份,这可能需要大约6分钟 才能完成.\n"
-"现在开始吗?"
+"您的%s %s即将创建完整的图像备份，这可能需要大约 6 分钟才能完成。\n"
+"你想允许吗？"
 
 msgid ""
 "Your %s %s is about to run a backup of your settings and to detect your "
 "plugins.\n"
 "Do you want to allow this?"
 msgstr ""
-"您的 %s %s 将运行设置备份并检测您的 插件.\n"
-"现在开始吗?"
+"您的%s %s即将运行设置的备份并检测您的插件。\n"
+"你想允许吗？"
 
 msgid ""
 "Your %s %s is not connected to a network. Please check your network settings "
 "and try again."
-msgstr "您的 %s %s 未连接到网络.请检查网络设置 并重试."
+msgstr "您的%s %s未连接到网络。请检查您的网络设置并重试。"
 
 msgid ""
 "Your %s %s is not connected to a network. Please try using the Backup "
 "manager to restore plugins later when a network connection is available."
-msgstr ""
-"您的 %s %s 未连接到网络.请稍后在网络连接可用时尝试使用 备份管理器还原插件."
+msgstr "您的%s %s未连接到网络。请尝试使用备份管理器在网络连接可用后恢复插件。"
 
 msgid ""
 "Your %s %s is not connected to the Internet. Please check your network "
 "settings and try again."
-msgstr "您的  %s %s 未连接到Internet.请检查网络设置并重试."
+msgstr "您的%s %s未连接到互联网。请检查您的网络设置并重试。"
 
 msgid ""
 "Your %s %s is not connected to the Internet. Please try using Backup manager "
 "to restore plugins later."
-msgstr "您的 %s %s 未连接到Internet.请稍后尝试使用备份管理器还原插件."
+msgstr "您的%s %s未连接到互联网。请稍后尝试使用备份管理器恢复插件。"
 
 msgid ""
 "Your %s %s is not connected to the Internet. Please try using the Backup "
 "manager to restore plugins later."
-msgstr "您的 %s %s 未连接到Internet.请稍后尝试使用备份管理器还原插件."
+msgstr "您的%s %s未连接到互联网。请稍后尝试使用备份管理器恢复插件。"
 
 msgid "slot%s - %s"
-msgstr "分区%s - %s"
+msgstr "插槽%s - %s"
 
 msgid "slot%s - %s "
-msgstr "分区%s - %s "
+msgstr "插槽%s：%s%s "
 
 msgid "slot%s - %s (current image)"
-msgstr "分区%s - %s (当前镜像)"
+msgstr "插槽%s - %s（当前图像）"
 
 msgid "unavailable"
-msgstr "不可用"
+msgstr "不可用的"
