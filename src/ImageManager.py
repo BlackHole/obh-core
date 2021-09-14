@@ -286,13 +286,13 @@ class OBHImageManager(Screen):
 		self.sel = self["list"].getCurrent()
 		if self.sel is not None:
 			self["list"].instance.moveSelectionTo((len(self["list"].list) > self["list"].getSelectionIndex() + 2) and self["list"].getSelectionIndex() or 0) # hold the selection current possition if the list is long enough
-			try:	
+			try:
 				if self.sel.endswith(".zip"):
 					remove(self.BackupDirectory + self.sel)
 				else:
 					rmtree(self.BackupDirectory + self.sel)
 			except:
-				self.session.open(MessageBox, _("Delete failure - check device available."), MessageBox.TYPE_INFO, timeout=10)		
+				self.session.open(MessageBox, _("Delete failure - check device available."), MessageBox.TYPE_INFO, timeout=10)
 			self.refreshList()
 
 	def GreenPressed(self):
@@ -465,8 +465,7 @@ class OBHImageManager(Screen):
 				Console().ePopen('umount %s' % tmp_dir)
 				if not path.ismount(tmp_dir):
 					rmdir(tmp_dir)
-				self.session.open(TryQuitMainloop, 2)					
-					
+				self.session.open(TryQuitMainloop, 2)
 			else:
 				self.session.open(TryQuitMainloop, 2)
 		else:
@@ -1321,7 +1320,8 @@ class ImageManagerDownload(Screen):
 		self.boxtype = getMachineMake()
 		if self.ConfigObj is config.imagemanager.imagefeed_Pli:
 			self.boxtype = HardwareInfo().get_device_name()
-			if self.boxtype == "dm8000":
+			print("[ImageManager1] boxtype:%s" % (self.boxtype))
+			if "dm800" in self.boxtype:
 				self.boxtype = getMachineMake()
 
 		if not self.imagesList:
