@@ -34,7 +34,7 @@ PLUGINRESTOREQUESTIONID = "RestorePluginsNotification"
 NOPLUGINS = "NoPluginsNotification"
 
 hddchoices = []
-defaultprefix = "OpenBh"
+defaultprefix = "openbh"
 for p in harddiskmanager.getMountedPartitions():
 	if path.exists(p.mountpoint):
 		d = path.normpath(p.mountpoint)
