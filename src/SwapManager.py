@@ -81,9 +81,9 @@ class StartSwap:
 		f.close()
 
 
-class OBHSwap(Screen):
+class OpenBhSwap(Screen):
 	skin = """
-	<screen name="OBHSwap" position="center,center" size="620,250">
+	<screen name="OpenBhSwap" position="center,center" size="620,250">
 		<ePixmap pixmap="skin_default/buttons/red.png" position="10,0" size="140,40" alphatest="on"/>
 		<ePixmap pixmap="skin_default/buttons/green.png" position="160,0" size="140,40" alphatest="on"/>
 		<ePixmap pixmap="skin_default/buttons/yellow.png" position="310,0" size="140,40" alphatest="on"/>

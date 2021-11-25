@@ -45,7 +45,7 @@ class BHMenu(Screen, ProtectedScreen):
 	def __init__(self, session, args=0):
 		Screen.__init__(self, session)
 		ProtectedScreen.__init__(self)
-		self.setTitle(_("OBH"))
+		self.setTitle(_("OpenBh"))
 		self.menu = args
 		self.list = []
 		if self.menu == 0:
@@ -113,26 +113,26 @@ class BHMenu(Screen, ProtectedScreen):
 			currentEntry = current[0]
 			if self.menu == 0:
 				if currentEntry == "backup-manager":
-					from .BackupManager import OBHBackupManager
-					self.session.open(OBHBackupManager)
+					from .BackupManager import OpenBhBackupManager
+					self.session.open(OpenBhBackupManager)
 				elif currentEntry == "image-manager":
-					from .ImageManager import OBHImageManager
-					self.session.open(OBHImageManager)
+					from .ImageManager import OpenBhImageManager
+					self.session.open(OpenBhImageManager)
 				elif currentEntry == "H9SDcard manager":
 					from .H9SDmanager import H9SDmanager
 					self.session.open(H9SDmanager)
 				elif currentEntry == "ipkg-install":
-					from .IPKInstaller import OBHIPKInstaller
-					self.session.open(OBHIPKInstaller)
+					from .IPKInstaller import OpenBhIPKInstaller
+					self.session.open(OpenBhIPKInstaller)
 				elif currentEntry == "mount-manager":
-					from .MountManager import OBHDevicesPanel
-					self.session.open(OBHDevicesPanel)
+					from .MountManager import OpenBhDevicesPanel
+					self.session.open(OpenBhDevicesPanel)
 				elif currentEntry == "script-runner":
-					from .ScriptRunner import OBHScriptRunner
-					self.session.open(OBHScriptRunner, None)
+					from .ScriptRunner import OpenBhScriptRunner
+					self.session.open(OpenBhScriptRunner, None)
 				elif currentEntry == "swap-manager":
-					from .SwapManager import OBHSwap
-					self.session.open(OBHSwap)
+					from .SwapManager import OpenBhSwap
+					self.session.open(OpenBhSwap)
 
 	def closeRecursive(self):
 		self.close(True)

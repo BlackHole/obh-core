@@ -19,9 +19,9 @@ from Screens.Screen import Screen
 from Screens.Standby import TryQuitMainloop
 
 
-class OBHIPKInstaller(Screen):
+class OpenBhIPKInstaller(Screen):
 	skin = """
-	<screen name="OBHIPKInstaller" position="center,center" size="560,400">
+	<screen name="OpenBhIPKInstaller" position="center,center" size="560,400">
 		<ePixmap pixmap="skin_default/buttons/red.png" position="0,0" size="140,40" alphatest="on"/>
 		<ePixmap pixmap="skin_default/buttons/green.png" position="140,0" size="140,40" alphatest="on"/>
 		<ePixmap pixmap="skin_default/buttons/yellow.png" position="280,0" size="140,40" alphatest="on"/>

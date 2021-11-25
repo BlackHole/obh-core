@@ -149,7 +149,7 @@ def buildPartitionInfo(partition, partitionList):
 		else:
 			description = _("Size: %sTB") % format(size / (1000 * 1000), '.2f')
 	if description != "": # how will this ever return false?
-		if SystemInfo["MountManager"]:	# called by OBHDevicesPanel else DeviceMountSetup
+		if SystemInfo["MountManager"]:	# called by OpenBhDevicesPanel else DeviceMountSetup
 			if rw.startswith("rw"):
 				rw = " R/W"
 			elif rw.startswith("ro"):
@@ -181,7 +181,7 @@ def buildPartitionInfo(partition, partitionList):
 		partitionList.append(partitionInfo)
 
 
-class OBHDevicesPanel(Screen):
+class OpenBhDevicesPanel(Screen):
 	skin = ["""
 	<screen position="center,center" size="%d,%d">
 		<widget source="list" render="Listbox" position="%d,%d" size="%d,%d" scrollbarMode="showOnDemand">

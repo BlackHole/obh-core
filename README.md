@@ -1,4 +1,4 @@
-obh-core
+openbh-core
 ========
 
-OpenBH Core plugin
+OpenBh Core plugin

@@ -69,7 +69,7 @@ def checkConfigBackup():
 		else:
 			return None
 	except IOError as e:
-		print("[OBH] unable to use device (%s)..." % str(e))
+		print("[OpenBh] unable to use device (%s)..." % str(e))
 		return None
 
 
@@ -101,8 +101,8 @@ def RestoreWizard(*args, **kwargs):
 
 
 def BackupManager(session):
-	from .BackupManager import OBHBackupManager
-	return OBHBackupManager(session)
+	from .BackupManager import OpenBhBackupManager
+	return OpenBhBackupManager(session)
 
 
 def BackupManagerMenu(session, **kwargs):
@@ -110,8 +110,8 @@ def BackupManagerMenu(session, **kwargs):
 
 
 def ImageManager(session):
-	from ImageManager import OBHImageManager
-	return OBHImageManager(session)
+	from ImageManager import OpenBhImageManager
+	return OpenBhImageManager(session)
 
 
 def ImageMangerMenu(session, **kwargs):
@@ -128,8 +128,8 @@ def H9SDmanagerMenu(session, **kwargs):
 
 
 def MountManager(session):
-	from .MountManager import OBHDevicesPanel
-	return OBHDevicesPanel(session)
+	from .MountManager import OpenBhDevicesPanel
+	return OpenBhDevicesPanel(session)
 
 
 def MountManagerMenu(session, **kwargs):
@@ -137,8 +137,8 @@ def MountManagerMenu(session, **kwargs):
 
 
 def ScriptRunner(session):
-	from .ScriptRunner import OBHScriptRunner
-	return OBHScriptRunner(session)
+	from .ScriptRunner import OpenBhScriptRunner
+	return OpenBhScriptRunner(session)
 
 
 def ScriptRunnerMenu(session, **kwargs):
@@ -146,8 +146,8 @@ def ScriptRunnerMenu(session, **kwargs):
 
 
 def SwapManager(session):
-	from .SwapManager import OBHSwap
-	return OBHSwap(session)
+	from .SwapManager import OpenBhSwap
+	return OpenBhSwap(session)
 
 
 def SwapManagerMenu(session, **kwargs):

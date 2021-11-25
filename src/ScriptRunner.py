@@ -30,7 +30,7 @@ def ScriptRunnerAutostart(reason, session=None, **kwargs):
 	pass
 
 
-class OBHScriptRunner(IpkgInstaller):
+class OpenBhScriptRunner(IpkgInstaller):
 	def __init__(self, session, list=None):
 		if not list:
 			list = []
@@ -47,7 +47,7 @@ class OBHScriptRunner(IpkgInstaller):
 		IpkgInstaller.__init__(self, session, list)
 		self.setTitle(_("Script runner"))
 
-		self.skinName = ["OBHScriptRunner", "IpkgInstaller"]
+		self.skinName = ["OpenBhScriptRunner", "IpkgInstaller"]
 		self["key_green"] = StaticText(_("Run"))
 
 		self["myactions"] = ActionMap(["MenuActions"],
@@ -56,7 +56,7 @@ class OBHScriptRunner(IpkgInstaller):
 									  }, -1)
 
 	def createSetup(self):
-		self.session.open(Setup, "obhscriptrunner", "SystemPlugins/OBH", PluginLanguageDomain)
+		self.session.open(Setup, "openbhscriptrunner", "SystemPlugins/OBH", PluginLanguageDomain)
 
 	def install(self):
 		list = self.list.getSelectionsList()

@@ -45,7 +45,7 @@ class RestoreWizard(WizardLanguage, Rc):
 		list = []
 		files = []
 		mtimes = []
-		defaultprefix = "obh"
+		defaultprefix = "OpenBh"
 
 		for dir in ["/media/%s/backup" % media for media in listdir("/media/") if path.isdir(path.join("/media/", media))]:
 			devmounts.append(dir)
@@ -213,7 +213,7 @@ class RestoreWizard(WizardLanguage, Rc):
 
 	def pluginsRestore_Finished(self, result, retval, extra_args=None):
 		if result:
-			print("[RestoreWizard] opkg install result:\n", six.ensure_str(result))			
+			print("[RestoreWizard] opkg install result:\n", six.ensure_str(result))
 		self.didPluginRestore = True
 		self.NextStep = "reboot"
 		self.buildListRef.close(True)

@@ -34,7 +34,7 @@ PLUGINRESTOREQUESTIONID = "RestorePluginsNotification"
 NOPLUGINS = "NoPluginsNotification"
 
 hddchoices = []
-defaultprefix = "obh"
+defaultprefix = "OpenBh"
 for p in harddiskmanager.getMountedPartitions():
 	if path.exists(p.mountpoint):
 		d = path.normpath(p.mountpoint)
@@ -114,8 +114,8 @@ def BackupManagerautostart(reason, session=None, **kwargs):
 			autoBackupManagerTimer.stop()
 
 
-class OBHBackupManager(Screen):
-	skin = """<screen name="OBHBackupManager" position="center,center" size="560,400">
+class OpenBhBackupManager(Screen):
+	skin = """<screen name="OpenBhBackupManager" position="center,center" size="560,400">
 		<ePixmap pixmap="skin_default/buttons/red.png" position="0,0" size="140,40" alphatest="on" />
 		<ePixmap pixmap="skin_default/buttons/green.png" position="140,0" size="140,40" alphatest="on" />
 		<ePixmap pixmap="skin_default/buttons/yellow.png" position="280,0" size="140,40" alphatest="on" />
@@ -264,13 +264,13 @@ class OBHBackupManager(Screen):
 				self["lab1"].setText(_("Device: ") + config.backupmanager.backuplocation.value + "\n" + _("There is a problem with this device. Please reformat it and try again."))
 
 	def createSetup(self):
-		self.session.openWithCallback(self.setupDone, OBHBackupManagerMenu, 'obhbackupmanager', 'SystemPlugins/OBH', PluginLanguageDomain)
+		self.session.openWithCallback(self.setupDone, OpenBhBackupManagerMenu, 'openbhbackupmanager', 'SystemPlugins/OBH', PluginLanguageDomain)
 
 	def showLog(self):
 		self.sel = self["list"].getCurrent()
 		if self.sel:
 			filename = self.BackupDirectory + self.sel
-			self.session.open(OBHBackupManagerLogView, filename)
+			self.session.open(OpenBhBackupManagerLogView, filename)
 
 	def setupDone(self, test=None):
 		if config.backupmanager.folderprefix.value == "":
@@ -885,9 +885,9 @@ class XtraPluginsSelection(Screen):
 		self.close(True)
 
 
-class OBHBackupManagerMenu(Setup):
+class OpenBhBackupManagerMenu(Setup):
 	skin = """
-	<screen name="OBHBackupManagerMenu" position="center,center" size="560,550">
+	<screen name="OpenBhBackupManagerMenu" position="center,center" size="560,550">
 		<ePixmap pixmap="skin_default/buttons/red.png" position="0,0" size="140,40" alphatest="on"/>
 		<ePixmap pixmap="skin_default/buttons/green.png" position="140,0" size="140,40" alphatest="on"/>
 		<ePixmap pixmap="skin_default/buttons/yellow.png" position="280,0" size="140,40" alphatest="on"/>
@@ -907,7 +907,7 @@ class OBHBackupManagerMenu(Setup):
 
 	def __init__(self, session, setup, plugin=None, PluginLanguageDomain=None):
 		Setup.__init__(self, session, setup, plugin, PluginLanguageDomain)
-		self.skinName = "OBHBackupManagerMenu"
+		self.skinName = "OpenBhBackupManagerMenu"
 
 		self["actions2"] = ActionMap(["SetupActions", "ColorActions", "VirtualKeyboardActions", "MenuActions"],
 									 {
@@ -933,9 +933,9 @@ class OBHBackupManagerMenu(Setup):
 		config.save()
 
 
-class OBHBackupManagerLogView(Screen):
+class OpenBhBackupManagerLogView(Screen):
 	skin = """
-<screen name="OBHBackupManagerLogView" position="center,center" size="560,400">
+<screen name="OpenBhBackupManagerLogView" position="center,center" size="560,400">
 	<widget name="list" position="0,0" size="560,400" font="Regular;16"/>
 </screen>"""
 
@@ -944,7 +944,7 @@ class OBHBackupManagerLogView(Screen):
 		Screen.__init__(self, session)
 		self.setTitle(_("Logs"))
 
-		self.skinName = "OBHBackupManagerLogView"
+		self.skinName = "OpenBhBackupManagerLogView"
 		filedate = str(date.fromtimestamp(stat(filename).st_mtime))
 		backuplog = _("Backup created") + ": " + filedate + "\n\n"
 		tar = tarfile.open(filename, "r")
@@ -1374,7 +1374,7 @@ class BackupFiles(Screen):
 							emlist.append(fil)
 						elif config.backupmanager.types_to_prune.value == "auto" and ("-Sch-" in fil or "-IM-" in fil or "-SU-" in fil):
 							emlist.append(fil)
-						
+
 # sort by oldest first...
 				emlist.sort(key=lambda fil: path.getmtime(self.BackupDirectory + fil))
 # ...then, if we have too many, remove the <n> newest from the end
