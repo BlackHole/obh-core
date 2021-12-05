@@ -66,6 +66,17 @@ config.imagemanager.scheduletime = ConfigClock(default=0)  # 1:00
 config.imagemanager.query = ConfigYesNo(default=True)
 config.imagemanager.lastbackup = ConfigNumber(default=0)
 config.imagemanager.number_to_keep = ConfigNumber(default=0)
+config.imagemanager.imagefeed_OBH = ConfigText(default="https://images.openbh.net/json", fixed_size=False)
+config.imagemanager.imagefeed_OBH.value = config.imagemanager.imagefeed_OBH.default # this is no longer a user setup option
+config.imagemanager.imagefeed_ViX = ConfigText(default="https://www.openvix.co.uk/json", fixed_size=False)
+config.imagemanager.imagefeed_ViX.value = config.imagemanager.imagefeed_ViX.default # this is no longer a user setup option
+config.imagemanager.imagefeed_ATV = ConfigText(default="http://images.mynonpublic.com/openatv/json", fixed_size=False)
+config.imagemanager.imagefeed_ATV.value = config.imagemanager.imagefeed_ATV.default # this is no longer a user setup option
+config.imagemanager.imagefeed_Pli = ConfigText(default="http://downloads.openpli.org/json", fixed_size=False)
+config.imagemanager.imagefeed_Pli.value = config.imagemanager.imagefeed_Pli.default # this is no longer a user setup option
+config.imagemanager.login_as_OBH_developer = ConfigYesNo(default=False)
+config.imagemanager.developer_username = ConfigText(default="username", fixed_size=False)
+config.imagemanager.developer_password = ConfigText(default="password", fixed_size=False)
 
 autoImageManagerTimer = None
 
@@ -128,7 +139,7 @@ class OpenBhImageManager(Screen):
 		self["backupstatus"] = Label()
 		self["key_red"] = Button(_("Delete"))
 		self["key_green"] = Button("New backup")
-		self["key_yellow"] = Button(_(" "))
+		self["key_yellow"] = Button(_("Downloads"))
 		self["key_blue"] = Button(_("Flash"))
 
 		self["key_menu"] = StaticText(_("MENU"))
@@ -232,11 +243,13 @@ class OpenBhImageManager(Screen):
 				"cancel": self.close,
 				"red": self.keyDelete,
 				"green": self.GreenPressed,
+				"yellow": self.doDownload,
 				"menu": self.createSetup,
 				"ok": self.keyRestore,
 				"blue": self.keyRestore,
 				"up": self.refreshUp,
 				"down": self.refreshDown,
+				"displayHelp": self.doDownload,
 			}, -1)
 			if mount not in config.imagemanager.backuplocation.choices.choices:
 				self.BackupDirectory = "/media/hdd/imagebackups/"
@@ -260,6 +273,15 @@ class OpenBhImageManager(Screen):
 
 	def createSetup(self):
 		self.session.openWithCallback(self.setupDone, ImageManagerSetup)
+
+	def doDownload(self):
+		choices = [("OpenBh", config.imagemanager.imagefeed_OBH), ("OpenViX", config.imagemanager.imagefeed_ViX), ("OpenATV", config.imagemanager.imagefeed_ATV), ("OpenPli", config.imagemanager.imagefeed_Pli)]
+		message = _("From which image library do you want to download?")
+		self.session.openWithCallback(self.doDownloadCallback, MessageBox, message, list=choices, default=1, simple=True)
+
+	def doDownloadCallback(self, retval): # retval will be the config element (or False, in the case of aborting the MessageBox).
+		if retval:
+			self.session.openWithCallback(self.refreshList, ImageManagerDownload, self.BackupDirectory, retval)
 
 	def setupDone(self, retval=None):
 		self.populate_List()
@@ -1293,7 +1315,7 @@ class ImageManagerDownload(Screen):
 
 	def __init__(self, session, BackupDirectory, ConfigObj):
 		Screen.__init__(self, session)
-		self.setTitle(_("%s downloads") % {config.imagemanager.imagefeed_ATV: "OpenATV", config.imagemanager.imagefeed_Pli: "OpenPLi", config.imagemanager.imagefeed_ViX: "OpenViX"}.get(ConfigObj, ''))
+		self.setTitle(_("%s downloads") % {config.imagemanager.imagefeed_ATV: "OpenATV", config.imagemanager.imagefeed_OBH: "OpenBh", config.imagemanager.imagefeed_Pli: "OpenPLi", config.imagemanager.imagefeed_ViX: "OpenViX"}.get(ConfigObj, ''))
 		self.ConfigObj = ConfigObj
 		self.BackupDirectory = BackupDirectory
 		self["lab1"] = Label(_("Select an image to download for %s:") % getMachineMake())
@@ -1332,9 +1354,20 @@ class ImageManagerDownload(Screen):
 
 		if not self.imagesList:
 			boxtype = self.boxtype
-
-			print("[ImageManager] no images available for: the '%s' at '%s'" % (self.boxtype, self.ConfigObj.value))
-			return
+			if self.ConfigObj is config.imagemanager.imagefeed_OBH \
+				and self.ConfigObj.value.startswith("https") \
+				and config.imagemanager.login_as_OBH_developer.value \
+				and config.imagemanager.developer_username.value \
+				and config.imagemanager.developer_username.value != config.imagemanager.developer_username.default \
+				and config.imagemanager.developer_password.value \
+				and config.imagemanager.developer_password.value != config.imagemanager.developer_password.default:
+				boxtype = path.join(boxtype, config.imagemanager.developer_username.value, config.imagemanager.developer_password.value)
+			try:
+				urljson = path.join(self.ConfigObj.value, boxtype)
+				self.imagesList = dict(json.load(urlopen("%s" % urljson)))
+			except Exception:
+				print("[ImageManager] no images available for: the '%s' at '%s'" % (self.boxtype, self.ConfigObj.value))
+				return
 
 		if not self.imagesList: # Nothing has been found on that server so we might as well give up.
 			return
@@ -1457,6 +1490,13 @@ class ImageManagerSetup(Setup):
 	def keySave(self):
 		if config.imagemanager.folderprefix.value == "":
 			config.imagemanager.folderprefix.value = defaultprefix
+		for configElement in (config.imagemanager.developer_username, config.imagemanager.developer_password):
+			if not configElement.value:
+				configElement.value = configElement.default
+		if not configElement.value:
+			config.imagemanager.imagefeed_DevL.value = config.imagemanager.imagefeed_DevL.default
+		for configElement in (config.imagemanager.imagefeed_OBH, config.imagemanager.imagefeed_ViX, config.imagemanager.imagefeed_ATV, config.imagemanager.imagefeed_Pli):
+			self.check_URL_format(configElement)
 		for x in self["config"].list:
 			x[1].save()
 		configfile.save()
