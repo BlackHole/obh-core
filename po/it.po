@@ -2,10 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Italian translation - OBH core\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-08-27 11:39+0000\n"
-"PO-Revision-Date: 2019-09-17 23:43+0100\n"
-"Last-Translator: William <ghenessior@gmail.com>\n"
-"Language-Team: insanity - alexwilmac\n"
+"PO-Revision-Date: 2021-12-04 09:29+0100\n"
+"Last-Translator: AlexWilmac\n"
 "Language: it_IT\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -14,6 +12,15 @@ msgstr ""
 "X-Poedit-Basepath: .\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Poedit-SourceCharset: UTF-8\n"
+
+msgid "- Repeat how often"
+msgstr "Tipo di esecuzione"
+
+msgid "- Time of backup to start"
+msgstr "Orario di avvio"
+
+msgid "- Query before image backup starts"
+msgstr "Avvisa prima di eseguire il backup"
 
 msgid "%a %e %b  %-H:%M"
 msgstr "%a %e %b  %-H:%M"
@@ -84,31 +91,10 @@ msgid "Are you sure you want to delete image slot %s ?"
 msgstr "Sei sicuro di voler eliminare questa posizione per l’immagine %s ?"
 
 msgid ""
-"Are you sure you want to delete this backup:\n"
-" "
-msgstr ""
-"Sei sicuro di voler eliminare questo backup:\n"
-" "
-
-msgid ""
-"Are you sure you want to delete this image backup:\n"
-" "
-msgstr ""
-"Sei sicuro di voler eliminare questo backup dell’immagine:\n"
-" "
-
-msgid ""
 "Are you sure you want to download this image:\n"
 " "
 msgstr ""
 "Sei sicuro di voler scaricare questa immagine:\n"
-" "
-
-msgid ""
-"Are you sure you want to flash this image:\n"
-" "
-msgstr ""
-"Sei sicuro di voler installare questa immagine?\n"
 " "
 
 msgid ""
@@ -180,13 +166,6 @@ msgstr "Prefisso backup"
 msgid "Backups to keep"
 msgstr "Backup da mantenere"
 
-msgid ""
-"Can't un-mount the partition; make sure it is not being used for SWAP or "
-"record/timeshift paths."
-msgstr ""
-"Unmount partizione fallito: controllare non venga utilizzata per SWAP o "
-"percorsi di registrazione o timeshift."
-
 msgid "Cancel"
 msgstr "Annulla"
 
@@ -198,9 +177,6 @@ msgstr "Controllo RAM disponibile..."
 
 msgid "Choose files"
 msgstr "Selezionare file"
-
-msgid "Choose local IPK's folder"
-msgstr "Cartella con ipk"
 
 msgid "Choose where to mount your devices to:"
 msgstr "Scegliere dove montare i tuoi dispositivi:"
@@ -222,12 +198,6 @@ msgstr "Crea un backup configurazioni prima di aggiornare."
 
 msgid "Create and Manage your SWAP files."
 msgstr "Crea e gestisci i file di swap."
-
-msgid "Create and flash complete images of your system."
-msgstr "Crea e installa una immagine completa del tuo sistema."
-
-msgid "Create empty slot."
-msgstr "Creo una posizione vuota."
 
 msgid "Creating SWAP.."
 msgstr "Sto creando il file di swap…"
@@ -297,17 +267,11 @@ msgstr "Conferma download"
 msgid "Downloading"
 msgstr "Download in corso"
 
-msgid "Downloads"
-msgstr "Download"
-
 msgid "Empty slot"
 msgstr "Posizione vuota"
 
 msgid "Enable SWAP at startup"
 msgstr "Abilita lo swap all’avvio"
-
-msgid "Enable frozen check"
-msgstr "Abilita congelamento del controllo"
 
 msgid "Enough retries, delaying till next schedule."
 msgstr "Troppi tentativi: rimando fino alla prossima pianificazione."
@@ -324,23 +288,11 @@ msgstr "IPK aggiuntivi"
 msgid "Flash"
 msgstr "Flash"
 
-msgid "Flash confirmation"
-msgstr "Conferma scrittura della memoria flash"
-
 msgid "Flash image unzip successful."
 msgstr "Decompressione immagine avvenuta con successo."
 
 msgid "Free space:"
 msgstr "Spazio disponibile:"
-
-msgid "Frozen check interval"
-msgstr "Intervallo di controllo congelamento"
-
-msgid "GB"
-msgstr "GB"
-
-msgid "HARD DISK: "
-msgstr "HARD DISK: "
 
 msgid "IPK installer"
 msgstr "Installatore IPK"
@@ -359,12 +311,6 @@ msgstr "Includere il nome del ricevitore nel nome del backup"
 
 msgid "Info"
 msgstr "Info"
-
-msgid "Init SDCARD"
-msgstr "Inizializzare SDCARD"
-
-msgid "Init SDcard"
-msgstr "Inizializzazione SDcard"
 
 msgid "Install"
 msgstr "Installa"
@@ -409,26 +355,14 @@ msgstr "Registri (Logs)"
 msgid "MB"
 msgstr "MB"
 
-msgid "Main menu"
-msgstr "Menu principale"
-
-msgid "Manage the backups of your settings."
-msgstr "Gestisci i backup delle tue impostazioni."
-
 msgid "Manage your devices mount points."
 msgstr "Gestisci i punti di mount dei tuoi dispositivi."
-
-msgid "Max backups to keep (0==all)"
-msgstr "Nr. di backup da mantenere (0 = tutti)"
 
 msgid "Max image backups to keep (0==all)"
 msgstr "Nr. di backup immagine da mantenere (0 = tutti)"
 
 msgid "Mount"
 msgstr "Mount"
-
-msgid "Mount failed."
-msgstr "Mount fallito."
 
 msgid "Mount manager"
 msgstr "Gestore punti di mount"
@@ -439,20 +373,8 @@ msgstr "Mount: "
 msgid "Moving to backup Location..."
 msgstr "Vado al percorso di backup..."
 
-msgid "MultiBoot manager"
-msgstr "Gestione Multiboot"
-
 msgid "Multiboot image manager"
 msgstr "Gestione immagini in Multiboot"
-
-msgid ""
-"Multiboot manager - Cannot initialize SDcard when running image on SDcard."
-msgstr ""
-"Gestione Multiboot: non posso formattare una SDcard con l’immagine "
-"attualmente in funzione!"
-
-msgid "Multiboot manager - The SDcard must be at least 8MB."
-msgstr "Gestione Multiboot: la SD card dev'essere almeno di 8Mb."
 
 msgid "NO, do not restore plugins"
 msgstr "NO: non ripristinare i plugin"
@@ -476,16 +398,6 @@ msgstr ""
 
 msgid "Now skipping restore process"
 msgstr "Salto il processo di ripristino."
-
-msgid "OBH"
-msgstr "OBH"
-
-msgid ""
-"OFGwrite error (also sent to any debug log):\n"
-"%s"
-msgstr ""
-"Errore di scrittura OFG (scritto anche in ogni file di debug):\n"
-"%s"
 
 msgid "OK"
 msgstr "OK"
@@ -536,17 +448,8 @@ msgstr ""
 msgid "Preparing extra plugins..."
 msgstr "Preparo plugin extra…"
 
-msgid "Press Init to format SDcard."
-msgstr "Premere Init per formattare la SDcard."
-
 msgid "Press OK to toggle the selection."
 msgstr "Premi OK per commutare la selezione."
-
-msgid "Query before backup starts"
-msgstr "Chiedi prima dell'avvio del backup"
-
-msgid "Query before image backup starts"
-msgstr "Avvisa prima di avviare il backup immagine"
 
 msgid "Query before starting backup."
 msgstr "Avvisa prima di avviare il backup."
@@ -571,9 +474,6 @@ msgstr "Conferma di rimozione"
 
 msgid "Removing temp mounts..."
 msgstr "Rimuovo i punti di mount temporanei…"
-
-msgid "Repeat how often"
-msgstr "Frequenza di esecuzione"
 
 msgid "Restart %s %s."
 msgstr "Riavvio %s %s."
@@ -644,9 +544,6 @@ msgstr "Seleziona un backup da ripristinare:"
 msgid "Select a package to install:"
 msgstr "Seleziona un pacchetto da installare:"
 
-msgid "Select an image to download:"
-msgstr "Seleziona un’immagine da scaricare:"
-
 msgid "Select an image to flash:"
 msgstr "Seleziona un’immagine da installare:"
 
@@ -662,9 +559,6 @@ msgstr "Seleziona la cartella che contiene i plugin"
 msgid "Select the SWAP file size:"
 msgstr "Seleziona la dimensione per il file di SWAP:"
 
-msgid "Set the interval to be checked in mins."
-msgstr "Imposta l'intervallo da verificare in min."
-
 msgid "Set the repeat interval of backup schedule."
 msgstr "Imposta l'intervallo di pianificazione del backup."
 
@@ -673,9 +567,6 @@ msgstr "Imposta l'orario di avvio del backup."
 
 msgid "Setting up..."
 msgstr "Imposto…"
-
-msgid "Setup"
-msgstr "Impostazioni"
 
 msgid "Setup mounts"
 msgstr "Impostazione punti di mount"
@@ -739,9 +630,6 @@ msgstr "Inizio…"
 msgid "Status:"
 msgstr "Stato:"
 
-msgid "TB"
-msgstr "TB"
-
 msgid "Temp folder"
 msgstr "Cartella file temporanei"
 
@@ -781,17 +669,8 @@ msgstr ""
 "C'è un problema con questo dispositivo. Si prega di riformattarlo e "
 "riprovare."
 
-msgid "There is no backup to delete."
-msgstr "Non trovo backup da eliminare."
-
 msgid "There is no backup to restore."
 msgstr "Non trovo backup da ripristinare."
-
-msgid "There is no image to delete."
-msgstr "Non c'è nessuna immagine da eliminare."
-
-msgid "There is no image to download."
-msgstr "Non c'è nessuna immagine da scaricare."
 
 msgid "There is no image to flash."
 msgstr "Non c'è nessuna immagine da installare."
@@ -799,14 +678,8 @@ msgstr "Non c'è nessuna immagine da installare."
 msgid "This device is already mounted as HDD."
 msgstr "Questo dispositivo è già montato come HDD."
 
-msgid "Time of backup to start"
-msgstr "Orario di avvio del backup"
-
 msgid "Type: "
 msgstr "Tipo: "
-
-msgid "USB: "
-msgstr "USB: "
 
 msgid "Un-mount"
 msgstr "Smontaggio"
@@ -828,21 +701,6 @@ msgid "Use the cursor keys to select an installed image and then Erase button."
 msgstr ""
 "Utilizza i tasti cursore per selezionare un'immagine installata e quindi usa "
 "il tasto CANCELLA."
-
-msgid "ViX Backup manager"
-msgstr "Backup manager"
-
-msgid "ViX Image manager"
-msgstr "Image manager"
-
-msgid "ViX Mount manager"
-msgstr "Mount manager"
-
-msgid "ViX SWAP manager"
-msgstr "SWAP manager"
-
-msgid "ViX Script runner"
-msgstr "Esecutore script"
 
 msgid "View progress"
 msgstr "Vedi l’avanzamento"
@@ -875,20 +733,6 @@ msgstr "SI: ripristina i plugin"
 
 msgid "YES, to restore settings"
 msgstr "SI: ripristina le configurazioni"
-
-msgid ""
-"You are about to flash an eMMC flash; we cannot take any responsibility for "
-"any errors or damage to your box during this process.\n"
-"Proceed with CAUTION!:\n"
-"Are you sure you want to flash this image:\n"
-" "
-msgstr ""
-"Stai per scrivere una memoria flash; non possiamo assumerci alcuna "
-"responsabilità per qualsiasi errore o danno al tuo box derivante da questo "
-"processo.\n"
-"Procedi con CAUTELA!\n"
-"Sei sicuro di voler installare questa immagine?\n"
-" "
 
 msgid "You have decided not to flash image."
 msgstr "Hai deciso di non installare l'immagine."
