@@ -1,3 +1,4 @@
+import six
 from os import system, stat as mystat, path, remove, rename
 from glob import glob
 import stat

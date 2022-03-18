@@ -1,3 +1,4 @@
+import six
 from os import listdir, path, stat
 from boxbranding import getMachineBrand, getMachineName, getImageDistro
 from . import _
