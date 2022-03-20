@@ -523,7 +523,7 @@ class OpenBhImageManager(Screen):
 			if SystemInfo["HasHiSi"] and SystemInfo["HasRootSubdir"] is False and self.HasSDmmc is False:	# sf8008 receiver 1 eMMC parition, No SD card
 				self.session.open(TryQuitMainloop, 2)
 			if SystemInfo["canMultiBoot"]:
-				print("[ImageManager] slot %s result %s\n" % (self.multibootslot, six.ensure_str(result)))
+				print("[ImageManager] slot %s result %s\n" % (self.multibootslot, result))
 				tmp_dir = tempfile.mkdtemp(prefix="ImageManagerFlash")
 				Console().ePopen("mount %s %s" % (self.mtdboot, tmp_dir))
 				if pathExists(ospath.join(tmp_dir, "STARTUP")):
@@ -1545,8 +1545,8 @@ class ImageManagerDownload(Screen):
 		path = parsed.path
 		if username or password:
 			import base64
-			base64string = base64.b64encode(six.ensure_binary('%s:%s' % (username, password)))
-			headers = {six.ensure_binary("Authorization"): six.ensure_binary("Basic %s" % six.ensure_str(base64string))}
+			base64bytes = base64.b64encode(('%s:%s' % (username, password)).encode())
+			headers = {("Authorization").encode(): ("Basic %s" % base64bytes.decode()).encode()}
 		return headers, scheme + "://" + hostname + path
 
 
