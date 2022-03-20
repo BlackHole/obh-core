@@ -1,4 +1,3 @@
-import six
 import errno
 from os import mkdir, path, remove, rename, statvfs, system
 import re

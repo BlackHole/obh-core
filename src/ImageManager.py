@@ -1,4 +1,3 @@
-import six
 # required methods: Request, urlopen, HTTPError, URLError
 from urllib.request import urlopen, Request, urlretrieve
 from urllib.error import HTTPError, URLError
