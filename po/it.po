@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Italian translation - OBH core\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2021-12-04 09:29+0100\n"
+"PO-Revision-Date: 2022-04-05 20:00 +0100\n"
 "Last-Translator: AlexWilmac\n"
 "Language: it_IT\n"
 "MIME-Version: 1.0\n"
@@ -12,6 +12,55 @@ msgstr ""
 "X-Poedit-Basepath: .\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Poedit-SourceCharset: UTF-8\n"
+
+# Vecchie righe 4.4
+# msgid "Restore"
+# msgstr "Ripristino"
+
+# msgid "Flash"
+# msgstr "Flash"
+
+msgid "Query before starting backup."
+msgstr "Avvisa prima di avviare il backup."
+
+msgid "- Query before backup starts"
+msgstr "- Chiedi prima di avviare il backup."
+
+msgid "Backups to prune"
+msgstr "Backup da sfoltire"
+
+msgid "Types of backups to remove when stale."
+msgstr "Tipo di backup da eliminare quando troppo datato."
+
+msgid "Only scheduled"
+msgstr "Solo i programmati"
+
+msgid "Automatically created"
+msgstr "Quelli creati automaticamente"
+
+msgid "All"
+msgstr "Tutti"
+
+msgid "- Max backups to keep (0==all)"
+msgstr "- Max num. di backup ma conservare (0=tutti)"
+
+msgid ""
+"Maximum number of backups to keep. Older backups are given priority for removal, so the fresher ones remain."
+msgstr ""
+"Numero massimo di backup da conservare: ai più vecchi viene attribuita una priorità per decidere quali eliminare"
+" e mantenere solo i più recenti."
+
+msgid "Choose IPK folder"
+msgstr "Cartella salvataggio"
+
+msgid "Image Download"
+msgstr "Ripristino"
+
+msgid "Online Flash"
+msgstr "Flash"
+
+#msgid "Full backup"
+#msgstr "Backup completo"
 
 msgid "Max image backups to keep (0 = all)"
 msgstr "Numero massimo di backup da mantenere (0=tutti)"
@@ -303,9 +352,6 @@ msgstr "Esci dalla procedura di ripristino"
 msgid "Extra IPK's"
 msgstr "IPK aggiuntivi"
 
-msgid "Flash"
-msgstr "Flash"
-
 msgid "Flash image unzip successful."
 msgstr "Decompressione immagine avvenuta con successo."
 
@@ -466,9 +512,6 @@ msgstr "Preparo plugin extra…"
 msgid "Press OK to toggle the selection."
 msgstr "Premi OK per commutare la selezione."
 
-msgid "Query before starting backup."
-msgstr "Avvisa prima di avviare il backup."
-
 msgid "Query before starting image backup."
 msgstr "Chiedi prima dell'avvio del backup immagine."
 
@@ -495,9 +538,6 @@ msgstr "Riavvio %s %s."
 
 msgid "Restart GUI."
 msgstr "Riavvio il sistema."
-
-msgid "Restore"
-msgstr "Ripristino"
 
 msgid "Restore Confirmation"
 msgstr "Conferma di ripristino"
