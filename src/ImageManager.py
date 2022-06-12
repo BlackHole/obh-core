@@ -178,6 +178,7 @@ class OpenBhImageManager(Screen):
 		self.activityTimer.timeout.get().append(self.backupRunning)
 		self.activityTimer.start(10)
 		self.Console = Console()
+		self.ConsoleB = Console(binary=True)
 
 		if BackupTime > 0:
 			t = localtime(BackupTime)
@@ -727,6 +728,7 @@ class ImageBackup(Screen):
 	def __init__(self, session, updatebackup=False):
 		Screen.__init__(self, session)
 		self.Console = Console()
+		self.ConsoleB = Console(binary=True)
 		self.BackupDevice = config.imagemanager.backuplocation.value
 		print("[ImageManager] Device: " + self.BackupDevice)
 		self.BackupDirectory = config.imagemanager.backuplocation.value + "imagebackups/"
@@ -935,15 +937,15 @@ class ImageBackup(Screen):
 			self.SwapCreated = True
 
 	def MemCheck2(self):
-		self.Console.ePopen("dd if=/dev/zero of=" + self.swapdevice + config.imagemanager.folderprefix.value + "-" + getMachineMake() + "-" + getImageType() + "-swapfile_backup bs=1024 count=61440", self.MemCheck3)
+		self.ConsoleB.ePopen("dd if=/dev/zero of=" + self.swapdevice + config.imagemanager.folderprefix.value + "-" + getMachineMake() + "-" + getImageType() + "-swapfile_backup bs=1024 count=61440", self.MemCheck3)
 
 	def MemCheck3(self, result, retval, extra_args=None):
 		if retval == 0:
-			self.Console.ePopen("mkswap " + self.swapdevice + config.imagemanager.folderprefix.value + "-" + getMachineMake() + "-" + getImageType() + "-swapfile_backup", self.MemCheck4)
+			self.ConsoleB.ePopen("mkswap " + self.swapdevice + config.imagemanager.folderprefix.value + "-" + getMachineMake() + "-" + getImageType() + "-swapfile_backup", self.MemCheck4)
 
 	def MemCheck4(self, result, retval, extra_args=None):
 		if retval == 0:
-			self.Console.ePopen("swapon " + self.swapdevice + config.imagemanager.folderprefix.value + "-" + getMachineMake() + "-" + getImageType() + "-swapfile_backup", self.MemCheck5)
+			self.ConsoleB.ePopen("swapon " + self.swapdevice + config.imagemanager.folderprefix.value + "-" + getMachineMake() + "-" + getImageType() + "-swapfile_backup", self.MemCheck5)
 
 	def MemCheck5(self, result, retval, extra_args=None):
 		self.SwapCreated = True
@@ -970,7 +972,7 @@ class ImageBackup(Screen):
 			self.command = "dd if=/dev/%s of=%s/vmlinux.bin" % (self.MTDKERNEL, self.WORKDIR)
 		else:
 			self.command = "nanddump /dev/%s -f %s/vmlinux.gz" % (self.MTDKERNEL, self.WORKDIR)
-		self.Console.ePopen(self.command, self.Stage1Complete)
+		self.ConsoleB.ePopen(self.command, self.Stage1Complete)
 
 	def Stage1Complete(self, result, retval, extra_args=None):
 		if retval == 0:
@@ -1049,10 +1051,10 @@ class ImageBackup(Screen):
 				print("[ImageManager] Stage2: Create: boot dump boot.bin:", self.MODEL)
 				print("[ImageManager] Stage2: Create: rescue dump rescue.bin:", self.MODEL)
 		print("[ImageManager] ROOTFSTYPE:", self.ROOTFSTYPE)
-		self.Console.eBatch(self.commands, self.Stage2Complete, debug=False)
+		self.ConsoleB.eBatch(self.commands, self.Stage2Complete, debug=False)
 
 	def Stage2Complete(self, extra_args=None):
-		if len(self.Console.appContainers) == 0:
+		if len(self.ConsoleB.appContainers) == 0:
 			self.Stage2Completed = True
 			print("[ImageManager] Stage2: Complete.")
 
@@ -1109,7 +1111,7 @@ class ImageBackup(Screen):
 			self.commandMB.append("dd if=/dev/%s of=%s seek=%s" % (self.MTDKERNEL, EMMC_IMAGE, KERNEL_IMAGE_SEEK))
 			ROOTFS_IMAGE_SEEK = int(ROOTFS_PARTITION_OFFSET) * int(BLOCK_SECTOR)
 			self.commandMB.append("dd if=/dev/%s of=%s seek=%s " % (self.MTDROOTFS, EMMC_IMAGE, ROOTFS_IMAGE_SEEK))
-			self.Console.eBatch(self.commandMB, self.Stage3Complete, debug=False)
+			self.ConsoleB.eBatch(self.commandMB, self.Stage3Complete, debug=False)
 
 		elif self.EMMCIMG == "emmc.img":
 			print("[ImageManager] osmio4k: EMMC Detected.")  # osmio4k receiver with multiple eMMC partitions in class
@@ -1156,7 +1158,7 @@ class ImageBackup(Screen):
 			self.commandMB.append("dd conv=notrunc if=/dev/%s of=%s seek=1 bs=%s" % (self.MTDKERNEL, EMMC_IMAGE, KERNEL_IMAGE_BS))
 			ROOTFS_IMAGE_BS = int(ROOTFS_PARTITION_OFFSET) * 1024
 			self.commandMB.append("dd if=/dev/%s of=%s seek=1 bs=%s" % (self.MTDROOTFS, EMMC_IMAGE, ROOTFS_IMAGE_BS))
-			self.Console.eBatch(self.commandMB, self.Stage3Complete, debug=False)
+			self.ConsoleB.eBatch(self.commandMB, self.Stage3Complete, debug=False)
 
 		elif self.EMMCIMG == "usb_update.bin":
 			print("[ImageManager] Trio4K sf8008 bewonwiz: Making emmc_partitions.xml")
@@ -1201,7 +1203,7 @@ class ImageBackup(Screen):
 			self.commandMB.append('echo "Create: Trio4K Sf8008 Bewonwiz Recovery Fullbackup %s"' % self.EMMCIMG)
 			self.commandMB.append('echo " "')
 			self.commandMB.append('/usr/sbin/mkupdate -s 00000003-00000001-01010101 -f %s/emmc_partitions.xml -d %s/%s' % (self.WORKDIR, self.WORKDIR, self.EMMCIMG))
-			self.Console.eBatch(self.commandMB, self.Stage3Complete, debug=False)
+			self.ConsoleB.eBatch(self.commandMB, self.Stage3Complete, debug=False)
 		else:
 			self.Stage3Completed = True
 			print("[ImageManager] Stage3 bypassed: Complete.")
@@ -1214,7 +1216,7 @@ class ImageBackup(Screen):
 		print("[ImageManager] Stage4: Unmounting and removing tmp system")
 		if path.exists(self.TMPDIR + "/root") and path.ismount(self.TMPDIR + "/root"):
 			self.command = "umount " + self.TMPDIR + "/root && rm -rf " + self.TMPDIR
-			self.Console.ePopen(self.command, self.Stage4Complete)
+			self.ConsoleB.ePopen(self.command, self.Stage4Complete)
 		else:
 			if path.exists(self.TMPDIR):
 				rmtree(self.TMPDIR)
@@ -1241,7 +1243,7 @@ class ImageBackup(Screen):
 			move("%s/vmlinux.bin" % self.WORKDIR, "%s/%s" % (self.MAINDEST, self.KERNELFILE))
 		else:
 			move("%s/vmlinux.gz" % self.WORKDIR, "%s/%s" % (self.MAINDEST, self.KERNELFILE))
-
+		self.h9root = False
 		if getMachineBuild() in ("h9", "i55plus"):
 			system("mv %s/fastboot.bin %s/fastboot.bin" % (self.WORKDIR, self.MAINDEST))
 			system("mv %s/bootargs.bin %s/bootargs.bin" % (self.WORKDIR, self.MAINDEST))
@@ -1252,8 +1254,10 @@ class ImageBackup(Screen):
 			system("cp -f /usr/share/bootargs.bin %s/bootargs.bin" % self.MAINDEST2)
 			with open("/proc/cmdline", "r") as z:
 				if SystemInfo["HasMMC"] and "root=/dev/mmcblk0p1" in z.read():
+					self.h9root = True
 					move("%s/rootfs.tar.bz2" % self.WORKDIR, "%s/rootfs.tar.bz2" % self.MAINDEST)
 				else:
+					self.h9root = False
 					move("%s/rootfs.%s" % (self.WORKDIR, self.ROOTFSTYPE), "%s/%s" % (self.MAINDEST, self.ROOTFSFILE))
 		else:
 			move("%s/rootfs.%s" % (self.WORKDIR, self.ROOTFSTYPE), "%s/%s" % (self.MAINDEST, self.ROOTFSFILE))
@@ -1306,7 +1310,7 @@ class ImageBackup(Screen):
 			remove(self.swapdevice + config.imagemanager.folderprefix.value + "-" + getMachineMake() + "-" + getImageType() + "-swapfile_backup")
 		if path.exists(self.WORKDIR):
 			rmtree(self.WORKDIR)
-		if (path.exists(self.MAINDEST + "/" + self.ROOTFSFILE) and path.exists(self.MAINDEST + "/" + self.KERNELFILE)) or (getMachineBuild() in ("h9", "i55plus") and "root=/dev/mmcblk0p1" in z):
+		if (path.exists(self.MAINDEST + "/" + self.ROOTFSFILE) and path.exists(self.MAINDEST + "/" + self.KERNELFILE)) or (getMachineBuild() in ("h9", "i55plus") and self.h9root):
 			for root, dirs, files in walk(self.MAINDEST):
 				for momo in dirs:
 					chmod(path.join(root, momo), 0o644)
@@ -1330,7 +1334,7 @@ class ImageBackup(Screen):
 		else:
 			self.commands.append("cd " + self.MAINDESTROOT + " && zip -r " + self.MAINDESTROOT + ".zip *")
 		self.commands.append("rm -rf " + self.MAINDESTROOT)
-		self.Console.eBatch(self.commands, self.Stage6Complete, debug=True)
+		self.ConsoleB.eBatch(self.commands, self.Stage6Complete, debug=True)
 
 	def Stage6Complete(self, answer=None):
 		self.Stage6Completed = True
@@ -1553,11 +1557,13 @@ class ImageManagerDownload(Screen):
 		username = parsed.username if parsed.username else ""
 		password = parsed.password if parsed.password else ""
 		hostname = parsed.hostname
+		port = ":%s" % parsed.port if parsed.port else ""
+		query = "?%s" % parsed.query if parsed.query else ""
 		if username or password:
 			import base64
 			base64bytes = base64.b64encode(('%s:%s' % (username, password)).encode())
 			headers = {("Authorization").encode(): ("Basic %s" % base64bytes.decode()).encode()}
-		return headers, scheme + "://" + hostname + parsed.path
+		return headers, scheme + "://" + hostname + port + parsed.path + query
 
 
 class ImageManagerSetup(Setup):
