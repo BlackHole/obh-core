@@ -1480,8 +1480,6 @@ class ImageManagerDownload(Screen):
 						self["list"].moveToIndex(self.setIndex if self.setIndex < len(list) else len(list) - 1)
 				self.setIndex = 0
 			self.SelectionChanged()
-		else:
-			return
 
 	def SelectionChanged(self):
 		currentSelected = self["list"].l.getCurrentSelection()
