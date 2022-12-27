@@ -72,7 +72,10 @@ config.imagemanager.scheduletime = ConfigClock(default=0)  # 1:00
 config.imagemanager.query = ConfigYesNo(default=True)
 config.imagemanager.lastbackup = ConfigNumber(default=0)
 config.imagemanager.number_to_keep = ConfigNumber(default=0)
-config.imagemanager.imagefeed_OBH = ConfigText(default="https://images.openbh.net/json", fixed_size=False)
+if getImageType() == "release":
+	config.imagemanager.imagefeed_OBH = ConfigText(default="https://images.openbh.net/json", fixed_size=False)
+elif getImageType() == "community":
+	config.imagemanager.imagefeed_OBH = ConfigText(default="https://images.blackhole-community.com/json", fixed_size=False)
 config.imagemanager.imagefeed_OBH.value = config.imagemanager.imagefeed_OBH.default # this is no longer a user setup option
 config.imagemanager.imagefeed_ViX = ConfigText(default="https://www.openvix.co.uk/json", fixed_size=False)
 config.imagemanager.imagefeed_ViX.value = config.imagemanager.imagefeed_ViX.default # this is no longer a user setup option
@@ -173,14 +176,14 @@ class OpenBhImageManager(Screen):
 			self.mtdboot = SystemInfo["MBbootdevice"]
 		self.onChangedEntry = []
 		if getMountChoices():
-			self["list"] = MenuList(list=[((_("No images found on the selected download server...if password check validity")), "Waiter")])		
-				
+			self["list"] = MenuList(list=[((_("No images found on the selected download server...if password check validity")), "Waiter")])
+
 		else:
 			self["list"] = MenuList(list=[((_(" Press 'Menu' to select a storage device - none available")), "Waiter")])
 			self["key_red"].hide()
 			self["key_green"].hide()
 			self["key_yellow"].hide()
-			self["key_blue"].hide()			
+			self["key_blue"].hide()
 		self.populate_List()
 		self.activityTimer = eTimer()
 		self.activityTimer.timeout.get().append(self.backupRunning)
@@ -751,7 +754,7 @@ class ImageBackup(Screen):
 		if updatebackup:
 			backupType = "-SoftwareUpdate-"
 		imageSubBuild = ""
-		if getImageType() != "release":
+		if getImageType() != "release, community":
 			imageSubBuild = ".%s" % getImageDevBuild()
 		self.MAINDESTROOT = self.BackupDirectory + config.imagemanager.folderprefix.value + "-" + getMachineMake() + "-" + getImageType() + backupType + getImageVersion() + "." + getImageBuild() + imageSubBuild + "-" + self.BackupDate
 		self.KERNELFILE = getMachineKernelFile()
