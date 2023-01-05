@@ -641,8 +641,9 @@ class OpenBhBackupManager(Screen):
 							devmounts = []
 							files = []
 							self.plugfile = self.plugfiles[3]
-							for dir in ["/media/%s/%s" % (media, self.plugfile) for media in listdir("/media/") if path.isdir(path.join("/media/", media))]:
-								if media != "autofs" or "net":
+#							print("[BackupManager] self.plugfile, self.plugfiles", self.plugfile, self.plugfiles)
+							for dir in ["/media/%s/%s" % (media, self.plugfile) for media in listdir("/media/") if path.isdir(path.join("/media/", media)) and path.exists("/media/%s/%s" % (media, self.plugfile))]:
+								if media not in ("autofs", "net"):
 									devmounts.append(dir)
 							if len(devmounts):
 								for x in devmounts:
@@ -658,13 +659,11 @@ class OpenBhBackupManager(Screen):
 							for file in available:
 								if file:
 									fileparts = file.strip().split("_")
-									# 									print "FILE:",fileparts
-									# 									print "IPK:",ipk
+#									print("[BackupManager] fileparts, ipk", fileparts, ipk)									
 									if fileparts[0] == ipk:
 										self.thirdpartyPluginsLocation = self.thirdpartyPluginsLocation.replace(" ", "%20")
 										ipk = path.join(self.thirdpartyPluginsLocation, file)
 										if path.exists(ipk):
-											# 											print "IPK", ipk
 											self.pluginslist2.append(ipk)
 						print("[BackupManager] pluginslist = %s" % self.pluginslist2)
 
