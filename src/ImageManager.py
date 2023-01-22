@@ -537,6 +537,9 @@ class OpenBhImageManager(Screen):
 					print("[ImageManager] running commnd:%s slot = %s" % (CMD, self.multibootslot))
 					if fileExists("/boot/STARTUP") and fileExists("/boot/STARTUP_6"):
 						copyfile("/boot/STARTUP_%s" % self.multibootslot, "/boot/STARTUP")
+				elif SystemInfo["HasKexecMultiboot"] and "mmcblk" not in self.MTDROOTFS:
+					CMD = "/usr/bin/ofgwrite -r%s -kzImage -m%s '%s'" % (self.MTDROOTFS, self.multibootslot, MAINDEST)
+					print("[ImageManager] running commnd:%s slot = %s" % (CMD, self.multibootslot))
 				else:
 					CMD = "/usr/bin/ofgwrite -r -k -m%s '%s'" % (self.multibootslot, MAINDEST)	# Normal multiboot
 			elif SystemInfo["HasH9SD"]:
