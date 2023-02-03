@@ -527,8 +527,7 @@ class OpenBhImageManager(Screen):
 		MAINDEST = "%s/%s" % (self.TEMPDESTROOT, getImageFolder())
 		print("[ImageManager] MAINDEST=%s" % MAINDEST)
 		if ret == 0:
-			CMD = "/usr/bin/ofgwrite -r -k '%s'" % MAINDEST
-			# normal non multiboot receiver
+			CMD = "/usr/bin/ofgwrite -r -k '%s'" % MAINDEST			# normal non multiboot receiver
 			if SystemInfo["canMultiBoot"]:
 				if SystemInfo["HasHiSi"] and SystemInfo["HasRootSubdir"] is False:  # SF8008 type receiver with single eMMC & SD card multiboot
 					CMD = "/usr/bin/ofgwrite -r%s -k%s '%s'" % (self.MTDROOTFS, self.MTDKERNEL, MAINDEST)
