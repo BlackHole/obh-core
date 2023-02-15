@@ -536,7 +536,7 @@ class OpenBhImageManager(Screen):
 						copyfile("/boot/STARTUP_%s" % self.multibootslot, "/boot/STARTUP")
 				elif SystemInfo["HasKexecMultiboot"] and "mmcblk" not in self.MTDROOTFS:
 					if SystemInfo["HasKexecUSB"]:
-						   CMD = "/usr/bin/ofgwrite -r%s -kzImage -s'%s/linuxrootfs' -m%s '%s'" % (self.MTDROOTFS, getBoxType().replace("vu", ""), self.multibootslot, MAINDEST)
+						   CMD = "/usr/bin/ofgwrite -r%s -kzImage -s'%s/linuxrootfs' -m%s '%s'" % (self.MTDROOTFS, getBoxType()[2:], self.multibootslot, MAINDEST)
 					else:
 						   CMD = "/usr/bin/ofgwrite -r%s -kzImage -m%s '%s'" % (self.MTDROOTFS, self.multibootslot, MAINDEST)
 					print("[ImageManager] running commnd:%s slot = %s" % (CMD, self.multibootslot))
