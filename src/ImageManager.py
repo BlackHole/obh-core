@@ -761,7 +761,7 @@ class ImageBackup(Screen):
 		if updatebackup:
 			backupType = "-SoftwareUpdate-"
 		imageSubBuild = ""
-		if getImageType() != "release, community":
+		if getImageType() == "developer":
 			imageSubBuild = ".%s" % getImageDevBuild()
 		self.MAINDESTROOT = self.BackupDirectory + config.imagemanager.folderprefix.value + "-" + getMachineMake() + "-" + getImageType() + backupType + getImageVersion() + "." + getImageBuild() + imageSubBuild + "-" + self.BackupDate
 		self.KERNELFILE = getMachineKernelFile()
