@@ -26,6 +26,7 @@ from Screens.Screen import Screen
 from Screens.Setup import Setup
 from Screens.Standby import TryQuitMainloop
 from Screens.TaskView import JobView
+from Screens.TextBox import TextBox
 from Tools.BoundFunction import boundFunction
 from Tools.Directories import fileExists, pathExists, fileHas
 import Tools.CopyFiles
@@ -169,6 +170,11 @@ class OpenBhImageManager(Screen):
 		self["key_blue"] = Button(_("Online Flash"))
 
 		self["key_menu"] = StaticText(_("MENU"))
+		self["key_info"] = StaticText(_("INFO"))
+
+		self["infoactions"] = ActionMap(["SetupActions"], {
+			"info": self.showInfo,
+		}, -1)
 
 		self.BackupRunning = False
 		self.BackupDirectory = " "
@@ -432,6 +438,25 @@ class OpenBhImageManager(Screen):
 		self.sel = self["list"].getCurrent() # (name, link)
 		if not self.sel:
 			return
+		print("[ImageManager][keyRestore] self.sel SystemInfo['MultiBootSlot']", self.sel[0], "   ", SystemInfo["MultiBootSlot"])
+		if SystemInfo["MultiBootSlot"] == 0 and self.sel[0].startswith(("openvix", "openbh")):
+			if "VuSlot0" in self.sel[0] or "release" in self.sel[0] or "developer" in self.sel[0]:
+				message = _("Do you want to flash slot0?\nThis will change all eMMC slots.") if "VuSlot0" in self.sel[0] else _("Do you want to flash slot0?\nThis will remove Vu Multiboot and erase all eMMC slots.")
+				ybox = self.session.openWithCallback(self.keyRestorez0, MessageBox, message, MessageBox.TYPE_YESNO)
+				ybox.setTitle(_("Restore confirmation"))
+		else:
+			self.keyRestore1()
+
+	def keyRestorez0(self, retval):
+		print("[ImageManager][keyRestorez0] retval", retval)
+		if retval:
+			self.multibootslot = 0												# set slot0 to be flashed
+			self.Console.ePopen("umount /proc/cmdline", self.keyRestore3)		# tell ofgwrite not Vu Multiboot
+		else:
+			self.session.open(MessageBox, _("You have decided not to flash image."), MessageBox.TYPE_INFO, timeout=10)
+			self.keyRestore1()
+
+	def keyRestore1(self):
 		self.HasSDmmc = False
 		self.multibootslot = 1
 		self.MTDKERNEL = getMachineMtdKernel()
@@ -480,7 +505,7 @@ class OpenBhImageManager(Screen):
 		else:
 			self.session.open(MessageBox, _("You have decided not to flash image."), MessageBox.TYPE_INFO, timeout=10)
 
-	def keyRestore3(self, val=None):
+	def keyRestore3(self, *args, **kwargs):
 		self.restore_infobox = self.session.open(MessageBox, _("Please wait while the flash prepares."), MessageBox.TYPE_INFO, timeout=240, enable_input=False)
 		if "/media/autofs" in config.imagemanager.backuplocation.value or "/media/net" in config.imagemanager.backuplocation.value:
 			self.TEMPDESTROOT = tempfile.mkdtemp(prefix="imageRestore")
@@ -527,7 +552,11 @@ class OpenBhImageManager(Screen):
 		if ret == 0:
 			CMD = "/usr/bin/ofgwrite -r -k '%s'" % MAINDEST			# normal non multiboot receiver
 			if SystemInfo["canMultiBoot"]:
-				if SystemInfo["HasHiSi"] and SystemInfo["HasRootSubdir"] is False:  # SF8008 type receiver with single eMMC & SD card multiboot
+				if self.multibootslot == 0 and SystemInfo["HasKexecMultiboot"]:		# reset Vu Multiboot slot0
+					kz0 = getMachineMtdKernel()
+					rz0 = getMachineMtdRoot()
+					CMD = "/usr/bin/ofgwrite -kkz0 -rrz0 '%s'" % MAINDEST			# slot0 treat as kernel/root only multiboot receiver
+				elif SystemInfo["HasHiSi"] and SystemInfo["HasRootSubdir"] is False:  # SF8008 type receiver with single eMMC & SD card multiboot
 					CMD = "/usr/bin/ofgwrite -r%s -k%s '%s'" % (self.MTDROOTFS, self.MTDKERNEL, MAINDEST)
 				elif SystemInfo["HasHiSi"] and SystemInfo["canMultiBoot"][self.multibootslot]["rootsubdir"] is None:	# sf8008 type receiver using SD card in multiboot
 					CMD = "/usr/bin/ofgwrite -r%s -k%s -m0 '%s'" % (self.MTDROOTFS, self.MTDKERNEL, MAINDEST)
@@ -592,6 +621,16 @@ class OpenBhImageManager(Screen):
 				return True
 			else:
 				return False
+
+	def infoText(self):
+		# add info text sentence by sentence to make translators job easier
+		return " ".join([
+			_("Sentence one."),
+			_("Sentence two."),
+			_("Etc, etc, etc.")])
+
+	def showInfo(self):
+		self.session.open(TextBox, self.infoText(), self.title + " - " + _("info"))
 
 
 class AutoImageManagerTimer:
@@ -778,6 +817,7 @@ class ImageBackup(Screen):
 		self.MKUBIFS_ARGS = getMachineMKUBIFS()
 		self.ROOTFSTYPE = getImageFileSystem().strip()
 		self.ROOTFSSUBDIR = "none"
+		self.VuSlot0 = ""
 		self.EMMCIMG = "none"
 		self.MTDBOOT = "none"
 		if SystemInfo["canBackupEMC"]:
@@ -791,6 +831,7 @@ class ImageBackup(Screen):
 			if SystemInfo["HasKexecMultiboot"]:
 				self.MTDKERNEL = getMachineMtdKernel() if slot == 0 else SystemInfo["canMultiBoot"][slot]["kernel"]
 				self.MTDROOTFS = getMachineMtdRoot() if slot == 0 else SystemInfo["canMultiBoot"][slot]["root"].split("/")[2]
+				self.VuSlot0 = "-VuSlot0" if slot == 0 else ""
 			else:
 				self.MTDKERNEL = SystemInfo["canMultiBoot"][slot]["kernel"].split("/")[2]
 			if SystemInfo["HasMultibootMTD"]:
@@ -807,6 +848,7 @@ class ImageBackup(Screen):
 			self.GB4Krescue = "rescue.bin"
 		if "sda" in self.MTDKERNEL:
 			self.KERN = "sda"
+		print("[ImageManager] HasKexecMultiboot:", SystemInfo["HasKexecMultiboot"])
 		print("[ImageManager] Model:", self.MODEL)
 		print("[ImageManager] Machine Build:", self.MCBUILD)
 		print("[ImageManager] Kernel File:", self.KERNELFILE)
@@ -1001,8 +1043,9 @@ class ImageBackup(Screen):
 		print("[ImageManager] Stage1: Making Kernel Image.")
 		if "bin" or "uImage" in self.KERNELFILE:
 			if SystemInfo["HasKexecMultiboot"]:
-				boot = SystemInfo["canMultiBoot"][slot]["kernel"] if slot > 3 else "boot"
-				self.command = "dd if=/%s%s of=%s/vmlinux.bin" % (boot, SystemInfo["canMultiBoot"][slot]["kernel"], self.WORKDIR) if slot != 0 else "dd if=/dev/%s of=%s/vmlinux.bin" % (self.MTDKERNEL, self.WORKDIR)
+#				boot = "boot" if slot > 0 and slot < 4 else "dev/%s/%s"  %(self.MTDROOTFS, self.ROOTFSSUBDIR)
+				boot = "boot"
+				self.command = "dd if=/%s/%s of=%s/vmlinux.bin" % (boot, SystemInfo["canMultiBoot"][slot]["kernel"].rsplit("/", 1)[1], self.WORKDIR) if slot != 0 else "dd if=/dev/%s of=%s/vmlinux.bin" % (self.MTDKERNEL, self.WORKDIR)
 			else:
 				self.command = "dd if=/dev/%s of=%s/vmlinux.bin" % (self.MTDKERNEL, self.WORKDIR)
 		else:
@@ -1370,7 +1413,7 @@ class ImageBackup(Screen):
 		zipfolder = path.split(self.MAINDESTROOT)
 		self.commands = []
 		if SystemInfo["HasRootSubdir"]:
-			self.commands.append("7za a -r -bt -bd %s/%s-%s-%s-%s-%s_mmc.zip %s/*" % (self.BackupDirectory, self.IMAGEDISTRO, self.DISTROVERSION, self.DISTROBUILD, self.MODEL, self.BackupDate, self.MAINDESTROOT))
+			self.commands.append("7za a -r -bt -bd %s/%s-%s-%s-%s-%s%s_mmc.zip %s/*" % (self.BackupDirectory, self.IMAGEDISTRO, self.DISTROVERSION, self.DISTROBUILD, self.MODEL, self.BackupDate, self.VuSlot0, self.MAINDESTROOT))
 		else:
 			self.commands.append("cd " + self.MAINDESTROOT + " && zip -r " + self.MAINDESTROOT + ".zip *")
 		self.commands.append("rm -rf " + self.MAINDESTROOT)
