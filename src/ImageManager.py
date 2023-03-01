@@ -362,7 +362,7 @@ class OpenBhImageManager(Screen):
 		if self.sel is not None:
 			self["list"].instance.moveSelectionTo((len(self["list"].list) > self["list"].getSelectionIndex() + 2) and self["list"].getSelectionIndex() or 0) # hold the selection current possition if the list is long enough
 			try:
-				# print("[ImageManager][keyDelet] selected image=%s" % (self.sel[1]))
+				# print("[ImageManager][keyDelete] selected image=%s" % (self.sel[1]))
 				if self.sel[1].endswith(".zip"):
 					remove(self.sel[1])
 				else:
@@ -453,7 +453,6 @@ class OpenBhImageManager(Screen):
 			self.multibootslot = 0												# set slot0 to be flashed
 			self.Console.ePopen("umount /proc/cmdline", self.keyRestore3)		# tell ofgwrite not Vu Multiboot
 		else:
-			self.session.open(MessageBox, _("You have decided not to flash image."), MessageBox.TYPE_INFO, timeout=10)
 			self.keyRestore1()
 
 	def keyRestore1(self):
@@ -467,9 +466,9 @@ class OpenBhImageManager(Screen):
 		if not recordings:
 			next_rec_time = self.session.nav.RecordTimer.getNextRecordingTime()
 		if recordings or (next_rec_time > 0 and (next_rec_time - time()) < 360):
-			self.message = _("Recording(s) are in progress or coming up in few seconds!\nDo you still want to flash image\n%s?") % self.sel[0]
+			message = _("Recording(s) are in progress or coming up in few seconds!\nDo you still want to flash image\n%s?") % self.sel[0]
 		else:
-			self.message = _("Do you want to flash image\n%s") % self.sel[0]
+			message = _("Do you want to flash image\n%s") % self.sel[0]
 		if SystemInfo["canMultiBoot"] is False:
 			if config.imagemanager.autosettingsbackup.value:
 				self.doSettingsBackup()
@@ -483,7 +482,7 @@ class OpenBhImageManager(Screen):
 		currentimageslot = SystemInfo["MultiBootSlot"]
 		for x in imagedict.keys():
 			choices.append(((_("slot%s %s - %s (current image)") if x == currentimageslot else _("slot%s %s - %s")) % (x, SystemInfo["canMultiBoot"][x]["slotname"], imagedict[x]["imagename"]), (x)))
-		self.session.openWithCallback(self.keyRestore2, MessageBox, self.message, list=choices, default=currentimageslot, simple=True)
+		self.session.openWithCallback(self.keyRestore2, MessageBox, message, list=choices, default=currentimageslot, simple=True)
 
 	def keyRestore2(self, retval):
 		if retval:
@@ -502,8 +501,6 @@ class OpenBhImageManager(Screen):
 					self.keyRestore3()
 			else:
 				self.session.open(MessageBox, _("There is no image to flash."), MessageBox.TYPE_INFO, timeout=10)
-		else:
-			self.session.open(MessageBox, _("You have decided not to flash image."), MessageBox.TYPE_INFO, timeout=10)
 
 	def keyRestore3(self, *args, **kwargs):
 		self.restore_infobox = self.session.open(MessageBox, _("Please wait while the flash prepares."), MessageBox.TYPE_INFO, timeout=240, enable_input=False)
@@ -625,9 +622,54 @@ class OpenBhImageManager(Screen):
 	def infoText(self):
 		# add info text sentence by sentence to make translators job easier
 		return " ".join([
-			_("Sentence one."),
-			_("Sentence two."),
-			_("Etc, etc, etc.")])
+			_("FULL IMAGE BACKUP"),
+			"\n\n" +
+			_("A full image backup can be created at any time."),
+			"\n\n" +
+			_("The backup creates a snapshot of the image exactly as it is at the current instant."),
+			"\n\n" +
+			_("It allows making changes to the box with the knowledge that the box can be safely reverted back to a previous known working state."),
+			"\n\n" +
+			_("To make an image backup select GREEN from Image Manager main screen."),
+			"\n\n\n" +
+			_("IMAGE DOWNLOADS"),
+			"\n\n" +
+			_("Image Manager allows downloading images from OpenBh image server and from a range of other distros."),
+			"\n\n" +
+			_("To be able to download any image local storage must already be configured, HDD, USB or SD card (if supported), and also be selected as the 'Backup location' in Image Manager setup menu."),
+			"\n\n" +
+			_("To start a download select YELLOW from Image Manager main screen, then select the distro, and finally which image to download."),
+			"\n\n" +
+			_("The image will then be downloaded to the 'Backup location'."),
+			"\n\n" +
+			_("Please note, images are large, generally over 100 MB so downloading over a slow or unstable connection is prohibitive."),
+			"\n\n" +
+			_("Also, instead to downloading, it is possible to send a zipped image to the 'Backup location' by FTP."),
+			"\n\n\n" +
+			_("FLASHING"),
+			"\n\n" +
+			_("Before flashing an image 'Automatic settings backup' should be enabled in Image Manager setup menu."),
+			"\n\n" +
+			_("This will make a backup of the current settings and plugins which can be used later when setting up the new image in the First Install Wizard."),
+			"\n\n" +
+			_("To flash an image first select it from the list of images in the Image Manager main screen (the image will need to have already been downloaded) and then press BLUE."),
+			"\n\n" +
+			_("After confirming, an automatic backup will be made and then the image will be flashed."),
+			"\n\n" +
+			_("Upon completion the receiver will reboot and display the First Install Wizard."),
+			"\n\n" +
+			_("From here the settings backup and plugins can be restored just by selecting that option."),
+			"\n\n\n" +
+			_("RECOVERY MODE"),
+			"\n\n" +
+			_("This only applies to Vu+ 4K models."),
+			"\n\n" +
+			_("Backups of the RECOVERY image will contain a copy of all the client images."),
+			"\n\n" +
+			_("When flashing from the recovery image it is possible to flash it to the recovery slot."),
+			"\n\n" +
+			_("The new image will overwrite the previous one including any client images that were also configured, so care needs to be taken to make any full image backups (including client images) before overwriting the recovery image."),
+			])
 
 	def showInfo(self):
 		self.session.open(TextBox, self.infoText(), self.title + " - " + _("info"))
