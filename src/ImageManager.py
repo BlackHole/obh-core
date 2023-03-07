@@ -6,7 +6,7 @@ import tempfile
 from boxbranding import getBoxType, getImageType, getImageDistro, getImageVersion, getImageBuild, getImageDevBuild, getImageFolder, getImageFileSystem, getBrandOEM, getMachineBrand, getMachineName, getMachineBuild, getMachineMake, getMachineMtdRoot, getMachineRootFile, getMachineMtdKernel, getMachineKernelFile, getMachineMKUBIFS, getMachineUBINIZE
 from enigma import eTimer, fbClass
 from os import path, stat, system, mkdir, makedirs, listdir, remove, rename, rmdir, sep as ossep, statvfs, chmod, walk, symlink, unlink
-from shutil import copy, rmtree, move, copyfile
+from shutil import copy, copyfile, move, rmtree
 from time import localtime, time, strftime, mktime
 
 from . import _, PluginLanguageDomain
@@ -40,8 +40,9 @@ def getMountChoices():
 	for p in harddiskmanager.getMountedPartitions():
 		if path.exists(p.mountpoint):
 			d = path.normpath(p.mountpoint)
-			if p.mountpoint != "/":
-				choices.append((p.mountpoint, d))
+			entry = (p.mountpoint, d)
+			if p.mountpoint != "/" and entry not in choices:
+				choices.append(entry)
 	choices.sort()
 	return choices
 
@@ -53,6 +54,7 @@ def getMountDefault(choices):
 
 
 def __onPartitionChange(*args, **kwargs):
+	global choices
 	choices = getMountChoices()
 	config.imagemanager.backuplocation.setChoices(choices=choices, default=getMountDefault(choices))
 
@@ -62,6 +64,7 @@ config.imagemanager = ConfigSubsection()
 config.imagemanager.autosettingsbackup = ConfigYesNo(default=True)
 choices = getMountChoices()
 config.imagemanager.backuplocation = ConfigSelection(choices=choices, default=getMountDefault(choices))
+config.imagemanager.extensive_location_search = ConfigYesNo(default=True)
 harddiskmanager.on_partition_list_change.append(__onPartitionChange) # to update backuplocation choices on mountpoint change
 config.imagemanager.backupretry = ConfigNumber(default=30)
 config.imagemanager.backupretrycount = NoSave(ConfigNumber(default=0))
@@ -175,15 +178,34 @@ class OpenBhImageManager(Screen):
 		self["infoactions"] = ActionMap(["SetupActions"], {
 			"info": self.showInfo,
 		}, -1)
-
+		self["defaultactions"] = ActionMap(["OkCancelActions", "MenuActions"], {
+			"cancel": self.close,
+			"menu": self.createSetup,
+		}, -1)
+		self["mainactions"] = ActionMap(["ColorActions", "OkCancelActions", "DirectionActions", "KeyboardInputActions"], {
+			"red": self.keyDelete,
+			"green": self.GreenPressed,
+			"yellow": self.doDownload,
+			"ok": self.keyRestore,
+			"blue": self.keyRestore,
+			"up": self.refreshUp,
+			"down": self.refreshDown,
+			"left": self.keyLeft,
+			"right": self.keyRight,
+			"upRepeated": self.refreshUp,
+			"downRepeated": self.refreshDown,
+			"leftRepeated": self.keyLeft,
+			"rightRepeated": self.keyRight,
+		}, -1)
+		self["mainactions"].setEnabled(False)
 		self.BackupRunning = False
+		self.mountAvailable = False
 		self.BackupDirectory = " "
 		if SystemInfo["canMultiBoot"]:
 			self.mtdboot = SystemInfo["MBbootdevice"]
 		self.onChangedEntry = []
-		if getMountChoices():
+		if choices:
 			self["list"] = MenuList(list=[((_("No images found on the selected download server...if password check validity")), "Waiter")])
-
 		else:
 			self["list"] = MenuList(list=[((_(" Press 'Menu' to select a storage device - none available")), "Waiter")])
 			self["key_red"].hide()
@@ -193,7 +215,7 @@ class OpenBhImageManager(Screen):
 		self.populate_List()
 		self.activityTimer = eTimer()
 		self.activityTimer.timeout.get().append(self.backupRunning)
-		self.activityTimer.start(10)
+		self.activityTimer.startLongTimer(10)
 		self.Console = Console()
 		self.ConsoleB = Console(binary=True)
 
@@ -219,19 +241,23 @@ class OpenBhImageManager(Screen):
 
 	def backupRunning(self):
 		self.BackupRunning = False
-		for job in Components.Task.job_manager.getPendingJobs():
-			if job.name.startswith(_("Image manager")):
-				self.BackupRunning = True
-		if self.BackupRunning:
-			self["key_green"].setText(_("View progress"))
+		if self.mountAvailable:
+			for job in Components.Task.job_manager.getPendingJobs():
+				if job.name.startswith(_("Image manager")):
+					self.BackupRunning = True
+					break
+			if self.BackupRunning:
+				self["key_green"].setText(_("View progress"))
+			else:
+				self["key_green"].setText(_("New backup"))
+			self["key_green"].show()
 		else:
-			self["key_green"].setText(_("Full backup"))
+			self["key_green"].hide()
 		self.activityTimer.startLongTimer(5)
-		self.refreshList()
+		self.refreshList() # display any new images that may have been sent too the box since the list was built
 
 	def refreshUp(self):
 		self["list"].instance.moveSelection(self["list"].instance.moveUp)
-
 
 	def refreshDown(self):
 		self["list"].instance.moveSelection(self["list"].instance.moveDown)
@@ -266,7 +292,7 @@ class OpenBhImageManager(Screen):
 
 	def showJobView(self, job):
 		Components.Task.job_manager.in_background = False
-		self.session.openWithCallback(self.JobViewCB, JobView, job, cancelable=False, backgroundable=False, afterEventChangeable=False, afterEvent="close")
+		self.session.openWithCallback(self.JobViewCB, JobView, job, cancelable=False, backgroundable=True, afterEventChangeable=False, afterEvent="close")
 
 	def JobViewCB(self, in_background):
 		Components.Task.job_manager.in_background = in_background
@@ -278,30 +304,11 @@ class OpenBhImageManager(Screen):
 			mount = config.imagemanager.backuplocation.value + "/", config.imagemanager.backuplocation.value
 		hdd = "/media/hdd/", "/media/hdd"
 		if mount not in config.imagemanager.backuplocation.choices.choices and hdd not in config.imagemanager.backuplocation.choices.choices:
-			self["myactions"] = ActionMap(["OkCancelActions", "MenuActions"], {
-				"cancel": self.close,
-				"menu": self.createSetup,
-			}, -1)
+			self["mainactions"].setEnabled(False)
+			self.mountAvailable = False
+			self["key_green"].hide()
 			self["lab1"].setText(_("Device: None available") + "\n" + _("Press 'Menu' to select a storage device"))
 		else:
-			self["myactions"] = ActionMap(["ColorActions", "OkCancelActions", "DirectionActions", "MenuActions", "HelpActions", "KeyboardInputActions"], {
-				"cancel": self.close,
-				"red": self.keyDelete,
-				"green": self.GreenPressed,
-				"yellow": self.doDownload,
-				"menu": self.createSetup,
-				"ok": self.keyRestore,
-				"blue": self.keyRestore,
-				"up": self.refreshUp,
-				"down": self.refreshDown,
-				"left": self.keyLeft,
-				"right": self.keyRight,
-				"upRepeated": self.refreshUp,
-				"downRepeated": self.refreshDown,
-				"leftRepeated": self.keyLeft,
-				"rightRepeated": self.keyRight,
-				"displayHelp": self.doDownload,
-			}, -1)
 			if mount not in config.imagemanager.backuplocation.choices.choices:
 				self.BackupDirectory = "/media/hdd/imagebackups/"
 				config.imagemanager.backuplocation.value = "/media/hdd/"
@@ -321,6 +328,9 @@ class OpenBhImageManager(Screen):
 				self.refreshList()
 			except Exception:
 				self["lab1"].setText(_("Device: ") + config.imagemanager.backuplocation.value + "\n" + _("There is a problem with this device. Please reformat it and try again."))
+			self["mainactions"].setEnabled(True)
+			self.mountAvailable = True
+			self["key_green"].show()
 
 	def createSetup(self):
 		self.session.openWithCallback(self.setupDone, ImageManagerSetup)
@@ -403,23 +413,26 @@ class OpenBhImageManager(Screen):
 
 	def getImagesDownloaded(self):
 		def getImages(files):
-			for file in [x for x in files if path.splitext(x)[1] == ".zip" and model in x]:
+			for file in files:
 				imagesFound.append({'link': file, 'name': file.split(ossep)[-1], 'mtime': stat(file).st_mtime})
-
 
 		model = getMachineMake()
 		imagesFound = []
-		for media in ['/media/%s' % x for x in listdir('/media')] + (['/media/net/%s' % x for x in listdir('/media/net')] if path.isdir('/media/net') else [])  + (['/media/autofs/%s' % x for x in listdir('/media/autofs')] if path.isdir('/media/autofs') else []):
+		if config.imagemanager.extensive_location_search.value:
+			mediaList = ['/media/%s' % x for x in listdir('/media')] + (['/media/net/%s' % x for x in listdir('/media/net')] if path.isdir('/media/net') else [])  + (['/media/autofs/%s' % x for x in listdir('/media/autofs')] if path.isdir('/media/autofs') else [])
+		else:
+			mediaList = [config.imagemanager.backuplocation.value]
+		for media in mediaList:
 			try: # /media/autofs/xxx will crash listdir if "xxx" is inactive (e.g. dropped network link). os.access reports True for "xxx" so it seems we are forced to try/except here.
 				medialist = listdir(media)
 			except FileNotFoundError:
 				continue
 			getImages([path.join(media, x) for x in medialist if path.splitext(x)[1] == ".zip" and model in x])
 			for folder in ["imagebackups", "downloaded_images", "images"]:
-				if folder in listdir(media):
-					media = path.join(media, folder)
-					if path.isdir(media) and not path.islink(media) and not path.ismount(media):
-						getImages([path.join(media, x) for x in listdir(media) if path.splitext(x)[1] == ".zip" and model in x])
+				if folder in medialist:
+					media2 = path.join(media, folder)
+					if path.isdir(media2) and not path.islink(media2) and not path.ismount(media2):
+						getImages([path.join(media2, x) for x in listdir(media2) if path.splitext(x)[1] == ".zip" and model in x])
 		imagesFound.sort(key=lambda x: x['mtime'], reverse=True)
 		# print("[ImageManager][getImagesDownloaded] imagesFound=%s" % imagesFound)
 		return imagesFound
@@ -439,21 +452,28 @@ class OpenBhImageManager(Screen):
 		if not self.sel:
 			return
 		print("[ImageManager][keyRestore] self.sel SystemInfo['MultiBootSlot']", self.sel[0], "   ", SystemInfo["MultiBootSlot"])
-		if SystemInfo["MultiBootSlot"] == 0 and self.sel[0].startswith(("openvix", "openbh")):
-			if "VuSlot0" in self.sel[0] or "release" in self.sel[0] or "developer" in self.sel[0]:
-				message = _("Do you want to flash slot0?\nThis will change all eMMC slots.") if "VuSlot0" in self.sel[0] else _("Do you want to flash slot0?\nThis will remove Vu Multiboot and erase all eMMC slots.")
-				ybox = self.session.openWithCallback(self.keyRestorez0, MessageBox, message, MessageBox.TYPE_YESNO)
-				ybox.setTitle(_("Restore confirmation"))
+		if SystemInfo["MultiBootSlot"] == 0 and self.isVuKexecCompatibleImage(self.sel[0]): # only if Vu multiboot has been enabled and the image is compatible
+			message = (_("Do you want to flash slot0?\nThis will change all eMMC slots.") if "VuSlot0" in self.sel[0] else _("Do you want to flash slot0?\nThis will remove Vu Multiboot and may erase all eMMC slots.")) + "\n" + _("Select 'no' to flash to a different slot.")
+			ybox = self.session.openWithCallback(self.keyRestorez0, MessageBox, message, default=False)
+			ybox.setTitle(_("Restore confirmation"))
 		else:
 			self.keyRestore1()
 
 	def keyRestorez0(self, retval):
 		print("[ImageManager][keyRestorez0] retval", retval)
 		if retval:
-			self.multibootslot = 0												# set slot0 to be flashed
-			self.Console.ePopen("umount /proc/cmdline", self.keyRestore3)		# tell ofgwrite not Vu Multiboot
+			message = (_("Do you want to backup eMMC slots? This will take 1 -> 5 minutes per eMMC slot"))
+			ybox = self.session.openWithCallback(self.keyRestorez1, MessageBox, message, default=False)
+			ybox.setTitle(_("Copy eMMC slots confirmation"))
 		else:
 			self.keyRestore1()
+
+	def keyRestorez1(self, retval):
+		if retval:
+			self.VuKexecCopyimage()
+		else:
+			self.multibootslot = 0												# set slot0 to be flashed
+			self.Console.ePopen("umount /proc/cmdline", self.keyRestore3)		# tell ofgwrite not Vu Multiboot
 
 	def keyRestore1(self):
 		self.HasSDmmc = False
@@ -482,7 +502,7 @@ class OpenBhImageManager(Screen):
 		currentimageslot = SystemInfo["MultiBootSlot"]
 		for x in imagedict.keys():
 			choices.append(((_("slot%s %s - %s (current image)") if x == currentimageslot else _("slot%s %s - %s")) % (x, SystemInfo["canMultiBoot"][x]["slotname"], imagedict[x]["imagename"]), (x)))
-		self.session.openWithCallback(self.keyRestore2, MessageBox, message, list=choices, default=currentimageslot, simple=True)
+		self.session.openWithCallback(self.keyRestore2, MessageBox, message, list=choices, default=False, simple=True)
 
 	def keyRestore2(self, retval):
 		if retval:
@@ -494,6 +514,9 @@ class OpenBhImageManager(Screen):
 					self.MTDROOTFS = SystemInfo["canMultiBoot"][self.multibootslot]["root"]
 				else:
 					self.MTDROOTFS = SystemInfo["canMultiBoot"][self.multibootslot]["root"].split("/")[2]
+			if SystemInfo["HasHiSi"] and SystemInfo["MultiBootSlot"] >= 4 and self.multibootslot < 4:
+				self.session.open(MessageBox, _("ImageManager - %s - cannot flash eMMC slot from sd card slot.") % getBoxType(), MessageBox.TYPE_INFO, timeout=10)
+				return
 			if self.sel:
 				if config.imagemanager.autosettingsbackup.value:
 					self.doSettingsBackup()
@@ -522,7 +545,7 @@ class OpenBhImageManager(Screen):
 			self.session.openWithCallback(self.restore_infobox.close, MessageBox, _("Flash image unzip successful."), MessageBox.TYPE_INFO, timeout=4)
 			if getMachineMake() == "et8500" and self.dualboot:
 				message = _("ET8500 Multiboot: Yes to restore OS1 No to restore OS2:\n ") + self.sel[1]
-				ybox = self.session.openWithCallback(self.keyRestore5_ET8500, MessageBox, message, MessageBox.TYPE_YESNO)
+				ybox = self.session.openWithCallback(self.keyRestore5_ET8500, MessageBox, message)
 				ybox.setTitle(_("ET8500 Image Restore"))
 			else:
 				MAINDEST = "%s/%s" % (self.TEMPDESTROOT, getImageFolder())
@@ -547,21 +570,19 @@ class OpenBhImageManager(Screen):
 		MAINDEST = "%s/%s" % (self.TEMPDESTROOT, getImageFolder())
 		print("[ImageManager] MAINDEST=%s" % MAINDEST)
 		if ret == 0:
-			CMD = "/usr/bin/ofgwrite -r -k '%s'" % MAINDEST			# normal non multiboot receiver
+			CMD = "/usr/bin/ofgwrite -r -k '%s'" % MAINDEST							# normal non multiboot receiver
 			if SystemInfo["canMultiBoot"]:
 				if self.multibootslot == 0 and SystemInfo["HasKexecMultiboot"]:		# reset Vu Multiboot slot0
 					kz0 = getMachineMtdKernel()
 					rz0 = getMachineMtdRoot()
 					CMD = "/usr/bin/ofgwrite -kkz0 -rrz0 '%s'" % MAINDEST			# slot0 treat as kernel/root only multiboot receiver
-				elif SystemInfo["HasHiSi"] and SystemInfo["HasRootSubdir"] is False:  # SF8008 type receiver with single eMMC & SD card multiboot
-					CMD = "/usr/bin/ofgwrite -r%s -k%s '%s'" % (self.MTDROOTFS, self.MTDKERNEL, MAINDEST)
 				elif SystemInfo["HasHiSi"] and SystemInfo["canMultiBoot"][self.multibootslot]["rootsubdir"] is None:	# sf8008 type receiver using SD card in multiboot
 					CMD = "/usr/bin/ofgwrite -r%s -k%s -m0 '%s'" % (self.MTDROOTFS, self.MTDKERNEL, MAINDEST)
 					print("[ImageManager] running commnd:%s slot = %s" % (CMD, self.multibootslot))
 					if fileExists("/boot/STARTUP") and fileExists("/boot/STARTUP_6"):
 						copyfile("/boot/STARTUP_%s" % self.multibootslot, "/boot/STARTUP")
-				elif SystemInfo["HasKexecMultiboot"] and "mmcblk" not in self.MTDROOTFS:
-					if SystemInfo["HasKexecUSB"]:
+				elif SystemInfo["HasKexecMultiboot"]:
+					if SystemInfo["HasKexecUSB"]  and "mmcblk" not in self.MTDROOTFS:
 						   CMD = "/usr/bin/ofgwrite -r%s -kzImage -s'%s/linuxrootfs' -m%s '%s'" % (self.MTDROOTFS, getBoxType()[2:], self.multibootslot, MAINDEST)
 					else:
 						   CMD = "/usr/bin/ofgwrite -r%s -kzImage -m%s '%s'" % (self.MTDROOTFS, self.multibootslot, MAINDEST)
@@ -618,6 +639,43 @@ class OpenBhImageManager(Screen):
 				return True
 			else:
 				return False
+
+	def isVuKexecCompatibleImage(self, name):
+		retval = False
+		if "VuSlot0" in name:
+			retval = True
+		else:
+			name_split = name.split("-")
+			if len(name_split) > 1 and name_split[0] in ("openbh", "openvix") and name[-8:] == "_usb.zip": # "_usb.zip" only in build server images
+				parts = name_split[1].split(".")
+				if len(parts) > 1 and parts[0].isnumeric() and parts[1].isnumeric():
+					version = float(parts[0] + "." + parts[1])
+					if name_split[0] == "openbh" and version > 5.1:
+						retval = True
+					if name_split[0] == "openvix" and (version > 6.3 or version == 6.3 and len(parts) > 2 and parts[2].isnumeric() and int(parts[2]) > 2): # greater than 6.2.002
+						retval = True
+		return retval
+
+	def VuKexecCopyimage(self):
+		installedHDD = False
+		with open("/proc/mounts", "r") as fd:
+			lines = fd.readlines()
+		result = [line.strip().split(" ") for line in lines]
+		print("[ImageManager][VuKexecCopyimage] result", result)
+		for item in result:
+			if '/media/hdd' in item[1] and "/dev/sd" in item[0]:
+				installedHDD = True
+				break
+		if installedHDD and pathExists("/media/hdd"):
+			if not pathExists("/media/hdd/%s" % getBoxType()):
+				mkdir("/media/hdd/%s" % getBoxType())
+			for usbslot in range(1,4):
+				if pathExists("/linuxrootfs%s" % usbslot):
+					if pathExists("/media/hdd/%s/linuxrootfs%s/" % (getBoxType(), usbslot)):
+						rmtree("/media/hdd/%s/linuxrootfs%s" % (getBoxType(), usbslot), ignore_errors=True)
+					Console().ePopen("cp -R /linuxrootfs%s . /media/hdd/%s/" % (usbslot, getBoxType()))
+		self.multibootslot = 0												# set slot0 to be flashed
+		self.Console.ePopen("umount /proc/cmdline", self.keyRestore3)		# tell ofgwrite not Vu Multiboot
 
 	def infoText(self):
 		# add info text sentence by sentence to make translators job easier
