@@ -249,7 +249,7 @@ class OpenBhImageManager(Screen):
 			if self.BackupRunning:
 				self["key_green"].setText(_("View progress"))
 			else:
-				self["key_green"].setText(_("New backup"))
+				self["key_green"].setText(_("Full backup"))
 			self["key_green"].show()
 		else:
 			self["key_green"].hide()
@@ -462,7 +462,7 @@ class OpenBhImageManager(Screen):
 	def keyRestorez0(self, retval):
 		print("[ImageManager][keyRestorez0] retval", retval)
 		if retval:
-			message = (_("Do you want to backup eMMC slots? This will take 1 -> 5 minutes per eMMC slot"))
+			message = (_("Do you want to backup eMMC slots?/nThis will take 1 -> 5 minutes per eMMC slot"))
 			ybox = self.session.openWithCallback(self.keyRestorez1, MessageBox, message, default=False)
 			ybox.setTitle(_("Copy eMMC slots confirmation"))
 		else:
