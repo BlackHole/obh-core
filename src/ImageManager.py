@@ -169,9 +169,8 @@ class OpenBhImageManager(Screen):
 		self["backupstatus"] = Label()
 		self["key_red"] = Button(_("Delete"))
 		self["key_green"] = Button("Full Backup")
-		self["key_yellow"] = Button(_("Image Download"))
-		self["key_blue"] = Button(_("Online Flash"))
-
+		self["key_yellow"] = Button(_("Downloads"))
+		self["key_blue"] = Button(_("Flash"))
 		self["key_menu"] = StaticText(_("MENU"))
 		self["key_info"] = StaticText(_("INFO"))
 
@@ -453,7 +452,7 @@ class OpenBhImageManager(Screen):
 			return
 		print("[ImageManager][keyRestore] self.sel SystemInfo['MultiBootSlot']", self.sel[0], "   ", SystemInfo["MultiBootSlot"])
 		if SystemInfo["MultiBootSlot"] == 0 and self.isVuKexecCompatibleImage(self.sel[0]): # only if Vu multiboot has been enabled and the image is compatible
-			message = (_("Do you want to flash slot0?\nThis will change all eMMC slots.") if "VuSlot0" in self.sel[0] else _("Do you want to flash slot0?\nThis will remove Vu Multiboot and may erase all eMMC slots.")) + "\n" + _("Select 'no' to flash to a different slot.")
+			message = (_("Do you want to flash Recovery image?\nThis will change all eMMC slots.") if "VuSlot0" in self.sel[0] else _("This selection will flash the Recovery image.\nWe advise flashing new image to a MultiBoot slot and restoring (default) settings backup.")) + "\n" + _("Select 'no' to flash a MultiBoot slot.")
 			ybox = self.session.openWithCallback(self.keyRestorez0, MessageBox, message, default=False)
 			ybox.setTitle(_("Restore confirmation"))
 		else:
@@ -674,6 +673,8 @@ class OpenBhImageManager(Screen):
 					if pathExists("/media/hdd/%s/linuxrootfs%s/" % (getBoxType(), usbslot)):
 						rmtree("/media/hdd/%s/linuxrootfs%s" % (getBoxType(), usbslot), ignore_errors=True)
 					Console().ePopen("cp -R /linuxrootfs%s . /media/hdd/%s/" % (usbslot, getBoxType()))
+		if not installedHDD:
+			self.session.open(MessageBox, _("ImageManager - no HDD unable to backup Vu Multiboot eMMC slots"), MessageBox.TYPE_INFO, timeout=5)
 		self.multibootslot = 0												# set slot0 to be flashed
 		self.Console.ePopen("umount /proc/cmdline", self.keyRestore3)		# tell ofgwrite not Vu Multiboot
 
