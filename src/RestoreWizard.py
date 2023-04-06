@@ -7,10 +7,12 @@ from Components.About import about
 from Components.config import config, configfile
 from Components.Console import Console
 from Components.Pixmap import Pixmap
+from Components.SystemInfo import SystemInfo
 from Screens.MessageBox import MessageBox
 from Screens.Rc import Rc
 from Screens.WizardLanguage import WizardLanguage
-from Tools.Directories import fileExists, resolveFilename, SCOPE_PLUGINS
+from Tools.Directories import fileExists, fileHas, resolveFilename, SCOPE_PLUGINS
+from Tools.Multiboot import bootmviSlot, createInfo
 
 
 class RestoreWizard(WizardLanguage, Rc):
@@ -124,8 +126,12 @@ class RestoreWizard(WizardLanguage, Rc):
 
 	def buildList(self, action):
 		if self.NextStep == "reboot":
+			if fileHas("/proc/cmdline", "kexec=1"):
+				slot = SystemInfo["MultiBootSlot"]
+				text = createInfo(slot)
+				bootmviSlot(text=text, slot=slot)
 			if self.didSettingsRestore:
-				self.Console.ePopen("tar -xzvf " + self.fullbackupfilename + " -C /" + " etc/enigma2/settings")	
+				self.Console.ePopen("tar -xzvf " + self.fullbackupfilename + " -C /" + " etc/enigma2/settings")
 			self.Console.ePopen("killall -9 enigma2 && init 6")
 		elif self.NextStep == "settingsquestion" or self.NextStep == "settingsrestore" or self.NextStep == "pluginsquestion" or self.NextStep == "pluginsrestoredevice" or self.NextStep == "end" or self.NextStep == "noplugins":
 			self.buildListfinishedCB(False)
@@ -212,7 +218,7 @@ class RestoreWizard(WizardLanguage, Rc):
 
 	def pluginsRestore_Finished(self, result, retval, extra_args=None):
 		if result:
-			print("[RestoreWizard] opkg install result:\n", result)		
+			print("[RestoreWizard] opkg install result:\n", result)
 		self.didPluginRestore = True
 		self.NextStep = "reboot"
 		self.buildListRef.close(True)
@@ -323,7 +329,7 @@ class RestoreWizard(WizardLanguage, Rc):
 							devmounts = []
 							files = []
 							self.plugfile = self.plugfiles[3]
-							for dir in ["/media/%s/%s" % (media, self.plugfile) for media in listdir("/media/") if path.isdir(path.join("/media/", media)) and path.exists("/media/%s/%s" % (media, self.plugfile))]:							
+							for dir in ["/media/%s/%s" % (media, self.plugfile) for media in listdir("/media/") if path.isdir(path.join("/media/", media)) and path.exists("/media/%s/%s" % (media, self.plugfile))]:
 								if media not in ("autofs", "net"):
 									devmounts.append(dir)
 							if len(devmounts):
