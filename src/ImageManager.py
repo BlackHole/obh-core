@@ -125,6 +125,9 @@ def ImageManagerautostart(reason, session=None, **kwargs):
 class tmp:
 	dir = None
 
+def checkImageFiles(files):
+	return len([x for x in files if "kernel" in x and ".bin" in x or x in ("zImage", "uImage", "root_cfe_auto.bin", "root_cfe_auto.jffs2", "oe_kernel.bin", "oe_rootfs.bin", "e2jffs2.img", "rootfs.tar.bz2", "rootfs.ubi", "rootfs.bin")]) >= 2
+
 class OpenBhImageManager(Screen):
 	skin = ["""<screen name="OpenBhImageManager" position="center,center" size="%d,%d">
 		<ePixmap pixmap="skin_default/buttons/red.png" position="%d,%d" size="%d,%d" alphatest="blend" scale="1"/>
@@ -566,8 +569,16 @@ class OpenBhImageManager(Screen):
 			self.keyRestore6(1)
 
 	def keyRestore6(self, ret):
-		MAINDEST = "%s/%s" % (self.TEMPDESTROOT, getImageFolder())
+		#MAINDEST = "%s/%s" % (self.TEMPDESTROOT, getImageFolder())
+		MAINDEST = "%s" % self.TEMPDESTROOT
 		print("[ImageManager] MAINDEST=%s" % MAINDEST)
+		def findImageFiles(path):
+			for path, subDirs, files in walk(path):
+				if not subDirs and files:
+					return checkImageFiles(files) and path
+		MAINDEST = findImageFiles(MAINDEST)
+		print("[ImageManager] FIXED MAINDEST=%s" % MAINDEST)
+
 		if ret == 0:
 			CMD = "/usr/bin/ofgwrite -r -k '%s'" % MAINDEST							# normal non multiboot receiver
 			if SystemInfo["canMultiBoot"]:
