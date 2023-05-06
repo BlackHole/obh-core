@@ -616,6 +616,10 @@ class OpenBhImageManager(Screen):
 		if retval == 0:
 			if SystemInfo["HasHiSi"] and SystemInfo["HasRootSubdir"] is False and self.HasSDmmc is False:	# sf8008 receiver 1 eMMC parition, No SD card
 				self.session.open(TryQuitMainloop, 2)
+			if SystemInfo["HasMultibootFlags"]:
+				print("[ImageManager] setting slot %s to flag file\n" % self.multibootslot)
+				with open('/dev/block/by-name/flag', 'wb') as f:
+					f.write(struct.pack("B", int(self.multibootslot)))
 			if SystemInfo["canMultiBoot"]:
 				print("[ImageManager] slot %s result %s\n" % (self.multibootslot, result))
 				tmp_dir = tempfile.mkdtemp(prefix="ImageManagerFlash")
