@@ -1,6 +1,4 @@
 from os import listdir, path
-from boxbranding import getBoxType, getImageDistro
-
 
 from . import _
 from Plugins.Plugin import PluginDescriptor
@@ -21,17 +19,18 @@ def setLanguageFromBackup(backupfile):
 		print(backupfile)
 		import tarfile
 		tar = tarfile.open(backupfile)
-		for member in tar.getmembers():
-			if member.name == "etc/enigma2/settings":
-				for line in tar.extractfile(member):
-					if line.startswith("config.osd.language"):
-						print(line)
-						languageToSelect = line.strip().split("=")[1]
-						print(languageToSelect)
-						if languageToSelect:
-							from Components.Language import language
-							language.activateLanguage(languageToSelect)
-							break
+		member = tar.getmember("etc/enigma2/settings")
+		for line in tar.extractfile(member):
+			line = line.decode()
+			if line.startswith("config.osd.language"):
+				print(line)
+				languageToSelect = line.strip().split("=")[1]
+				print(languageToSelect)
+				if languageToSelect:
+					from Components.Language import language
+					language.InitLang()
+					language.activateLanguage(languageToSelect)
+					break
 		tar.close()
 	except:
 		pass
