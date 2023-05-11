@@ -13,27 +13,36 @@ from .IPKInstaller import IpkgInstaller
 
 config.misc.restorewizardrun = ConfigBoolean(default=False)
 
+#	On plugin initialisation (called by StartEnigma). language will be assigned as follows if config.misc.firstrun.value:
+#	Default language en_GB (OpenBh) is set by SetupDevices called by StartEnigma
+#	If no backup, the languagewizard will be inserted by Plugin into the wizards.
+#	If backup, then language will be set here from config.osd.language if in backup, else default language
+#
 
 def setLanguageFromBackup(backupfile):
+	print("[OBH plugin][setLanguageFromBackup] backupfile", backupfile)
+	import tarfile
+
 	try:
-		print(backupfile)
-		import tarfile
 		tar = tarfile.open(backupfile)
 		member = tar.getmember("etc/enigma2/settings")
-		for line in tar.extractfile(member):
-			line = line.decode()
-			if line.startswith("config.osd.language"):
-				print(line)
-				languageToSelect = line.strip().split("=")[1]
-				print(languageToSelect)
-				if languageToSelect:
-					from Components.Language import language
-					language.InitLang()
-					language.activateLanguage(languageToSelect)
-					break
+	except KeyError:
+		print("[OBH plugin][setLanguageFromBackup] language selected failed")
 		tar.close()
-	except:
-		pass
+		return
+
+	for line in tar.extractfile(member):
+		line = line.decode()
+		if line.startswith("config.osd.language"):
+			languageToSelect = line.strip().split("=")[1]
+			print("[OBH plugin][setLanguageFromBackup] language selected", languageToSelect)
+			from Components.Language import language
+			language.InitLang()
+			language.activateLanguage(languageToSelect)
+			config.misc.languageselected.value = 0		# 0 means found
+			config.misc.languageselected.save()
+			break
+	tar.close()
 
 
 def checkConfigBackup():
@@ -94,6 +103,10 @@ def startSetup(menuid):
 def RestoreWizard(*args, **kwargs):
 	from .RestoreWizard import RestoreWizard
 	return RestoreWizard(*args, **kwargs)
+
+def LanguageWizard(*args, **kwargs):
+	from Screens.LanguageSelection import LanguageWizard
+	return LanguageWizard(*args, **kwargs)
 
 
 def BackupManager(session):
@@ -174,7 +187,10 @@ def Plugins(**kwargs):
 	plist.append(PluginDescriptor(where=PluginDescriptor.WHERE_AUTOSTART, fnc=SwapAutostart))
 	plist.append(PluginDescriptor(where=PluginDescriptor.WHERE_SESSIONSTART, fnc=ImageManagerautostart))
 	plist.append(PluginDescriptor(where=PluginDescriptor.WHERE_SESSIONSTART, fnc=BackupManagerautostart))
+	plist.append(PluginDescriptor(where=PluginDescriptor.WHERE_SESSIONSTART, fnc=ScriptRunnerAutostart))
+	if config.misc.firstrun.value and not config.misc.restorewizardrun.value and backupAvailable == 0:
+		plist.append(PluginDescriptor(name=_("Language Wizard"), where=PluginDescriptor.WHERE_WIZARD, needsRestart=False, fnc=(1, LanguageWizard)))
 	if config.misc.firstrun.value and not config.misc.restorewizardrun.value and backupAvailable == 1:
-		plist.append(PluginDescriptor(name=_("Restore wizard"), where=PluginDescriptor.WHERE_WIZARD, needsRestart=False, fnc=(3, RestoreWizard)))
+		plist.append(PluginDescriptor(name=_("Restore wizard"), where=PluginDescriptor.WHERE_WIZARD, needsRestart=False, fnc=(4, RestoreWizard)))
 	plist.append(PluginDescriptor(name=_("Ipkg"), where=PluginDescriptor.WHERE_FILESCAN, needsRestart=False, fnc=filescan))
 	return plist
