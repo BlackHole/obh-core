@@ -460,7 +460,7 @@ class OpenBhImageManager(Screen):
 			return
 		print("[ImageManager][keyRestore] self.sel SystemInfo['MultiBootSlot']", self.sel[0], "   ", SystemInfo["MultiBootSlot"])
 		if SystemInfo["MultiBootSlot"] == 0 and self.isVuKexecCompatibleImage(self.sel[0]): # only if Vu multiboot has been enabled and the image is compatible
-			message = (_("Do you want to flash Recovery image?\nThis will change all eMMC slots.") if "VuSlot0" in self.sel[0] else _("Selecting 'Yes' will flash the Recovery image.\nWe advise flashing a new image to a MultiBoot slot and restoring a settings backup. (default)")) + "\n" + _("Select 'No' to flash a MultiBoot slot.")
+			message = (_("Do you want to flash Recovery image?\nThis will change all eMMC slots.") if "VuSlot0" in self.sel[0] else _("Selecting 'Yes' will flash the Recovery image.\nWe advise flashing a new image to a MultiBoot slot and restoring a settings backup.")) + "\n" + _("Select 'No' to flash a MultiBoot slot.")
 			ybox = self.session.openWithCallback(self.keyRestorez0, MessageBox, message, default=False)
 			ybox.setTitle(_("Restore confirmation"))
 		else:
