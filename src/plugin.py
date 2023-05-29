@@ -108,7 +108,6 @@ def LanguageWizard(*args, **kwargs):
 	from Screens.LanguageSelection import LanguageWizard
 	return LanguageWizard(*args, **kwargs)
 
-
 def BackupManager(session):
 	from .BackupManager import OpenBhBackupManager
 	return OpenBhBackupManager(session)
