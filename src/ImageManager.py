@@ -123,6 +123,7 @@ def ImageManagerautostart(reason, session=None, **kwargs):
 			print("[ImageManager] Stop")
 			autoImageManagerTimer.stop()
 
+
 class tmp:
 	dir = None
 
@@ -413,7 +414,6 @@ class OpenBhImageManager(Screen):
 					break
 			self.showJobView(job)
 
-
 	def getImagesDownloaded(self):
 		def getImages(files):
 			for file in files:
@@ -426,7 +426,7 @@ class OpenBhImageManager(Screen):
 		device_name = HardwareInfo().get_device_name()
 		imagesFound = []
 		if config.imagemanager.extensive_location_search.value:
-			mediaList = ['/media/%s' % x for x in listdir('/media')] + (['/media/net/%s' % x for x in listdir('/media/net')] if path.isdir('/media/net') else [])  + (['/media/autofs/%s' % x for x in listdir('/media/autofs')] if path.isdir('/media/autofs') else [])
+			mediaList = ['/media/%s' % x for x in listdir('/media')] + (['/media/net/%s' % x for x in listdir('/media/net')] if path.isdir('/media/net') else []) + (['/media/autofs/%s' % x for x in listdir('/media/autofs')] if path.isdir('/media/autofs') else [])
 		else:
 			mediaList = [config.imagemanager.backuplocation.value]
 		for media in mediaList:
@@ -597,7 +597,7 @@ class OpenBhImageManager(Screen):
 					if fileExists("/boot/STARTUP") and fileExists("/boot/STARTUP_6"):
 						copyfile("/boot/STARTUP_%s" % self.multibootslot, "/boot/STARTUP")
 				elif SystemInfo["HasKexecMultiboot"]:
-					if SystemInfo["HasKexecUSB"]  and "mmcblk" not in self.MTDROOTFS:
+					if SystemInfo["HasKexecUSB"] and "mmcblk" not in self.MTDROOTFS:
 						   CMD = "/usr/bin/ofgwrite -r%s -kzImage -s'%s/linuxrootfs' -m%s '%s'" % (self.MTDROOTFS, getBoxType()[2:], self.multibootslot, MAINDEST)
 					else:
 						   CMD = "/usr/bin/ofgwrite -r%s -kzImage -m%s '%s'" % (self.MTDROOTFS, self.multibootslot, MAINDEST)
@@ -643,7 +643,6 @@ class OpenBhImageManager(Screen):
 			self.session.openWithCallback(self.restore_infobox.close, MessageBox, _("ofgwrite error (also sent to any debug log):\n%s") % result, MessageBox.TYPE_INFO, timeout=20)
 			print("[ImageManager] OFGWriteResult failed:\n", result)
 
-
 	def dualBoot(self):
 		rootfs2 = False
 		kernel2 = False
@@ -688,7 +687,7 @@ class OpenBhImageManager(Screen):
 		if installedHDD and pathExists("/media/hdd"):
 			if not pathExists("/media/hdd/%s" % getBoxType()):
 				mkdir("/media/hdd/%s" % getBoxType())
-			for slotnum in range(1,4):
+			for slotnum in range(1, 4):
 				if pathExists("/linuxrootfs%s" % slotnum):
 					if pathExists("/media/hdd/%s/linuxrootfs%s/" % (getBoxType(), slotnum)):
 						rmtree("/media/hdd/%s/linuxrootfs%s" % (getBoxType(), slotnum), ignore_errors=True)
@@ -1242,7 +1241,7 @@ class ImageBackup(Screen):
 					self.commands.append("mount /dev/%s %s/root" % (self.MTDROOTFS, self.TMPDIR))
 			else:
 				self.commands.append("mount --bind / %s/root" % self.TMPDIR)
-			if  SystemInfo["canMultiBoot"] and SystemInfo["MultiBootSlot"] == 0:
+			if SystemInfo["canMultiBoot"] and SystemInfo["MultiBootSlot"] == 0:
 				self.commands.append("/bin/tar -jcf %s/rootfs.tar.bz2 -C %s/root --exclude ./var/nmbd --exclude ./.resizerootfs --exclude ./linuxrootfs* --exclude ./.resize-rootfs --exclude ./.resize-linuxrootfs --exclude ./.resize-userdata --exclude ./var/lib/samba/private/msg.sock ." % (self.WORKDIR, self.TMPDIR))
 			elif SystemInfo["HasRootSubdir"]:
 				self.commands.append("/bin/tar -jcf %s/rootfs.tar.bz2 -C %s/root/%s --exclude ./var/nmbd --exclude ./.resizerootfs --exclude ./.resize-rootfs --exclude ./.resize-linuxrootfs --exclude ./.resize-userdata --exclude ./var/lib/samba/private/msg.sock ." % (self.WORKDIR, self.TMPDIR, self.ROOTFSSUBDIR))

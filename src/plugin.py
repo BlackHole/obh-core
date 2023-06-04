@@ -104,6 +104,7 @@ def RestoreWizard(*args, **kwargs):
 	from .RestoreWizard import RestoreWizard
 	return RestoreWizard(*args, **kwargs)
 
+
 def LanguageWizard(*args, **kwargs):
 	from Screens.LanguageSelection import LanguageWizard
 	return LanguageWizard(*args, **kwargs)

@@ -77,8 +77,7 @@ class StartSwap:
 		if swap_Pname and not swap_Fname:
 			print("[SwapManager][StartSwap] SWAP partition active on ", swap_Pname)
 		if swap_Pname and swap_Fname:
-			print("[SwapManager][StartSwap] SWAP file %s chosen before swap partition on %s by priority" %(swap_Fname, swap_Pname))
-
+			print("[SwapManager][StartSwap] SWAP file %s chosen before swap partition on %s by priority" % (swap_Fname, swap_Pname))
 
 
 class OpenBhSwap(Screen):
@@ -123,7 +122,6 @@ class OpenBhSwap(Screen):
 		160, 200, 100, 30, 20,
 		160, 200, 100, 30, 20,
 	]
-
 
 	def __init__(self, session):
 		Screen.__init__(self, session)
@@ -218,7 +216,7 @@ class OpenBhSwap(Screen):
 							self.MMCdevice = True
 							self.swap_Pname = parts[0]
 #							self["key_blue"].setText("")
-							self.swap_name =  _("manufacturer defined swap")
+							self.swap_name = _("manufacturer defined swap")
 						self.swap_Pactive = True
 				f.close()
 		self["key_blue"].setText(_("Create"))
@@ -326,7 +324,6 @@ class OpenBhSwap(Screen):
 				mybox = self.session.open(MessageBox, _("SWAP file not found. You have to create the file before you try to activate it."), MessageBox.TYPE_INFO)
 				mybox.setTitle(_("Info"))
 		self.updateSwap()
-
 
 	def createDel(self):
 		if self.swap_Fname:
