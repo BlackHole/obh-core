@@ -398,7 +398,10 @@ class OpenBhImageManager(Screen):
 			self.keyBackup()
 
 	def keyBackup(self):
-		message = _("Do you want to create a full image backup?\nThis can take about 6 minutes to complete.")
+		if getBoxType() == "dual":
+			message = _("Do you want to create a full image backup?\nThis can take upto 25 minutes to complete.")
+		else:
+			message = _("Do you want to create a full image backup?\nThis can take about 6 minutes to complete.")
 		ybox = self.session.openWithCallback(self.doBackup, MessageBox, message, MessageBox.TYPE_YESNO)
 		ybox.setTitle(_("Backup confirmation"))
 
@@ -828,7 +831,10 @@ class AutoImageManagerTimer:
 			from Screens.Standby import inStandby
 
 			if not inStandby and config.imagemanager.query.value:
-				message = _("Your %s %s is about to create a full image backup, this can take about 6 minutes to complete.\nDo you want to allow this?") % (getMachineBrand(), getMachineName())
+				if getBoxType() == "dual":
+					message = _("Your %s %s is about to create a full image backup, this can take upto 25 minutes to complete.\nDo you want to allow this?") % (getMachineBrand(), getMachineName())
+				else:
+					message = _("Your %s %s is about to create a full image backup, this can take about 6 minutes to complete.\nDo you want to allow this?") % (getMachineBrand(), getMachineName())
 				ybox = self.session.openWithCallback(self.doBackup, MessageBox, message, MessageBox.TYPE_YESNO, timeout=30)
 				ybox.setTitle("Scheduled backup.")
 			else:
