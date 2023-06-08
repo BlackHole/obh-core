@@ -120,7 +120,7 @@ def BackupManagerMenu(session, **kwargs):
 
 
 def ImageManager(session):
-	from ImageManager import OpenBhImageManager
+	from .ImageManager import OpenBhImageManager
 	return OpenBhImageManager(session)
 
 
