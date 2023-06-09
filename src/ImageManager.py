@@ -463,16 +463,29 @@ class OpenBhImageManager(Screen):
 			return
 		print("[ImageManager][keyRestore] self.sel SystemInfo['MultiBootSlot']", self.sel[0], "   ", SystemInfo["MultiBootSlot"])
 		if SystemInfo["MultiBootSlot"] == 0 and self.isVuKexecCompatibleImage(self.sel[0]): # only if Vu multiboot has been enabled and the image is compatible
-			message = (_("Do you want to flash Recovery image?\nThis will change all eMMC slots.") if "VuSlot0" in self.sel[0] else _("Selecting 'Yes' will flash the Recovery image.\nWe advise flashing a new image to a MultiBoot slot and restoring a settings backup.")) + "\n" + _("Select 'No' to flash a MultiBoot slot.")
-			ybox = self.session.openWithCallback(self.keyRestorez0, MessageBox, message, default=False)
+			message = [_("Are you sure you want to overwrite the Recovery image?")]
+			if "VuSlot0" in self.sel[0]:
+				callback = self.keyRestoreVuSlot0Image
+				message.append(_("This change will overwrite all eMMC Slots."))
+				choices = None
+			else:
+				callback = self.keyRestorez0
+				message.append(_("We advise flashing the new image to a Regular MultiBoot Slot and restoring a settings backup."))
+				message.append(_("Select 'Flash Regular Slot' to flash a Regular MultiBoot Slot or select 'Overwrite Recovery' to overwrite the Recovery image."))
+				choices = [(_("Flash Regular Slot"), False), (_("Overwrite Recovery"), True)]
+			ybox = self.session.openWithCallback(self.keyRestorez0, MessageBox, "\n".join(message), default=False, list=choices)
 			ybox.setTitle(_("Restore confirmation"))
 		else:
 			self.keyRestore1()
 
+	def keyRestoreVuSlot0Image(self, retval):
+		if retval:
+			self.keyRestorez1(retval=False)
+
 	def keyRestorez0(self, retval):
 		print("[ImageManager][keyRestorez0] retval", retval)
 		if retval:
-			message = (_("Do you want to backup eMMC slots?\nThis will take 1 -> 5 minutes per eMMC slot"))
+			message = (_("Do you want to backup eMMC Slots?\nThis will take 1 -> 5 minutes per eMMC Slot"))
 			ybox = self.session.openWithCallback(self.keyRestorez1, MessageBox, message, default=False)
 			ybox.setTitle(_("Copy eMMC slots confirmation"))
 		else:
