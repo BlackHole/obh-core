@@ -125,6 +125,9 @@ def BackupManagerautostart(reason, session=None, **kwargs):
 			autoBackupManagerTimer.stop()
 
 
+BackupTime = 0
+
+
 class OpenBhBackupManager(Screen):
 	skin = ["""<screen name="OpenBhBackupManager" position="center,center" size="%d,%d">
 		<ePixmap pixmap="skin_default/buttons/red.png" position="%d,%d" size="%d,%d" alphatest="blend" scale="1" />
@@ -333,7 +336,7 @@ class OpenBhBackupManager(Screen):
 	def keyDelete(self):
 		self.sel = self["list"].getCurrent()
 		if self.sel is not None:
-			self["list"].instance.moveSelectionTo((len(self["list"].list) > self["list"].getSelectionIndex() + 1) and self["list"].getSelectionIndex() or max(len(self["list"].list) - 2, 0)) # hold the selection current possition if the list is long enough, else go to last item
+			self["list"].moveToIndex(self["list"].getSelectionIndex() if len(self["list"].list) > self["list"].getSelectionIndex() + 1 else max(len(self["list"].list) - 2, 0)) # hold the selection current possition if the list is long enough, else go to last item
 			remove(self.BackupDirectory + self.sel)
 			self.populate_List()
 

@@ -130,6 +130,10 @@ class tmp:
 def checkImageFiles(files):
 	return len([x for x in files if "kernel" in x and ".bin" in x or x in ("zImage", "uImage", "root_cfe_auto.bin", "root_cfe_auto.jffs2", "oe_kernel.bin", "oe_rootfs.bin", "e2jffs2.img", "rootfs.tar.bz2", "rootfs.ubi", "rootfs.bin")]) >= 2
 
+
+BackupTime = 0
+
+
 class OpenBhImageManager(Screen):
 	skin = ["""<screen name="OpenBhImageManager" position="center,center" size="%d,%d">
 		<ePixmap pixmap="skin_default/buttons/red.png" position="%d,%d" size="%d,%d" alphatest="blend" scale="1"/>
@@ -374,7 +378,7 @@ class OpenBhImageManager(Screen):
 	def keyDelete(self):
 		self.sel = self["list"].getCurrent() # (name, link)
 		if self.sel is not None:
-			self["list"].instance.moveSelectionTo((len(self["list"].list) > self["list"].getSelectionIndex() + 1) and self["list"].getSelectionIndex() or max(len(self["list"].list) - 2, 0)) # hold the selection current possition if the list is long enough, else go to last item
+			self["list"].moveToIndex(self["list"].getSelectionIndex() if len(self["list"].list) > self["list"].getSelectionIndex() + 1 else max(len(self["list"].list) - 2, 0)) # hold the selection current possition if the list is long enough, else go to last item
 			try:
 				# print("[ImageManager][keyDelete] selected image=%s" % (self.sel[1]))
 				if self.sel[1].endswith(".zip"):
