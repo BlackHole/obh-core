@@ -97,7 +97,7 @@ if getImageType() == "release":
 	("OpenATV", "https://images.mynonpublic.com/openatv/json/%s", "getMachineMake"),
 	("OpenPLi", "http://downloads.openpli.org/json/%s", "HardwareInfo"),
 ]
-if getImageType() == "community":
+elif getImageType() == "community":
 	FEED_URLS = [
 	("OpenBh", "https://images.blackhole-community.com/json/%s", "getMachineMake"),
 	("OpenViX", "https://www.openvix.co.uk/json/%s", "getMachineMake"),
